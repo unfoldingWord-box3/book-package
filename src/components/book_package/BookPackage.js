@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {fetchBookPackage} from './helpers';
@@ -10,17 +10,18 @@ function BookPackage({
   style,
 }) 
 {
-  let _book;
-  _book = fetchBookPackage(
-    {username: 'unfoldingword', languageId:'en', bookId: bookId
-  });
+  const [_book, setVal] = useState(0);
+  //let _book;
+  useEffect( () => {
+    fetchBookPackage(
+      {username: 'unfoldingword', languageId:'en', bookId: bookId
+    }).then(setVal);
+  }); 
   console.log("bp _book:",_book)
   return (
-    <Suspense fallback={<div>Loading...</div>}>
     <div>
       {JSON.stringify(_book)}
     </div>
-    </Suspense>
   );
 
 };
