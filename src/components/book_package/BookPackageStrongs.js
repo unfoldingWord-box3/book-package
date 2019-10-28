@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+/*
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {fetchBookPackage} from './helpers';
 import { Typography } from '@material-ui/core';
+*/
+import {fetchBookPackage} from './helpers';
 
-function BookPackage({
+function BookPackageStrongs({
   bookId,
   classes,
   style,
@@ -25,20 +27,11 @@ function BookPackage({
       {username: 'unfoldingword', languageId:'en', bookId: bookId
     }).then(setVal);
   });
-
   return (
-    <div>
-      <Paper className={classes.paper}>
-      {Object.keys({_book}).forEach(skey => ( 
-        <div>
-        <Typography>skey</Typography>
-        <Typography>_book[skey]</Typography>   
-        </div>
-      ))}
-      </Paper>
+    <div className={classes.root}>
+      {_book}
     </div>
-  );
-
+  )
 };
 
 BookPackage.propTypes = {
@@ -64,6 +57,7 @@ export default withStyles(styles)(BookPackage);
       {_book}
     </div>
 
+  return (
     <div>
       <Paper className={classes.paper}>
       {Object.keys({_book}).forEach(skey => ( 
@@ -74,8 +68,11 @@ export default withStyles(styles)(BookPackage);
       ))}
       </Paper>
     </div>
+  );
 
-        <div className={classes.root}>
+
+  return (
+    <div className={classes.root}>
     <Paper className={classes.paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
@@ -97,7 +94,7 @@ export default withStyles(styles)(BookPackage);
       </Table>
     </Paper>
     </div>
-
+  );
 
 Object.keys(obj).forEach(item => {
   console.log(item,obj[item]);

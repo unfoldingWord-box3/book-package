@@ -1,1 +1,2 @@
-export {default} from './BookPackage';
+export {default} from './BookPackageStrongs';
+export {default} from './BookPackageTw';

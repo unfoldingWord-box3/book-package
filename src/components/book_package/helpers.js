@@ -44,12 +44,13 @@ export async function fetchBookPackage({
     });
 
     // function to convert map to object
+    /*
     const map_to_obj = ( mp => {
         const ob = {};
         mp.forEach((v,k) => {ob[k]=v});
         return ob;
-    })
-  
+    });
+    */
 
     //var bp_map = {};
     var book_map = obj_to_map(_book);
@@ -84,5 +85,6 @@ export async function fetchBookPackage({
             }
         }
     }
-    return map_to_obj(summary_strong_map);
+    return JSON.stringify([...summary_strong_map])
+    //return map_to_obj(summary_strong_map);
   }
