@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import {fetchBookPackage} from './helpers';
-
+import { Typography } from '@material-ui/core';
 
 function BookPackage({
   bookId,
@@ -10,17 +16,26 @@ function BookPackage({
   style,
 }) 
 {
-  const [_book, setVal] = useState(0);
-  //let _book;
+  //const classes = useStyles();
+  let _book = {};
+  let setVal;
+  [_book, setVal] = useState(0);
   useEffect( () => {
     fetchBookPackage(
       {username: 'unfoldingword', languageId:'en', bookId: bookId
     }).then(setVal);
-  }); 
-  console.log("bp _book:",_book)
+  });
+
   return (
     <div>
-      {JSON.stringify(_book)}
+      <Paper className={classes.paper}>
+      {Object.keys({_book}).forEach(skey => ( 
+        <div>
+        <Typography>skey</Typography>
+        <Typography>_book[skey]</Typography>   
+        </div>
+      ))}
+      </Paper>
     </div>
   );
 
@@ -41,3 +56,52 @@ const styles = theme => ({
 });
 
 export default withStyles(styles)(BookPackage);
+
+
+
+/* Code Graveyard
+    <div className={classes.root}>
+      {_book}
+    </div>
+
+    <div>
+      <Paper className={classes.paper}>
+      {Object.keys({_book}).forEach(skey => ( 
+        <div>
+        <Typography>skey</Typography>
+        <Typography>_book[skey]</Typography>   
+        </div>
+      ))}
+      </Paper>
+    </div>
+
+        <div className={classes.root}>
+    <Paper className={classes.paper}>
+      <Table className={classes.table} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Translation Word</TableCell>
+            <TableCell align="middle">Count</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {Object.keys(_book).forEach(skey => (
+            <TableRow key={skey}>
+              <TableCell component="th" scope="row">
+                {skey}
+              </TableCell>
+              <TableCell>{_book.skey}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
+    </div>
+
+
+Object.keys(obj).forEach(item => {
+  console.log(item,obj[item]);
+});
+
+
+*/
