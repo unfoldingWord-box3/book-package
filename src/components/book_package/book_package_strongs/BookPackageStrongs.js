@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
 */
-import {fetchBookPackage} from './helpers';
+import {fetchBookPackageStrongs} from './helpers';
 
 function BookPackageStrongs({
   bookId,
@@ -18,12 +18,11 @@ function BookPackageStrongs({
   style,
 }) 
 {
-  //const classes = useStyles();
   let _book = {};
   let setVal;
   [_book, setVal] = useState(0);
   useEffect( () => {
-    fetchBookPackage(
+    fetchBookPackageStrongs(
       {username: 'unfoldingword', languageId:'en', bookId: bookId
     }).then(setVal);
   });
@@ -32,9 +31,35 @@ function BookPackageStrongs({
       {_book}
     </div>
   )
+  /*
+  return (
+    <div className={classes.root}>
+    <Paper className={classes.paper}>
+      <Table className={classes.table} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Translation Word</TableCell>
+            <TableCell align="middle">Count</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {Object.keys(_book).forEach(skey => (
+            <TableRow key={skey}>
+              <TableCell component="th" scope="row">
+                {skey}
+              </TableCell>
+              <TableCell>{_book.skey}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
+    </div>
+  );
+  */
 };
 
-BookPackage.propTypes = {
+BookPackageStrongs.propTypes = {
   /** @ignore */
   classes: PropTypes.object,
   /** The Book ID to package. */
@@ -48,7 +73,7 @@ const styles = theme => ({
   },
 });
 
-export default withStyles(styles)(BookPackage);
+export default withStyles(styles)(BookPackageStrongs);
 
 
 

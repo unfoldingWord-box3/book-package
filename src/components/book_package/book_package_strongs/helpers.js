@@ -1,5 +1,5 @@
-import { fetchOriginalBook } from '../../core/helpers.js'
-import * as gitApi from '../../core/gitApi';
+import { fetchOriginalBook } from '../../../core/helpers.js'
+import * as gitApi from '../../../core/gitApi';
 
 function process_tags(key,val,summary_strong_map,summary_tw_map) {
     if ( key === "strong" ) {
@@ -16,7 +16,7 @@ function process_tags(key,val,summary_strong_map,summary_tw_map) {
     }
 }
 
-export async function fetchBookPackage({
+export async function fetchBookPackageStrongs({
     bookId,
     chapters,
     languageId,

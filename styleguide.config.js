@@ -20,7 +20,7 @@ let sections = [
       ];
       return componentNames.map(componentName => {
         const filename = upperFirst(camelCase(componentName));
-        const fpath = Path.resolve(__dirname, `src/components/${componentName}`, `${filename}.js`);
+        const fpath = Path.resolve(__dirname, `src/components/book_package/${componentName}`, `${filename}.js`);
         return fpath;
       });
     }
