@@ -31,3 +31,18 @@ These notes are copied from https://unfoldingword-box3.github.io/hello-world-rea
     - if dependencies are missing it will not compile and will report what is missing
     - to fix, add dependencies to `package.json` and rerun `yarn` to install them
 4. See debug `console.log()` output in browser console -- in chrome, CTRL-SHIFT-J to open.
+
+
+
+
+*Note* cannot get the React component to render as a table. See this message:
+```
+
+index.js:1437 Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+    in BookPackageStrongs (created by WithStyles(BookPackageStrongs))
+    in WithStyles(BookPackageStrongs) (created by FunctionComponentWrapper)
+    in FunctionComponentWrapper (created by StateHolder)
+    in StateHolder (created by ReactExample)
+    in Wrapper (created by ReactExample)
+    in ReactExample
+```
