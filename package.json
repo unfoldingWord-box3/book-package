@@ -1,6 +1,6 @@
 {
   "name": "book-package",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "description": "A React Component Library for Single Piece Workflow resource identification.",
   "homepage": "https://unfoldingWord-box3.github.io/book-package/",

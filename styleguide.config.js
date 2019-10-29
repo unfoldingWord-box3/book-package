@@ -17,6 +17,8 @@ let sections = [
       const componentNames = [
         'book_package_strongs',
         'book_package_tw',
+        'book_package_tn',
+        'book_package_tq',
       ];
       return componentNames.map(componentName => {
         const filename = upperFirst(camelCase(componentName));
