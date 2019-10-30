@@ -4,7 +4,7 @@ Identifying resources needed to enable single piece workflow
 
 ## Purpose
 
-Given a book of the Bible and, optionally, a chapter, then return a all the resources needed for the book and chapter.
+Given a book of the Bible and, optionally, a chapter, then return a all the resources needed for the book and chapter. **At this time, only English is supported.**
 
 ## Current constraints
 
