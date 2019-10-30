@@ -111,7 +111,7 @@ export async function getLanguageIdsByResource({username, resourceId}) {
 };
 
 export async function fetchManifest({username, repository}) {
-  console.log("uname=",username," repo=",repository)
+  //console.log("uname=",username," repo=",repository)
   const yaml = await getFile({username, repository, path: 'manifest.yaml'});
   const json = (yaml) ? YAML.safeLoad(yaml) : null;
   return json;
@@ -119,8 +119,10 @@ export async function fetchManifest({username, repository}) {
 
 // https://git.door43.org/unfoldingword/en_ult/raw/branch/master/manifest.yaml
 export async function fetchFileFromServer({username, repository, path, branch='master'}) {
+  //console.log("repo=",repository, " path=",path);
   const repoExists = await repositoryExists({username, repository});
   if (repoExists) {
+    //console.log(repository+"/"+path+" ... exists")
     const uri = Path.join(username, repository, 'raw/branch', branch, path);
     try {
       const data = await get({uri});
@@ -130,6 +132,7 @@ export async function fetchFileFromServer({username, repository, path, branch='m
       return null;
     }
   } else {
+    //console.log(repository+"/"+path+" ... does not exist")
     return null;
   }
 };

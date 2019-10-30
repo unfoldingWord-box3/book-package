@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+
+import {fetchBookPackageTn} from './helpers';
 
 function BookPackageTn({
   bookId,
@@ -8,10 +10,23 @@ function BookPackageTn({
   style,
 }) 
 {
+  
+  let _notes;
+  let setVal;
+  [_notes, setVal] = useState(0);
+  useEffect( () => {
+    fetchBookPackageTn(
+      {username: 'unfoldingword', languageId:'en', 
+      bookId: bookId
+    }).then(setVal);
+  });
+  
+
   return (
     <div className={classes.root}>
 <h1>For "{bookId}"</h1>
 
+{_notes}
 <p>The naming convention is <strong>languageId</strong>_tn. 
 The repo for english is &nbsp;
 <a href="https://git.door43.org/unfoldingWord/en_tn">here</a>. 

@@ -13,6 +13,7 @@ import {fetchBookPackageStrongs} from './helpers';
 
 function BookPackageStrongs({
   bookId,
+  chapter,
   classes,
   style,
 }) 
@@ -23,15 +24,17 @@ function BookPackageStrongs({
   [_book, setVal] = useState(0);
   useEffect( () => {
     fetchBookPackageStrongs(
-      {username: 'unfoldingword', languageId:'en', bookId: bookId
+      {username: 'unfoldingword', languageId:'en', 
+      bookId: bookId, chapters: chapter
     }).then(setVal);
   });
 
   // debugging
+  /*
   Object.keys(_book).forEach(skey => (
     console.log("BP Strongs- skey:",skey,", val:",_book[skey])
   ));
-
+  */
   // comment the return below to test table renderer
   //*
   return (
@@ -73,6 +76,8 @@ BookPackageStrongs.propTypes = {
   classes: PropTypes.object,
   /** The Book ID to package. */
   bookId: PropTypes.string.isRequired,
+  /** Comma list of chapters to package. Default is zero and returns all chapters of book*/
+  chapter: PropTypes.string,
   /** The overriding CSS for this component */
   style: PropTypes.object,
 };

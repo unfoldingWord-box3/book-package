@@ -14,6 +14,7 @@ import {fetchBookPackageTw} from './helpers';
 
 function BookPackageTw({
   bookId,
+  chapter,
   classes,
   style,
 }) 
@@ -24,7 +25,8 @@ function BookPackageTw({
   [_book, setVal] = useState(0);
   useEffect( () => {
     fetchBookPackageTw(
-      {username: 'unfoldingword', languageId:'en', bookId: bookId
+      {username: 'unfoldingword', languageId:'en', 
+      bookId: bookId, chapters: chapter
     }).then(setVal);
   });
   return (
@@ -66,6 +68,8 @@ BookPackageTw.propTypes = {
   classes: PropTypes.object,
   /** The Book ID to package. */
   bookId: PropTypes.string.isRequired,
+  /** Comma list of chapters to package. Default is zero and returns all chapters of book*/
+  chapter: PropTypes.string,
   /** The overriding CSS for this component */
   style: PropTypes.object,
 };

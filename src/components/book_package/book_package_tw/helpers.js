@@ -21,7 +21,6 @@ function process_tags(key,val,summary_tw_map) {
         {username: 'unfoldingword', 
         languageId: languageId
     });
-    console.log("manifests:",_manifests);
     _book = await fetchOriginalBook(
         {username: 'unfoldingword', 
         languageId: languageId, 
@@ -49,15 +48,23 @@ function process_tags(key,val,summary_tw_map) {
     //var bp_map = {};
     var book_map = obj_to_map(_book);
     var summary_tw_map = new Map();
+    const chaparray = chapters.split(",");
+    console.log("chaparray=",chapters);
 
     for (var [k,v] of book_map.entries()) {
-        console.log("Working on Chapter:"+k);
+        if ( chapters !== "0" ) {
+            if ( ! chaparray.includes(k) ) {
+                console.log("Skipping chapter:"+k)
+                continue;
+            }
+        }
+        console.log("tW Working on Chapter:"+k);
         // the value is a verses object where key is verse number
         // and value is an array of verse objects
         var verses_map = obj_to_map(v);
         for (var [k1,v1] of verses_map.entries()) {
             if ( k1 === "front" ) continue;
-            console.log(". Working on verse:"+k1);
+            //console.log(". Working on verse:"+k1);
             // the value is a set of tags for each object in a verse
             var verse_map = obj_to_map(v1);
             for (var v2 of verse_map.values()) {
@@ -78,6 +85,7 @@ function process_tags(key,val,summary_tw_map) {
             }
         }
     }
+    console.log("Translation Words Count=",summary_tw_map.size)
     return JSON.stringify([...summary_tw_map])
     //return map_to_obj(summary_tw_map);
   }
