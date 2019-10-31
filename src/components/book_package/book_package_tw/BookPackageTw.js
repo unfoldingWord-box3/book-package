@@ -46,11 +46,11 @@ function BookPackageTw({
         </Table>
       </Paper>
       );  
-      // debugging
+      /* debugging
       Object.keys(result).forEach(skey => (
         console.log("tW:",skey,", val:",result[skey])
       ));
-    
+      */
     };
     fetchData();
   }, []); 

@@ -47,11 +47,11 @@ function BookPackageStrongs({
         </Table>
       </Paper>
       );  
-      // debugging
+      /* debugging
       Object.keys(result).forEach(skey => (
         console.log("BP Strongs- skey:",skey,", val:",result[skey])
       ));
-    
+      */
     };
     fetchData();
   }, []); 

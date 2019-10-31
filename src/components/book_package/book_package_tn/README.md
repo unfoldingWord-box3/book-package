@@ -7,7 +7,7 @@ The book identifiers are per standards found at:
 http://ubsicap.github.io/usfm/identification/books.html
 
 ```js
-<BookPackageTn bookId='tit'  />
+<BookPackageTn bookId='tit' chapter="0" />
 ```
 
 
