@@ -10,7 +10,7 @@ function process_tags(key,val,summary_tw_map) {
     }
 }
 
-  export async function fetchBookPackageTw({
+export async function fetchBookPackageTw({
     bookId,
     chapters,
     languageId,
@@ -37,28 +37,23 @@ function process_tags(key,val,summary_tw_map) {
     });
 
     // function to convert map to object
-    /*
     const map_to_obj = ( mp => {
         const ob = {};
         mp.forEach((v,k) => {ob[k]=v});
         return ob;
     });
-    */
 
-    //var bp_map = {};
     var book_map = obj_to_map(_book);
     var summary_tw_map = new Map();
     const chaparray = chapters.split(",");
-    console.log("chaparray=",chapters);
 
     for (var [k,v] of book_map.entries()) {
+        //console.log("Working on Chapter:"+k);
         if ( chapters !== "0" ) {
             if ( ! chaparray.includes(k) ) {
-                console.log("Skipping chapter:"+k)
                 continue;
             }
         }
-        console.log("tW Working on Chapter:"+k);
         // the value is a verses object where key is verse number
         // and value is an array of verse objects
         var verses_map = obj_to_map(v);
@@ -86,6 +81,5 @@ function process_tags(key,val,summary_tw_map) {
         }
     }
     console.log("Translation Words Count=",summary_tw_map.size)
-    return JSON.stringify([...summary_tw_map])
-    //return map_to_obj(summary_tw_map);
+    return map_to_obj(summary_tw_map);
   }

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-/*
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Typography } from '@material-ui/core';
-*/
 import {fetchBookPackageTw} from './helpers';
 
 function BookPackageTw({
@@ -19,48 +16,52 @@ function BookPackageTw({
   style,
 }) 
 {
-  //const classes = useStyles();
-  let _book = {};
-  let setVal;
-  [_book, setVal] = useState(0);
+  const [_book, setVal] = useState("Waiting");
   useEffect( () => {
-    fetchBookPackageTw(
-      {username: 'unfoldingword', languageId:'en', 
-      bookId: bookId, chapters: chapter
-    }).then(setVal);
-  });
+    const fetchData = async () => {
+      const result = await fetchBookPackageTw(
+        {username: 'unfoldingword', languageId:'en', 
+        bookId: bookId, chapters: chapter
+      });
+      let gkeys = Array.from(Object.keys(result));
+      setVal(
+        <Paper className={classes.paper}>
+        <Table className={classes.table} size="small" aria-label="a dense table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Translation Word</TableCell>
+              <TableCell align="center">Count</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {gkeys.map(skey => (
+              <TableRow key={skey}>
+                <TableCell component="th" scope="row">
+                  {skey}
+                </TableCell>
+                <TableCell align="center">{result[skey]}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+      );  
+      // debugging
+      Object.keys(result).forEach(skey => (
+        console.log("tW:",skey,", val:",result[skey])
+      ));
+    
+    };
+    fetchData();
+  }, []); 
+  // the parameter [] allows the effect to skip if value unchanged
+  // an empty [] will only update on mount of component
+
   return (
     <div className={classes.root}>
       {_book}
     </div>
   )
-  /*
-  return (
-    <div className={classes.root}>
-    <Paper className={classes.paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Translation Word</TableCell>
-            <TableCell align="middle">Count</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Object.keys(_book).forEach(skey => (
-            <TableRow key={skey}>
-              <TableCell component="th" scope="row">
-                {skey}
-              </TableCell>
-              <TableCell>{_book.skey}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
-    </div>
-  );
-
-  */
 };
 
 BookPackageTw.propTypes = {
@@ -80,56 +81,3 @@ const styles = theme => ({
 });
 
 export default withStyles(styles)(BookPackageTw);
-
-
-
-/* Code Graveyard
-    <div className={classes.root}>
-      {_book}
-    </div>
-
-  return (
-    <div>
-      <Paper className={classes.paper}>
-      {Object.keys({_book}).forEach(skey => ( 
-        <div>
-        <Typography>skey</Typography>
-        <Typography>_book[skey]</Typography>   
-        </div>
-      ))}
-      </Paper>
-    </div>
-  );
-
-
-  return (
-    <div className={classes.root}>
-    <Paper className={classes.paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Translation Word</TableCell>
-            <TableCell align="middle">Count</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Object.keys(_book).forEach(skey => (
-            <TableRow key={skey}>
-              <TableCell component="th" scope="row">
-                {skey}
-              </TableCell>
-              <TableCell>{_book.skey}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
-    </div>
-  );
-
-Object.keys(obj).forEach(item => {
-  console.log(item,obj[item]);
-});
-
-
-*/
