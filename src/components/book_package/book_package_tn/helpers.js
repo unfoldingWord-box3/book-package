@@ -24,7 +24,9 @@ languageId,
     console.log("Notes - Number of notes:"+_notes.length);
     const chaparray = chapters.split(",");
     let total=0;
-    for (var i=0; i<_notes.length; i++) {
+
+    // loop starts at 1, skipping the header row of the TSV file
+    for (var i=1; i<_notes.length; i++) {
         let ch = _notes[i][2]
         if ( chapters !== "0" ) {
             if ( ! chaparray.includes(ch) ) {
