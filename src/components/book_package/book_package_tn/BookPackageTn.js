@@ -11,15 +11,13 @@ function BookPackageTn({
 }) 
 {
   
-  let _notes;
-  let setVal;
-  [_notes, setVal] = useState(0);
+  const [_notes, setVal] = useState(0);
   useEffect( () => {
     fetchBookPackageTn(
       {username: 'unfoldingword', languageId:'en', 
       bookId: bookId
     }).then(setVal);
-  });
+  },[]);
   
 
   return (

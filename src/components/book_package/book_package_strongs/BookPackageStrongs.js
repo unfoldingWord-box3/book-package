@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-/* uncomment to test table renderer
+//* uncomment to test table renderer
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -19,56 +19,53 @@ function BookPackageStrongs({
 }) 
 {
 
-  let _book = {};
-  let setVal;
-  [_book, setVal] = useState(0);
+  //let _book = {}; 
+  //let setVal;
+  const [_book, setVal] = useState("Waiting");
   useEffect( () => {
-    fetchBookPackageStrongs(
-      {username: 'unfoldingword', languageId:'en', 
-      bookId: bookId, chapters: chapter
-    }).then(setVal);
-  });
+    const fetchData = async () => {
+      const result = await fetchBookPackageStrongs(
+        {username: 'unfoldingword', languageId:'en', 
+        bookId: bookId, chapters: chapter
+      });
+      setVal(
+        <Paper className={classes.paper}>
+        <Table className={classes.table} size="small" aria-label="a dense table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Strongs Entry</TableCell>
+              <TableCell align="center">Count</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {Object.keys(result).forEach(skey => (
+              <TableRow key={skey}>
+                <TableCell component="th" scope="row">
+                  {skey}
+                </TableCell>
+                <TableCell>{result[skey]}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+      );  
+      // debugging
+      Object.keys(result).forEach(skey => (
+        console.log("BP Strongs- skey:",skey,", val:",result[skey])
+      ));
+    
+    };
+    fetchData();
+  }, []); 
+  // the parameter [] allows the effect to skip if value unchanged
+  // an empty [] will only update on mount of component
 
-  // debugging
-  /*
-  Object.keys(_book).forEach(skey => (
-    console.log("BP Strongs- skey:",skey,", val:",_book[skey])
-  ));
-  */
-  // comment the return below to test table renderer
-  //*
   return (
     <div className={classes.root}>
       {_book}
     </div>
-  )
-  //*/
-  /* Uncomment this return to test table renderer
-  return _book ? (
-    <div className={classes.root}>
-    <Paper className={classes.paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Translation Word</TableCell>
-            <TableCell align="middle">Count</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Object.keys(_book).forEach(skey => (
-            <TableRow key={skey}>
-              <TableCell component="th" scope="row">
-                {skey}
-              </TableCell>
-              <TableCell>{_book[skey]}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
-    </div>
-  ) : (<div classname={classes.root}>{_book}</div>);
-  //*/
+  );
 };
 
 BookPackageStrongs.propTypes = {

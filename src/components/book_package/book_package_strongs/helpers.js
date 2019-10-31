@@ -37,7 +37,7 @@ export async function fetchBookPackageStrongs({
     });
 
     // function to convert map to object
-    /* Uncomment to test table renderer
+    //* Uncomment to test table renderer
     const map_to_obj = ( mp => {
         const ob = {};
         mp.forEach((v,k) => {ob[k]=v});
@@ -84,6 +84,6 @@ export async function fetchBookPackageStrongs({
     }
     console.log("Strongs Count=",summary_strong_map.size)
     // uncomment one of the below to 
-    return JSON.stringify([...summary_strong_map])
-    //return map_to_obj(summary_strong_map);
+    //return JSON.stringify([...summary_strong_map])
+    return map_to_obj(summary_strong_map);
   }
