@@ -14,7 +14,8 @@ import {fetchBookPackageStrongs} from './helpers';
 
 function convertRC2Link(lnk) {
   const ugl_path = 'https://git.door43.org/unfoldingWord/en_ugl/src/branch/master/content/';
-  let s;
+  //const uhal_path = 'https://git.door43.org/unfoldingWord/en_uhal/src/branch/master/content/';
+  let s = lnk.skey;
   s = ugl_path+lnk.skey+"/01.md";
   return s;
 }
@@ -90,7 +91,7 @@ BookPackageStrongs.propTypes = {
   classes: PropTypes.object,
   /** The Book ID to package. */
   bookId: PropTypes.string.isRequired,
-  /** Comma list of chapters to package. Default is zero and returns all chapters of book*/
+  /** Comma list of chapters to package. Default is empty string and returns all chapters of book*/
   chapter: PropTypes.string,
   /** The overriding CSS for this component */
   style: PropTypes.object,
