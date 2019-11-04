@@ -1,6 +1,7 @@
 import data from './chaptersAndVerses.json';
 
-export const chaptersInBook = ({bookId}) => {
+export const chaptersInBook = (bookId) => {
+  console.log("here be arg:",bookId)
   try {
     let chapters;
     if (bookId === 'obs') {

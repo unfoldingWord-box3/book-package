@@ -5,7 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';import {fetchBookPackageTn} from './helpers';
+import ListItemText from '@material-ui/core/ListItemText';
+import {fetchBookPackageTn} from './helpers';
 
 function BookPackageTn({
   bookId,
@@ -25,7 +26,7 @@ function BookPackageTn({
       let tkeys = Array.from(result["tarticles"]);
       let uniqueAndSorted = [...new Set(tkeys)].sort() 
 
-      console.log("tkeys",tkeys);
+      //console.log("tkeys",tkeys);
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>
@@ -35,7 +36,7 @@ function BookPackageTn({
             Total number of notes: {result["total"]}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total number of tA articles: {result["tatotal"]}
+            Total number of tA articles: {uniqueAndSorted.length-1}
           </Typography>
           <Typography variant="body2" gutterBottom>
             Translation Articles are:

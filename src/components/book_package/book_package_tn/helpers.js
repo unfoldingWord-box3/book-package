@@ -18,10 +18,10 @@ languageId,
         bookId: bookId, 
         manifest: _manifests['tn']
     });
-    console.log("notes file:",_notes)
+    //console.log("notes file:",_notes)
     let tacount = 0;
     let tarticles = [];
-    console.log("Notes - Number of notes:"+_notes.length);
+    //console.log("Notes - Number of notes:"+_notes.length);
     const chaparray = chapters.split(",");
     let total=0;
 
@@ -34,13 +34,13 @@ languageId,
             }
         }
         total = total + 1;
-        console.log("Working on chapter:"+ch);
-        console.log("row "+i+" val=",_notes[i]);
+        //console.log("Working on chapter:"+ch);
+        //console.log("row "+i+" val=",_notes[i]);
         let tarticle = _notes[i][4];
         if ( tarticle !== "" ) {
             tacount = tacount + 1;
             tarticles.push(tarticle);
-            console.log("tA article:",_notes)
+            //console.log("tA article:",_notes)
         }
     }
     console.log("Total tA Arcticles:",tacount)

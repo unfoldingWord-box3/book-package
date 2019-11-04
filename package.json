@@ -3,10 +3,10 @@
   "version": "0.0.5",
   "license": "MIT",
   "description": "A React Component Library for Single Piece Workflow resource identification.",
-  "homepage": "https://unfoldingWord-box3.github.io/book-package/",
+  "homepage": "https://mandolyte.github.io/book-package/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/unfoldingWord-box3/book-package"
+    "url": "https://github.com/mandolyte/book-package"
   },
   "private": false,
   "dependencies": {
