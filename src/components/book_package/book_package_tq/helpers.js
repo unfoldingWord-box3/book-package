@@ -19,6 +19,9 @@ languageId,
     console.log("Number of chapters in book:",numchapters.length);
     for (var i = 0; i < numchapters.length; i++) {
         let ch = ""+(i+1);
+        if ( chapters === "" ) {
+            chapters = "0";
+        }
         if ( chapters !== "0" ) {
             if ( ! chaparray.includes(ch) ) {
                 continue;

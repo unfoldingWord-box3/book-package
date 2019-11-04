@@ -49,6 +49,9 @@ export async function fetchBookPackageTw({
 
     for (var [k,v] of book_map.entries()) {
         //console.log("Working on Chapter:"+k);
+        if ( chapters === "" ) {
+            chapters = "0";
+        }
         if ( chapters !== "0" ) {
             if ( ! chaparray.includes(k) ) {
                 continue;

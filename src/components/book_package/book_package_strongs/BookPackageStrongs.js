@@ -7,7 +7,17 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { Link } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+
 import {fetchBookPackageStrongs} from './helpers';
+
+function convertRC2Link(lnk) {
+  const ugl_path = 'https://git.door43.org/unfoldingWord/en_ugl/src/branch/master/content/';
+  let s;
+  s = ugl_path+lnk.skey+"/01.md";
+  return s;
+}
 
 function BookPackageStrongs({
   bookId,
@@ -25,27 +35,37 @@ function BookPackageStrongs({
         bookId: bookId, chapters: chapter
       });
       let gkeys = Array.from(Object.keys(result));
+      let chlist = chapter ? chapter : "(ALL)";
       setVal(
         <Paper className={classes.paper}>
-        <Table className={classes.table} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Strongs Entry</TableCell>
-              <TableCell align="center">Count</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {gkeys.map(skey => (
-              <TableRow key={skey}>
-                <TableCell component="th" scope="row">
-                  {skey}
-                </TableCell>
-                <TableCell align="center">{result[skey]}</TableCell>
+          <Typography variant="h6" gutterBottom>
+            Lexicon Entries for "{bookId.toUpperCase()}" 
+            and Chapters {chlist}
+          </Typography>
+          <Typography variant="body2" gutterBottom>
+            Distinct Number of Entries: {gkeys.length}
+          </Typography>
+          <Table className={classes.table} size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Strongs Entry</TableCell>
+                <TableCell align="center">Count</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
+            </TableHead>
+            <TableBody>
+              {gkeys.map(skey => (
+                <TableRow key={skey}>
+                  <TableCell component="th" scope="row">
+                    <Link href={convertRC2Link({skey})} target="_blank" rel="noopener" >
+                      {skey}
+                    </Link>
+                  </TableCell>
+                  <TableCell align="center">{result[skey]}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
       );  
       /* debugging
       Object.keys(result).forEach(skey => (
