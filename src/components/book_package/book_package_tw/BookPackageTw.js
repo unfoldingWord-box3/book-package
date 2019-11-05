@@ -13,12 +13,12 @@ import {fetchBookPackageTw} from './helpers';
 import { Link } from '@material-ui/core';
 
 function convertRC2Link(lnk) {
-  console.log("link arg is:",lnk.skey);
+  //console.log("link arg is:",lnk.skey);
   const path = 'https://git.door43.org/unfoldingWord/en_tw/src/branch/master';
   let s;
   s = lnk.skey;
   s = s.replace(/^rc.*dict(\/.*$)/, path+'$1.md');
-  console.log("tW link:",s);
+  //console.log("tW link:",s);
   return s;
 }
 

@@ -83,6 +83,6 @@ export async function fetchBookPackageTw({
             }
         }
     }
-    console.log("Translation Words Count=",summary_tw_map.size)
+    //console.log("Translation Words Count=",summary_tw_map.size)
     return map_to_obj(summary_tw_map);
   }

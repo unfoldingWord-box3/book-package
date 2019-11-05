@@ -16,7 +16,7 @@ languageId,
     const numchapters = chaptersInBook(bookId);
     const slash = "/";
     const mdext = ".md";
-    console.log("Number of chapters in book:",numchapters.length);
+    //console.log("Number of chapters in book:",numchapters.length);
     for (var i = 0; i < numchapters.length; i++) {
         let ch = ""+(i+1);
         if ( chapters === "" ) {
@@ -31,14 +31,14 @@ languageId,
             ch = "0"+ch;
         } 
         let numverses = numchapters[i];
-        console.log("Verses in chapter:",numverses);
+        //console.log("Verses in chapter:",numverses);
         for (var j = 0; j <= numverses; j++) {
             let vrs = ""+(j+1);
             if ( j < 10 ) {
                 vrs = "0"+vrs;
             }
             let repo_path = slash + bookId + slash + ch + slash + vrs + mdext;
-            console.log("Path:",repo_path);
+            //console.log("Path:",repo_path);
             let _tq = [];
             try {
                 _tq = await gitApi.getFile(
@@ -59,6 +59,6 @@ languageId,
             sumtotals.l1count  = sumtotals.l1count + vcounts.l1count;           
         }
     }
-    console.log("tq word counts:",sumtotals)
+    //console.log("tq word counts:",sumtotals)
     return sumtotals;
 }

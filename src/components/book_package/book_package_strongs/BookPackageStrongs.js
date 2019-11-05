@@ -35,7 +35,8 @@ function BookPackageStrongs({
         {username: 'unfoldingword', languageId:'en', 
         bookId: bookId, chapters: chapter
       });
-      let gkeys = Array.from(Object.keys(result));
+      let gkeys = Array.from(Object.keys(result.summary_strong_map));
+      let totalWordCount = result.totalWordCount;
       let chlist = chapter ? chapter : "(ALL)";
       setVal(
         <Paper className={classes.paper}>
@@ -46,6 +47,9 @@ function BookPackageStrongs({
           <Typography variant="body2" gutterBottom>
             Distinct Number of Entries: {gkeys.length}
           </Typography>
+          <Typography variant="body2" gutterBottom>
+            Total Number of Entries: {totalWordCount}
+          </Typography>
           <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
@@ -53,6 +57,7 @@ function BookPackageStrongs({
                 <TableCell align="center">Count</TableCell>
               </TableRow>
             </TableHead>
+
             <TableBody>
               {gkeys.map(skey => (
                 <TableRow key={skey}>
@@ -61,11 +66,11 @@ function BookPackageStrongs({
                       {skey}
                     </Link>
                   </TableCell>
-                  <TableCell align="center">{result[skey]}</TableCell>
+                  <TableCell align="center">{result.summary_strong_map[skey]}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
-          </Table>
+              </Table>
         </Paper>
       );  
       /* debugging

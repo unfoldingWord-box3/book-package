@@ -43,7 +43,7 @@ languageId,
             //console.log("tA article:",_notes)
         }
     }
-    console.log("Total tA Arcticles:",tacount)
+    //console.log("Total tA Arcticles:",tacount)
     let result = {};
     result["total"]   = total;
     result["tatotal"] = tacount;
