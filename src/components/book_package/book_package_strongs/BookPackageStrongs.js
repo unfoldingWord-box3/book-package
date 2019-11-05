@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Link } from '@material-ui/core';
+import { Link, Collapse } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 import {fetchBookPackageStrongs} from './helpers';
@@ -28,6 +28,12 @@ function BookPackageStrongs({
 }) 
 {
 
+  const [open, setOpen] = useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
   const [_book, setVal] = useState("Waiting");
   useEffect( () => {
     const fetchData = async () => {
@@ -39,7 +45,7 @@ function BookPackageStrongs({
       let totalWordCount = result.totalWordCount;
       let chlist = chapter ? chapter : "(ALL)";
       setVal(
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} onClick={handleClick}>
           <Typography variant="h6" gutterBottom>
             Lexicon Entries for "{bookId.toUpperCase()}" 
             and Chapters {chlist}
@@ -50,7 +56,11 @@ function BookPackageStrongs({
           <Typography variant="body2" gutterBottom>
             Total Number of Entries: {totalWordCount}
           </Typography>
-          <Table className={classes.table} size="small" aria-label="a dense table">
+
+          <Collapse in={open} component="details">
+            <div id="details">
+          <Table className={classes.table} 
+          size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
                 <TableCell>Strongs Entry</TableCell>
@@ -70,7 +80,10 @@ function BookPackageStrongs({
                 </TableRow>
               ))}
             </TableBody>
-              </Table>
+          </Table>
+          </div>
+          </Collapse>
+
         </Paper>
       );  
       /* debugging
