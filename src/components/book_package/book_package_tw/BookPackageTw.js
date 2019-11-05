@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import {fetchBookPackageTw} from './helpers';
-import { Link } from '@material-ui/core';
+import { Link, Collapse } from '@material-ui/core';
 
 function convertRC2Link(lnk) {
   //console.log("link arg is:",lnk.skey);
@@ -29,6 +29,8 @@ function BookPackageTw({
   style,
 }) 
 {
+  const open = true;
+
   const [_book, setVal] = useState("Waiting");
   useEffect( () => {
     const fetchData = async () => {
@@ -36,7 +38,8 @@ function BookPackageTw({
         {username: 'unfoldingword', languageId:'en', 
         bookId: bookId, chapters: chapter
       });
-      let gkeys = Array.from(Object.keys(result));
+      let gkeys = Array.from(Object.keys(result.summary_tw_map));
+      let totalWordCount = result.totalWordCount;
       let chlist = chapter ? chapter : "(ALL)";
       setVal(
         <Paper className={classes.paper}>
@@ -47,6 +50,13 @@ function BookPackageTw({
           <Typography variant="body2" gutterBottom>
             Distinct Number of Translation Words: {gkeys.length}
           </Typography>
+
+          <Typography variant="body2" gutterBottom>
+            Total Number of Entries: {totalWordCount}
+          </Typography>
+
+          <Collapse in={open} component="details">
+          <div id="details">
           <Table className={classes.table} size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
@@ -62,11 +72,14 @@ function BookPackageTw({
                     {skey}
                     </Link>
                   </TableCell>
-                  <TableCell align="center">{result[skey]}</TableCell>
+                  <TableCell align="center">{result.summary_tw_map[skey]}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+          </div>
+          </Collapse>
+
         </Paper>
       );  
       /* debugging

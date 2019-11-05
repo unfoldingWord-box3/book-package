@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import {fetchBookPackageTn} from './helpers';
+import { Collapse } from '@material-ui/core';
 
 function BookPackageTn({
   bookId,
@@ -15,7 +16,7 @@ function BookPackageTn({
   style,
 }) 
 {
-  
+  const open = true; // for collapse to manage its state
   const [_book, setVal] = useState("Waiting");
   useEffect( () => {
     const fetchData = async () => {
@@ -38,18 +39,23 @@ function BookPackageTn({
           <Typography variant="body2" gutterBottom>
             Total number of tA articles: {uniqueAndSorted.length-1}
           </Typography>
-          <Typography variant="body2" gutterBottom>
-            Translation Articles are:
-            </Typography>
-          <div>
-            <List dense={true}>
-              {uniqueAndSorted.map( (val,index) => (
-                <ListItem key={index}>
-                  <ListItemText>{val}</ListItemText>
-                </ListItem>
-              ))}
-            </List>
-          </div>
+
+          <Collapse in={open} component="details">
+            <div id="details">
+              <Typography variant="body2" gutterBottom>
+                Translation Articles are:
+              </Typography>
+              <div>
+                <List dense={true}>
+                  {uniqueAndSorted.map( (val,index) => (
+                    <ListItem key={index}>
+                      <ListItemText>{val}</ListItemText>
+                    </ListItem>
+                  ))}
+                </List>
+              </div>
+            </div>
+          </Collapse>
         </Paper>
       );  
       /* debugging

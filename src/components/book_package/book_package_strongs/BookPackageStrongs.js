@@ -27,13 +27,7 @@ function BookPackageStrongs({
   style,
 }) 
 {
-
-  const [open, setOpen] = useState(true);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-
+  const open = true; // for collapse component to manage its state
   const [_book, setVal] = useState("Waiting");
   useEffect( () => {
     const fetchData = async () => {
@@ -45,7 +39,7 @@ function BookPackageStrongs({
       let totalWordCount = result.totalWordCount;
       let chlist = chapter ? chapter : "(ALL)";
       setVal(
-        <Paper className={classes.paper} onClick={handleClick}>
+        <Paper className={classes.paper} >
           <Typography variant="h6" gutterBottom>
             Lexicon Entries for "{bookId.toUpperCase()}" 
             and Chapters {chlist}
@@ -58,7 +52,7 @@ function BookPackageStrongs({
           </Typography>
 
           <Collapse in={open} component="details">
-            <div id="details">
+          <div id="details">
           <Table className={classes.table} 
           size="small" aria-label="a dense table">
             <TableHead>

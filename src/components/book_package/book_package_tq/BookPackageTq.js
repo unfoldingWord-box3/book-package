@@ -30,13 +30,13 @@ function BookPackageTq({
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
+            Total Number of Questions: {result.l1count}
+          </Typography>
+          <Typography variant="body2" gutterBottom>
             Distinct Number of Words {result.distinct}
           </Typography>
           <Typography variant="body2" gutterBottom>
             Total Number of Words {result.total}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-            Total Number of Questions: {result.l1count}
           </Typography>
         </Paper>
       );  

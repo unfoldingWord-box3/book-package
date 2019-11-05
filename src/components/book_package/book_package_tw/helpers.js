@@ -83,6 +83,14 @@ export async function fetchBookPackageTw({
             }
         }
     }
+    let totalWordCount = 0;
+    for ( var v5 of summary_tw_map.values() ) {
+        totalWordCount = totalWordCount + v5;
+    }
+
     //console.log("Translation Words Count=",summary_tw_map.size)
-    return map_to_obj(summary_tw_map);
+    let results = {};
+    results.summary_tw_map = map_to_obj(summary_tw_map);
+    results.totalWordCount = totalWordCount;
+    return results;
   }
