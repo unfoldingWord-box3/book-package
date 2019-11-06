@@ -28,7 +28,7 @@ languageId,
     // loop starts at 1, skipping the header row of the TSV file
     for (var i=1; i<_notes.length; i++) {
         let ch = _notes[i][2]
-        if ( chapters !== "0" ) {
+        if ( chapters !== "" ) {
             if ( ! chaparray.includes(ch) ) {
                 continue;
             }

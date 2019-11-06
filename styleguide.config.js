@@ -12,6 +12,19 @@ let sections = [
     content: 'README.md',
   },
   {
+    name: 'BookPackageRollup',
+    components: () => {
+      const componentNames = [
+        'book_package_rollup',
+      ];
+      return componentNames.map(componentName => {
+        const filename = upperFirst(camelCase(componentName));
+        const fpath = Path.resolve(__dirname, `src/components//${componentName}`, `${filename}.js`);
+        return fpath;
+      });
+    }
+  },
+  {
     name: 'BookPackage',
     components: () => {
       const componentNames = [

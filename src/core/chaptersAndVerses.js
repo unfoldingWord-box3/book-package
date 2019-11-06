@@ -1,13 +1,12 @@
 import data from './chaptersAndVerses.json';
 
 export const chaptersInBook = (bookId) => {
-  console.log("here be arg:",bookId)
   try {
     let chapters;
     if (bookId === 'obs') {
       chapters = [...Array(50).keys()].map(i=>i+1);
     } else {
-      chapters = bookData({bookId}).chapters;
+      chapters = bookData(bookId).chapters;
     }
     return chapters;
   } catch(error) {
@@ -20,7 +19,7 @@ export const versesInChapter = ({bookId, chapter}) => {
   return verses;
 };
 
-export const bookData = ({bookId}) => {
+export const bookData = (bookId) => {
   const _bookData = data.filter(row => row.id === bookId)[0];
   return _bookData;
 };
@@ -34,7 +33,7 @@ export const validateBookId = (reference) => {
   let valid;
   if (reference.bookId === 'obs') {
     valid = true;
-  } else if (reference.bookId && !!bookData(reference)) {
+  } else if (reference.bookId && !!bookData(reference.bookId)) {
     valid = true;
   }
   return valid;
@@ -42,34 +41,28 @@ export const validateBookId = (reference) => {
 
 export const validateChapter = (reference) => {
   const dependencies = ( validateBookId(reference) );
-  const chapters = chaptersInBook(reference);
-  const valid = (dependencies && !!chapters[reference.chapter - 1]);
+  const chapters = chaptersInBook(reference.bookId);
+  const chapterCount = chapters.length;
+  const inRange = (chapterCount && reference.chapter <= chapterCount);
+
+  const valid = (dependencies && inRange);
   return valid;
 }
 
 export const validateVerse = (reference) => {
   const dependencies = (validateBookId(reference) && validateChapter(reference));
-  const chapters = chaptersInBook(reference);
-  const verseCount = chapters[reference.chapter];
+  const chapters = chaptersInBook(reference.bookId);
+  const verseCount = chapters[reference.chapter-1];
   const inRange = (verseCount && reference.verse <= verseCount);
   return (dependencies && inRange);
 };
 
-export const validateReference = ({reference}) => {
-  let valid = false;
-  const {bookId, chapter, verse} = reference;
-  const blankReference = (!bookId && !chapter && !verse);
+export const validateReference = (reference) => {
   const validBookId = validateBookId(reference);
+  if ( !validBookId ) return false;
   const validChapter = validateChapter(reference);
-  const validVerse = (!!verse) ? validateVerse(reference) : true;
-  if (blankReference) {
-    valid = true;
-  } else if (validBookId && !chapter && !verse) {
-    valid = true;
-  } else if (validBookId && validChapter && !verse) {
-    valid = true;
-  } else if (validBookId && validChapter && validVerse) {
-    valid = true;
-  }
-  return valid;
+  if ( !validChapter ) return false;
+  const validVerse = (!!reference.verse) ? validateVerse(reference) : true;
+  if ( !validVerse ) return false
+  return true;
 };
