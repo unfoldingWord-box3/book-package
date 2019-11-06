@@ -26,15 +26,19 @@ function BookPackageTn({
       );
       let tkeys = Array.from(result["tarticles"]);
       let uniqueAndSorted = [...new Set(tkeys)].sort() 
+      let chlist = chapter ? chapter : "(ALL)";
 
       //console.log("tkeys",tkeys);
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>
-            Translation Notes Information for "{bookId.toUpperCase()}" and Chapters {chapter}
+            Translation Notes Information for "{bookId.toUpperCase()}" 
+            and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total number of notes: {result["total"]}
+            Total number of notes: {result["total"]}<br/>
+            Distinct number of words in notes: {result["distinctNoteWords"]}<br/>
+            Total number of words in the notes: {result["totalNoteWords"]}
           </Typography>
           <Typography variant="body2" gutterBottom>
             Total number of tA articles: {uniqueAndSorted.length-1}

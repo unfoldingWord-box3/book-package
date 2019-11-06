@@ -1,5 +1,6 @@
 import { translationNotes } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
+import * as wc from '../../../core/wordCounts';
 
 export async function fetchBookPackageTn({
 bookId,
@@ -18,10 +19,11 @@ languageId,
         bookId: bookId, 
         manifest: _manifests['tn']
     });
-    //console.log("notes file:",_notes)
+
     let tacount = 0;
     let tarticles = [];
-    //console.log("Notes - Number of notes:"+_notes.length);
+    let allNotes = "";
+
     const chaparray = chapters.split(",");
     let total=0;
 
@@ -34,19 +36,21 @@ languageId,
             }
         }
         total = total + 1;
-        //console.log("Working on chapter:"+ch);
-        //console.log("row "+i+" val=",_notes[i]);
         let tarticle = _notes[i][4];
         if ( tarticle !== "" ) {
             tacount = tacount + 1;
             tarticles.push(tarticle);
-            //console.log("tA article:",_notes)
         }
+        let occurrenceNote = _notes[i][8];
+        allNotes = allNotes + occurrenceNote;
     }
-    //console.log("Total tA Arcticles:",tacount)
+    // count words in occurrence notes
+    let wcounts = wc.wordCount(allNotes);
     let result = {};
     result["total"]   = total;
     result["tatotal"] = tacount;
     result["tarticles"] = tarticles;
+    result["totalNoteWords"] = wcounts.total;
+    result["distinctNoteWords"] = wcounts.distinct
     return result;
 }
