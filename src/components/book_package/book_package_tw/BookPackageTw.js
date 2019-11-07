@@ -11,6 +11,25 @@ import Typography from '@material-ui/core/Typography';
 
 import {fetchBookPackageTw} from './helpers';
 import { Link, Collapse } from '@material-ui/core';
+import * as cav from '../../../core/chaptersAndVerses';
+
+function validateInputProperties(bookId,chapters) {
+  //console.log("validate bookId",bookId,", chapters:",chapters);
+  if ( chapters === "" ) {
+    let ref = {bookId: bookId, chapter: 1, verse: 1};
+    //console.log("validate ref", ref);
+    return cav.validateReference(ref);
+  }
+  const chaparray = chapters.split(",");
+  for (var vip = 0; vip < chaparray.length; vip++ ) {
+    let isValid = cav.validateReference(
+      {bookId: bookId, chapter: chaparray[vip], verse: 1}
+    );
+    if ( isValid ) continue;
+    return false
+  }
+  return true;
+}
 
 function convertRC2Link(lnk) {
   //console.log("link arg is:",lnk.skey);
@@ -33,6 +52,19 @@ function BookPackageTw({
 
   const [_book, setVal] = useState("Waiting");
   useEffect( () => {
+    const result = validateInputProperties(bookId, chapter);
+    let chlist = chapter ? chapter : "(ALL)";
+    if ( ! result ) {
+      setVal(
+        <Paper className={classes.paper} >
+          <Typography variant="h5" gutterBottom>
+            Invalid Book "{bookId.toUpperCase()}" 
+            or Chapter(s) {chlist}
+          </Typography> 
+        </Paper>
+      );
+      return;
+    }
     const fetchData = async () => {
       const result = await fetchBookPackageTw(
         {username: 'unfoldingword', languageId:'en', 
@@ -40,7 +72,6 @@ function BookPackageTw({
       });
       let gkeys = Array.from(Object.keys(result.summary_tw_map));
       let totalWordCount = result.totalWordCount;
-      let chlist = chapter ? chapter : "(ALL)";
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>

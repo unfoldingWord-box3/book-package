@@ -11,10 +11,10 @@ import BookPackageTn from '../book_package/book_package_tn';
 import BookPackageTq from '../book_package/book_package_tq';
 
 async function validateInputProperties(bookId,chapters) {
-  console.log("validate bookId",bookId,", chapters:",chapters);
+  //console.log("validate bookId",bookId,", chapters:",chapters);
   if ( chapters === "" ) {
     let ref = {bookId: bookId, chapter: 1, verse: 1};
-    console.log("validate ref", ref);
+    //console.log("validate ref", ref);
     return cav.validateReference(ref);
   }
   const chaparray = chapters.split(",");

@@ -35,3 +35,13 @@ These notes are adapted from https://unfoldingword-box3.github.io/hello-world-re
     - if dependencies are missing it will not compile and will report what is missing
     - to fix, add dependencies to `package.json` and rerun `yarn` to install them
 4. See debug `console.log()` output in browser console -- in chrome, CTRL-SHIFT-J to open.
+
+## Chromebook Linux Beta Notes
+
+Must use `hostname -I` to get the host address. **Neither `localhost` nor `127.0.0.1` will work.
+
+```
+$ hostname -I
+100.115.92.202 
+$
+```
