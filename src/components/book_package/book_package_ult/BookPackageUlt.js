@@ -7,20 +7,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { Link, Collapse } from '@material-ui/core';
+import { Collapse } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 import {fetchBookPackageULT} from './helpers';
 import * as cav from '../../../core/chaptersAndVerses';
 
-
-function convertRC2Link(lnk) {
-  const ugl_path = 'https://git.door43.org/unfoldingWord/en_ugl/src/branch/master/content/';
-  //const uhal_path = 'https://git.door43.org/unfoldingWord/en_uhal/src/branch/master/content/';
-  let s = lnk.skey;
-  s = ugl_path+lnk.skey+"/01.md";
-  return s;
-}
 
 function validateInputProperties(bookId,chapters) {
   //console.log("validate bookId",bookId,", chapters:",chapters);
@@ -41,7 +33,7 @@ function validateInputProperties(bookId,chapters) {
 }
 
 
-function BookPackageULT({
+function BookPackageUlt({
   bookId,
   chapter,
   classes,
@@ -70,7 +62,7 @@ function BookPackageULT({
         {username: 'unfoldingword', languageId:'en', 
         bookId: bookId, chapters: chapter
       });
-      let gkeys = Array.from(Object.keys(result.summary_strong_map));
+      let gkeys = Array.from(Object.keys(result.summary_ult_map));
       let totalWordCount = result.totalWordCount;
       setVal(
         <Paper className={classes.paper} >
@@ -91,7 +83,7 @@ function BookPackageULT({
           size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
-                <TableCell>Strongs Entry</TableCell>
+                <TableCell>Word</TableCell>
                 <TableCell align="center">Count</TableCell>
               </TableRow>
             </TableHead>
@@ -100,11 +92,9 @@ function BookPackageULT({
               {gkeys.map(skey => (
                 <TableRow key={skey}>
                   <TableCell component="th" scope="row">
-                    <Link href={convertRC2Link({skey})} target="_blank" rel="noopener" >
                       {skey}
-                    </Link>
                   </TableCell>
-                  <TableCell align="center">{result.summary_strong_map[skey]}</TableCell>
+                  <TableCell align="center">{result.summary_ult_map[skey]}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -114,11 +104,6 @@ function BookPackageULT({
 
         </Paper>
       );  
-      /* debugging
-      Object.keys(result).forEach(skey => (
-        console.log("BP Strongs- skey:",skey,", val:",result[skey])
-      ));
-      */
     };
     fetchData();
   }, []); 
@@ -132,7 +117,7 @@ function BookPackageULT({
   );
 };
 
-BookPackageULT.propTypes = {
+BookPackageUlt.propTypes = {
   /** @ignore */
   classes: PropTypes.object,
   /** The Book ID to package. */
@@ -148,4 +133,4 @@ const styles = theme => ({
   },
 });
 
-export default withStyles(styles)(BookPackageULT);
+export default withStyles(styles)(BookPackageUlt);
