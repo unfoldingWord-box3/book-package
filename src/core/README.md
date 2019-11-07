@@ -8,5 +8,5 @@ import {getLanguage} from '../core/langnames.js'
 const languageId = "kn";
 const value = getLanguage(languageId);
 
-<span>Name of language with ID "{languageId}" is {value}</ span>
+<span>Name of language with ID "{languageId}" is {value.ln} ({value.ang})}</ span>
 ```

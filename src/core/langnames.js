@@ -5,7 +5,7 @@ export const getLanguage = (lc) => {
   const langname = langnames.filter(object => object.lc === lc)[0];
   
   if (langname) {
-    language = langname.ln;
+    language = langname;
   }
   return language;
 };
