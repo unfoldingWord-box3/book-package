@@ -1,12 +1,11 @@
 import langnames from './langnames.json';
 
 export const getLanguage = (lc) => {
-  let language;
+  let language = "NOT FOUND";
   const langname = langnames.filter(object => object.lc === lc)[0];
   
-  //console.log("input:"+lc+", found:"+langname)
   if (langname) {
-    language = langname;
+    language = langname.ln;
   }
   return language;
 };
