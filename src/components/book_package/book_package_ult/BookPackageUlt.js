@@ -67,7 +67,7 @@ function BookPackageUlt({
       setVal(
         <Paper className={classes.paper} >
           <Typography variant="h6" gutterBottom>
-            Lexicon Entries for "{bookId.toUpperCase()}" 
+            ULT Number of Words for "{bookId.toUpperCase()}" 
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
@@ -89,7 +89,7 @@ function BookPackageUlt({
             </TableHead>
 
             <TableBody>
-              {gkeys.map(skey => (
+              {gkeys.sort().map(skey => (
                 <TableRow key={skey}>
                   <TableCell component="th" scope="row">
                       {skey}

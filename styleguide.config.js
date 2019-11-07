@@ -33,6 +33,7 @@ let sections = [
         'book_package_tn',
         'book_package_tq',
         'book_package_ult',
+        'book_package_ust',
       ];
       return componentNames.map(componentName => {
         const filename = upperFirst(camelCase(componentName));

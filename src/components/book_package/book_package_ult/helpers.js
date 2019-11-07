@@ -69,7 +69,8 @@ export async function fetchBookPackageULT({
                 for (var i=0; i < v2.length; i++) {
                     var verse_obj_map = obj_to_map(v2[i]);
                     if ( verse_obj_map.get("type") === "word" ) {
-                        console.log("=== Blink ===");
+                        let thisword = verse_obj_map.get("text");
+                        process_tags(thisword,summary_ult_map);
                     }
                     for ( var [k3,v3] of verse_obj_map.entries()) {
                         console.log("... Working on k3,v3:",k3,v3);

@@ -1,15 +1,15 @@
 import { fetchBook } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
 
-function process_tags(val,summary_ult_map) {
+function process_tags(val,summary_ust_map) {
     let lowerCaseVal = val.toLowerCase();
-    let count = summary_ult_map.get(lowerCaseVal);
+    let count = summary_ust_map.get(lowerCaseVal);
     if ( count === undefined ) count = 0;
     count = count + 1;
-    summary_ult_map.set(lowerCaseVal,count);
+    summary_ust_map.set(lowerCaseVal,count);
 }
 
-export async function fetchBookPackageULT({
+export async function fetchBookPackageUST({
     bookId,
     chapters,
     languageId,
@@ -23,9 +23,9 @@ export async function fetchBookPackageULT({
     _book = await fetchBook(
         {username: 'unfoldingword', 
         languageId: languageId, 
-        resourceId: 'ult',
+        resourceId: 'ust',
         bookId: bookId, 
-        manifest: _manifests['ult'], 
+        manifest: _manifests['ust'], 
     });
 
     // function to convert object to a map
@@ -41,9 +41,9 @@ export async function fetchBookPackageULT({
         mp.forEach((v,k) => {ob[k]=v});
         return ob;
     });
-    console.log("_book ult",_book);
+    console.log("_book ust",_book);
     var book_map = obj_to_map(_book);
-    var summary_ult_map = new Map();
+    var summary_ust_map = new Map();
     const chaparray = chapters.split(",");
 
     for (var [k,v] of book_map.entries()) {
@@ -69,7 +69,8 @@ export async function fetchBookPackageULT({
                 for (var i=0; i < v2.length; i++) {
                     var verse_obj_map = obj_to_map(v2[i]);
                     if ( verse_obj_map.get("type") === "word" ) {
-                        console.log("=== Blink ===");
+                        let thisword = verse_obj_map.get("text");
+                        process_tags(thisword,summary_ust_map);
                     }
                     for ( var [k3,v3] of verse_obj_map.entries()) {
                         console.log("... Working on k3,v3:",k3,v3);
@@ -78,7 +79,7 @@ export async function fetchBookPackageULT({
                                 var children_map = obj_to_map(v3[j]);
                                 if ( children_map.get("type") === "word" ) {
                                     let thisword = children_map.get("text");
-                                    process_tags(thisword,summary_ult_map);
+                                    process_tags(thisword,summary_ust_map);
                                 }
                             }
                         }
@@ -88,12 +89,12 @@ export async function fetchBookPackageULT({
         }
     }
     let totalWordCount = 0;
-    for ( var v5 of summary_ult_map.values() ) {
+    for ( var v5 of summary_ust_map.values() ) {
         totalWordCount = totalWordCount + v5;
     }
-    //console.log("Strongs Count=",summary_ult_map.size)
+    //console.log("Strongs Count=",summary_ust_map.size)
     let results = {};
-    results.summary_ult_map = map_to_obj(summary_ult_map);
+    results.summary_ust_map = map_to_obj(summary_ust_map);
     results.totalWordCount = totalWordCount;
     return results;
   }

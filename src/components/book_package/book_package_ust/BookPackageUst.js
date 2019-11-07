@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import { Collapse } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
-import {fetchBookPackageUst} from './helpers';
+import {fetchBookPackageUST} from './helpers';
 import * as cav from '../../../core/chaptersAndVerses';
 
 
@@ -58,16 +58,16 @@ function BookPackageUst({
     }
 
     const fetchData = async () => {
-      const result = await fetchBookPackageUst(
+      const result = await fetchBookPackageUST(
         {username: 'unfoldingword', languageId:'en', 
         bookId: bookId, chapters: chapter
       });
-      let gkeys = Array.from(Object.keys(result.summary_ult_map));
+      let gkeys = Array.from(Object.keys(result.summary_ust_map));
       let totalWordCount = result.totalWordCount;
       setVal(
         <Paper className={classes.paper} >
           <Typography variant="h6" gutterBottom>
-            Lexicon Entries for "{bookId.toUpperCase()}" 
+            UST Number of words for "{bookId.toUpperCase()}" 
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
@@ -89,12 +89,12 @@ function BookPackageUst({
             </TableHead>
 
             <TableBody>
-              {gkeys.map(skey => (
+              {gkeys.sort().map(skey => (
                 <TableRow key={skey}>
                   <TableCell component="th" scope="row">
                       {skey}
                   </TableCell>
-                  <TableCell align="center">{result.summary_ult_map[skey]}</TableCell>
+                  <TableCell align="center">{result.summary_ust_map[skey]}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
