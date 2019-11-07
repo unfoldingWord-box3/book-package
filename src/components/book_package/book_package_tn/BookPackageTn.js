@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import {fetchBookPackageTn} from './helpers';
-import { Collapse } from '@material-ui/core';
+import { Link, Collapse } from '@material-ui/core';
 
 import * as cav from '../../../core/chaptersAndVerses';
 
@@ -27,6 +27,11 @@ function validateInputProperties(bookId,chapters) {
     return false
   }
   return true;
+}
+
+function convertToLink(lnk) {
+  const path = 'https://git.door43.org/unfoldingWord/en_ta/src/branch/master/translate/';
+  return path+lnk;
 }
 
 function BookPackageTn({
@@ -85,7 +90,12 @@ function BookPackageTn({
                 <List dense={true}>
                   {uniqueAndSorted.map( (val,index) => (
                     <ListItem key={index}>
-                      <ListItemText>{val}</ListItemText>
+                      <ListItemText>
+                        <Link href={convertToLink(val)} target="_blank" 
+                          rel="noopener" >
+                          {val}
+                        </Link>
+                     </ListItemText>
                     </ListItem>
                   ))}
                 </List>
