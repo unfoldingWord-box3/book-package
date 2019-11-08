@@ -1,1 +1,1 @@
-export {default} from './BookPackageTn';
+export {default} from './BookPackageTq';

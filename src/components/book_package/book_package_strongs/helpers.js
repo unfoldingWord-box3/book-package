@@ -49,6 +49,9 @@ export async function fetchBookPackageStrongs({
 
     for (var [k,v] of book_map.entries()) {
         //console.log("Working on Chapter:"+k);
+        if ( chapters === "" ) {
+            chapters = "0";
+        }
         if ( chapters !== "0" ) {
             if ( ! chaparray.includes(k) ) {
                 continue;
@@ -80,6 +83,13 @@ export async function fetchBookPackageStrongs({
             }
         }
     }
-    console.log("Strongs Count=",summary_strong_map.size)
-    return map_to_obj(summary_strong_map);
+    let totalWordCount = 0;
+    for ( var v5 of summary_strong_map.values() ) {
+        totalWordCount = totalWordCount + v5;
+    }
+    //console.log("Strongs Count=",summary_strong_map.size)
+    let results = {};
+    results.summary_strong_map = map_to_obj(summary_strong_map);
+    results.totalWordCount = totalWordCount;
+    return results;
   }

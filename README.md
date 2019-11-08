@@ -1,6 +1,7 @@
-# book-package [https://unfoldingWord-box3.github.io/book-package/](https://unfoldingWord-box3.github.io/book-package/)
+# book-package 
+[https://unfoldingWord-box3.github.io/book-package/](https://unfoldingWord-box3.github.io/book-package/)
 
-Identifying resources needed to enable single piece workflow
+Identifying resources needed to enable single piece workflow.
 
 ## Purpose
 
@@ -11,10 +12,12 @@ Given a book of the Bible and, optionally, a chapter, then return a all the reso
 These resources will exist in all gateway languages, but for now, only english is completed. This component only considers english language resources.
 
 The resources shown include:
-- Lexicon references as Strong's Numbers with occurence counts
-- Translation Words (tW) as "rc" URI's with occurence counts
+- Lexicon references as Strong's Numbers with counts and links
+*Note Since each word in the original text has a Strong's number, then the number of words in the original text is the same as the number of Strong's entries.*
+- Translation Words (tW) with counts and links 
 - Translation Notes (tN) with counts and names of referenced tA articles
-- Translation Questions (UTQ) (not complete)
+- Translation Questions (tQ) with counts. 
+*Note: A count of the number of level one headings is used to count the number of questions.*
 
 Resources not shown are:
 - Literal Text (ULT)
@@ -23,7 +26,7 @@ Resources not shown are:
 
 # Setup Notes
 
-These notes are copied from https://unfoldingword-box3.github.io/hello-world-react-component-library/ for convenience.
+These notes are adapted from https://unfoldingword-box3.github.io/hello-world-react-component-library/ for convenience.
 
 1. Ensure `node.js` and `yarn` are installed
 1. Clone the repo and change directory to the cloned folder.
@@ -32,3 +35,13 @@ These notes are copied from https://unfoldingword-box3.github.io/hello-world-rea
     - if dependencies are missing it will not compile and will report what is missing
     - to fix, add dependencies to `package.json` and rerun `yarn` to install them
 4. See debug `console.log()` output in browser console -- in chrome, CTRL-SHIFT-J to open.
+
+## Chromebook Linux Beta Notes
+
+Must use `hostname -I` to get the host address. **Neither `localhost` nor `127.0.0.1` will work.
+
+```
+$ hostname -I
+100.115.92.202 
+$
+```

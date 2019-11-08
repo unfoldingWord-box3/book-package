@@ -5,7 +5,34 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';import {fetchBookPackageTn} from './helpers';
+import ListItemText from '@material-ui/core/ListItemText';
+import {fetchBookPackageTn} from './helpers';
+import { Link, Collapse } from '@material-ui/core';
+
+import * as cav from '../../../core/chaptersAndVerses';
+
+function validateInputProperties(bookId,chapters) {
+  //console.log("validate bookId",bookId,", chapters:",chapters);
+  if ( chapters === "" ) {
+    let ref = {bookId: bookId, chapter: 1, verse: 1};
+    //console.log("validate ref", ref);
+    return cav.validateReference(ref);
+  }
+  const chaparray = chapters.split(",");
+  for (var vip = 0; vip < chaparray.length; vip++ ) {
+    let isValid = cav.validateReference(
+      {bookId: bookId, chapter: chaparray[vip], verse: 1}
+    );
+    if ( isValid ) continue;
+    return false
+  }
+  return true;
+}
+
+function convertToLink(lnk) {
+  const path = 'https://git.door43.org/unfoldingWord/en_ta/src/branch/master/translate/';
+  return path+lnk;
+}
 
 function BookPackageTn({
   bookId,
@@ -14,9 +41,22 @@ function BookPackageTn({
   style,
 }) 
 {
-  
+  const open = true; // for collapse to manage its state
   const [_book, setVal] = useState("Waiting");
   useEffect( () => {
+    const result = validateInputProperties(bookId, chapter);
+    let chlist = chapter ? chapter : "(ALL)";
+    if ( ! result ) {
+      setVal(
+        <Paper className={classes.paper} >
+          <Typography variant="h5" gutterBottom>
+            Invalid Book "{bookId.toUpperCase()}" 
+            or Chapter(s) {chlist}
+          </Typography> 
+        </Paper>
+      );
+      return;
+    }
     const fetchData = async () => {
       const result = await fetchBookPackageTn(
         {username: 'unfoldingword', languageId:'en', 
@@ -25,30 +65,47 @@ function BookPackageTn({
       let tkeys = Array.from(result["tarticles"]);
       let uniqueAndSorted = [...new Set(tkeys)].sort() 
 
-      console.log("tkeys",tkeys);
+      //console.log("tkeys",tkeys);
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>
-            Translation Notes Information for "{bookId.toUpperCase()}" and Chapters {chapter}
+            Translation Notes for "{bookId.toUpperCase()}" 
+            and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total number of notes: {result["total"]}
+            Total number of notes: {result["total"]}<br/>
+            Distinct number of words in notes: {result["distinctNoteWords"]}<br/>
+            Total number of words in the notes: {result["totalNoteWords"]}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total number of tA articles: {result["tatotal"]}
+            Total number of tA articles: {uniqueAndSorted.length-1}<br/>
+            Distinct number of words in all tA articles: {result["allArticlesDistinct"]} <br/> 
+            Total number of words in all tA articles: {result["allArticlesTotal"]}
           </Typography>
-          <Typography variant="body2" gutterBottom>
-            Translation Articles are:
-            </Typography>
-          <div>
-            <List dense={true}>
-              {uniqueAndSorted.map( (val,index) => (
-                <ListItem key={index}>
-                  <ListItemText>{val}</ListItemText>
-                </ListItem>
-              ))}
-            </List>
-          </div>
+
+          <Collapse in={open} component="details">
+            <div id="details">
+              <Typography variant="body2" gutterBottom>
+                Translation Articles are:
+              </Typography>
+              <div>
+                <List dense={true}>
+                  {result.articleWordCounts.map( (val,index) => (
+                    <ListItem key={index}>
+                      <ListItemText>
+                        <Link href={convertToLink(val.name)} target="_blank" 
+                          rel="noopener" >
+                          {val.name}
+                        </Link>
+                        : Distinct Words={val.distinct} 
+                        ; Total Words={val.total}
+                     </ListItemText>
+                    </ListItem>
+                  ))}
+                </List>
+              </div>
+            </div>
+          </Collapse>
         </Paper>
       );  
       /* debugging
