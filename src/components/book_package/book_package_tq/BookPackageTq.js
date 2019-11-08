@@ -57,7 +57,7 @@ function BookPackageTq({
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>
-            Translation Questions Information for "{bookId.toUpperCase()}" 
+            Translation Questions for "{bookId.toUpperCase()}" 
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>

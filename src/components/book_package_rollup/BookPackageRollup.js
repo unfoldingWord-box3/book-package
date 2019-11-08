@@ -9,6 +9,8 @@ import BookPackageStrongs from '../book_package/book_package_strongs';
 import BookPackageTw from '../book_package/book_package_tw';
 import BookPackageTn from '../book_package/book_package_tn';
 import BookPackageTq from '../book_package/book_package_tq';
+import BookPackageUlt from '../book_package/book_package_ult';
+import BookPackageUst from '../book_package/book_package_ust';
 
 async function validateInputProperties(bookId,chapters) {
   //console.log("validate bookId",bookId,", chapters:",chapters);
@@ -51,6 +53,8 @@ function BookPackageRollup({
             <BookPackageTw bookId={bookId} chapter={chapter} />
             <BookPackageTn bookId={bookId} chapter={chapter} />
             <BookPackageTq bookId={bookId} chapter={chapter} />
+            <BookPackageUlt bookId={bookId} chapter={chapter} />
+            <BookPackageUst bookId={bookId} chapter={chapter} />
           </Paper>
         );    
       } else {
