@@ -122,9 +122,9 @@ export async function fetchFileFromServer({username, repository, path, branch='m
   //console.log("repo=",repository, " path=",path);
   const repoExists = await repositoryExists({username, repository});
   if (repoExists) {
-    //console.log(repository+"/"+path+" ... exists")
     const uri = Path.join(username, repository, 'raw/branch', branch, path);
     try {
+      //console.log("URI=",uri);
       const data = await get({uri});
       return data;
     }
@@ -132,12 +132,15 @@ export async function fetchFileFromServer({username, repository, path, branch='m
       return null;
     }
   } else {
-    //console.log(repository+"/"+path+" ... does not exist")
+    //console.log("REPO does not exist!", repository)
     return null;
   }
 };
 
 export async function getFile({username, repository, path, branch}) {
+  if (repository === "en_ta") {
+    //console.log("getFile(): path=",path," branch=",branch);
+  }
   let file;
   file = await getFileFromZip({username, repository, path, branch});
   if (!file) {
@@ -161,8 +164,9 @@ export async function repositoryExists({username, repository}) {
   return !!repo;
 };
 
-async function get({uri, params}) {
+export async function get({uri, params}) {
   const {data} = await api.get(uri, { params });
+  //console.log("get():",data);
   return data;
 };
 

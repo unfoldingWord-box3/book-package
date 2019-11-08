@@ -78,7 +78,9 @@ function BookPackageTn({
             Total number of words in the notes: {result["totalNoteWords"]}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total number of tA articles: {uniqueAndSorted.length-1}
+            Total number of tA articles: {uniqueAndSorted.length-1}<br/>
+            Distinct number of words in all tA articles: {result["allArticlesDistinct"]} <br/> 
+            Total number of words in all tA articles: {result["allArticlesTotal"]}
           </Typography>
 
           <Collapse in={open} component="details">
@@ -88,13 +90,15 @@ function BookPackageTn({
               </Typography>
               <div>
                 <List dense={true}>
-                  {uniqueAndSorted.map( (val,index) => (
+                  {result.articleWordCounts.map( (val,index) => (
                     <ListItem key={index}>
                       <ListItemText>
-                        <Link href={convertToLink(val)} target="_blank" 
+                        <Link href={convertToLink(val.name)} target="_blank" 
                           rel="noopener" >
-                          {val}
+                          {val.name}
                         </Link>
+                        : Distinct Words={val.distinct} 
+                        ; Total Words={val.total}
                      </ListItemText>
                     </ListItem>
                   ))}

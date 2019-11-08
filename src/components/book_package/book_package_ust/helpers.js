@@ -41,7 +41,7 @@ export async function fetchBookPackageUST({
         mp.forEach((v,k) => {ob[k]=v});
         return ob;
     });
-    console.log("_book ust",_book);
+    //console.log("_book ust",_book);
     var book_map = obj_to_map(_book);
     var summary_ust_map = new Map();
     const chaparray = chapters.split(",");
@@ -61,11 +61,11 @@ export async function fetchBookPackageUST({
         var verses_map = obj_to_map(v);
         for (var [k1,v1] of verses_map.entries()) {
             if ( k1 === "front" ) continue;
-            console.log(". Working on verse:"+k1);
+            //console.log(". Working on verse:"+k1);
             // the value is a set of tags for each object in a verse
             var verse_map = obj_to_map(v1);
             for (var v2 of verse_map.values()) {
-                console.log(".. Working on v2:",v2);
+                //console.log(".. Working on v2:",v2);
                 for (var i=0; i < v2.length; i++) {
                     var verse_obj_map = obj_to_map(v2[i]);
                     if ( verse_obj_map.get("type") === "word" ) {
@@ -73,7 +73,7 @@ export async function fetchBookPackageUST({
                         process_tags(thisword,summary_ust_map);
                     }
                     for ( var [k3,v3] of verse_obj_map.entries()) {
-                        console.log("... Working on k3,v3:",k3,v3);
+                        //console.log("... Working on k3,v3:",k3,v3);
                         if ( k3 === "children" ) {
                             for (var j=0; j < v3.length; j++) {
                                 var children_map = obj_to_map(v3[j]);
