@@ -8,38 +8,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { Link, Collapse } from '@material-ui/core';
 
 import {fetchBookPackageTw} from './helpers';
-import { Link, Collapse } from '@material-ui/core';
-import * as cav from '../../../core/chaptersAndVerses';
-
-function validateInputProperties(bookId,chapters) {
-  //console.log("validate bookId",bookId,", chapters:",chapters);
-  if ( chapters === "" ) {
-    let ref = {bookId: bookId, chapter: 1, verse: 1};
-    //console.log("validate ref", ref);
-    return cav.validateReference(ref);
-  }
-  const chaparray = chapters.split(",");
-  for (var vip = 0; vip < chaparray.length; vip++ ) {
-    let isValid = cav.validateReference(
-      {bookId: bookId, chapter: chaparray[vip], verse: 1}
-    );
-    if ( isValid ) continue;
-    return false
-  }
-  return true;
-}
-
-function convertRC2Link(lnk) {
-  //console.log("link arg is:",lnk.skey);
-  const path = 'https://git.door43.org/unfoldingWord/en_tw/src/branch/master';
-  let s;
-  s = lnk.skey;
-  s = s.replace(/^rc.*dict(\/.*$)/, path+'$1.md');
-  //console.log("tW link:",s);
-  return s;
-}
+import {validateInputProperties} from './helpers';
+import {convertRC2Link} from './helpers';
 
 function BookPackageTw({
   bookId,
@@ -79,11 +52,13 @@ function BookPackageTw({
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Distinct Number of Translation Words: {gkeys.length}
+            Distinct Number of tW Articles: {gkeys.length} <br/>
+            Total Number of tW Articles: {totalWordCount}
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Total Number of Entries: {totalWordCount}
+          Distinct Number of tW article words: {result.distinctTwArticleWords} <br/>
+          Total Number of tW article words: {result.totalTwArticleWords} <br/>
           </Typography>
 
           <Collapse in={open} component="details">
@@ -92,7 +67,9 @@ function BookPackageTw({
             <TableHead>
               <TableRow>
                 <TableCell>Translation Word</TableCell>
-                <TableCell align="center">Count</TableCell>
+                <TableCell align="center">Reference Count</TableCell>
+                <TableCell align="center">Distinct Words</TableCell>
+                <TableCell align="center">Total Words</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -104,6 +81,8 @@ function BookPackageTw({
                     </Link>
                   </TableCell>
                   <TableCell align="center">{result.summary_tw_map[skey]}</TableCell>
+                  <TableCell align="center">{result.summary_ByArticle_map[skey]['distinct']}</TableCell>
+                  <TableCell align="center">{result.summary_ByArticle_map[skey]['total']}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

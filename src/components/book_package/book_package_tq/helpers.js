@@ -59,6 +59,6 @@ languageId,
             sumtotals.l1count  = sumtotals.l1count + vcounts.l1count;           
         }
     }
-    //console.log("tq word counts:",sumtotals)
+    localStorage.setItem('tq',JSON.stringify(sumtotals));
     return sumtotals;
 }

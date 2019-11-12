@@ -69,6 +69,23 @@ function BookPackageRollup({
       }
     };
     fetchData();
+    let strong = JSON.parse(localStorage.getItem('strong'))
+    console.log('strong:',strong)
+    let ult = JSON.parse(localStorage.getItem('ult'))
+    console.log('ult:',ult)
+    let ust = JSON.parse(localStorage.getItem('ust'))
+    console.log('ust:',ust)
+    let tn = JSON.parse(localStorage.getItem('tn'))
+    console.log('tn:',tn)
+    let tq = JSON.parse(localStorage.getItem('tq'))
+    console.log('tq:',tq)
+    let grandTotalWords = strong.totalWordCount +
+                          ult.totalWordCount +
+                          ust.totalWordCount +
+                          tn.totalNoteWords +
+                          tn.allArticlesTotal +
+                          tq.total;
+    console.log('Grand Total Word Count is ',grandTotalWords)
   }, []); 
   // the parameter [] allows the effect to skip if value unchanged
   // an empty [] will only update on mount of component

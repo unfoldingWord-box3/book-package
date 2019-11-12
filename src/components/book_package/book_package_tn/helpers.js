@@ -98,5 +98,6 @@ languageId,
     let x = wc.wordCount(grandAllText);
     result["allArticlesDistinct"] = x.distinct;
     result["allArticlesTotal"]    = x.total;
+    localStorage.setItem('tn',JSON.stringify(result))
     return result;
 }

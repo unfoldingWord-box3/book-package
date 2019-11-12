@@ -92,9 +92,9 @@ export async function fetchBookPackageULT({
     for ( var v5 of summary_ult_map.values() ) {
         totalWordCount = totalWordCount + v5;
     }
-    //console.log("Strongs Count=",summary_ult_map.size)
     let results = {};
     results.summary_ult_map = map_to_obj(summary_ult_map);
     results.totalWordCount = totalWordCount;
+    localStorage.setItem('ult',JSON.stringify(results))
     return results;
   }

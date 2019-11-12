@@ -91,5 +91,7 @@ export async function fetchBookPackageStrongs({
     let results = {};
     results.summary_strong_map = map_to_obj(summary_strong_map);
     results.totalWordCount = totalWordCount;
+    localStorage.removeItem('strong')
+    localStorage.setItem('strong',JSON.stringify(results));
     return results;
   }
