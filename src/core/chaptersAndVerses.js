@@ -24,8 +24,8 @@ export const bookData = (bookId) => {
   return _bookData;
 };
 
-export const testament = ({bookId}) => {
-  const _testament = bookData({bookId}).testament;
+export const testament = (bookId) => {
+  const _testament = bookData(bookId).testament;
   return _testament;
 };
 

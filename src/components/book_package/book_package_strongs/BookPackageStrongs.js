@@ -11,34 +11,7 @@ import { Link, Collapse } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 import {fetchBookPackageStrongs} from './helpers';
-import * as cav from '../../../core/chaptersAndVerses';
-
-
-function convertRC2Link(lnk) {
-  const ugl_path = 'https://git.door43.org/unfoldingWord/en_ugl/src/branch/master/content/';
-  //const uhal_path = 'https://git.door43.org/unfoldingWord/en_uhal/src/branch/master/content/';
-  let s = lnk.skey;
-  s = ugl_path+lnk.skey+"/01.md";
-  return s;
-}
-
-function validateInputProperties(bookId,chapters) {
-  //console.log("validate bookId",bookId,", chapters:",chapters);
-  if ( chapters === "" ) {
-    let ref = {bookId: bookId, chapter: 1, verse: 1};
-    //console.log("validate ref", ref);
-    return cav.validateReference(ref);
-  }
-  const chaparray = chapters.split(",");
-  for (var vip = 0; vip < chaparray.length; vip++ ) {
-    let isValid = cav.validateReference(
-      {bookId: bookId, chapter: chaparray[vip], verse: 1}
-    );
-    if ( isValid ) continue;
-    return false
-  }
-  return true;
-}
+import {validateInputProperties, convertToLink} from './helpers';
 
 
 function BookPackageStrongs({
@@ -81,9 +54,16 @@ function BookPackageStrongs({
           <Typography variant="body2" gutterBottom>
             Distinct Number of Entries: {gkeys.length}
           </Typography>
+
           <Typography variant="body2" gutterBottom>
             Total Number of Entries: {totalWordCount}
           </Typography>
+
+          <Typography variant="body2" gutterBottom>
+          Distinct Number of words in entries: {result.distinctArticleWords} <br/>
+          Total Number of words in entries: {result.totalArticleWords} <br/>
+          </Typography>
+
 
           <Collapse in={open} component="details">
           <div id="details">
@@ -92,7 +72,9 @@ function BookPackageStrongs({
             <TableHead>
               <TableRow>
                 <TableCell>Strongs Entry</TableCell>
-                <TableCell align="center">Count</TableCell>
+                <TableCell align="center">Reference Count</TableCell>
+                <TableCell align="center">Distinct Words</TableCell>
+                <TableCell align="center">Total Words</TableCell>
               </TableRow>
             </TableHead>
 
@@ -100,11 +82,13 @@ function BookPackageStrongs({
               {gkeys.sort().map(skey => (
                 <TableRow key={skey}>
                   <TableCell component="th" scope="row">
-                    <Link href={convertRC2Link({skey})} target="_blank" rel="noopener" >
+                    <Link href={convertToLink(skey,bookId)} target="_blank" rel="noopener" >
                       {skey}
                     </Link>
                   </TableCell>
                   <TableCell align="center">{result.summary_strong_map[skey]}</TableCell>
+                  <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['distinct'] : 'Non Existent'}</TableCell>
+                  <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['total'] : 'Non Existent'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
