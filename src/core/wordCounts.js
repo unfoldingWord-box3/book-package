@@ -1,9 +1,13 @@
 
 // Find words by searching for sequences of non-whitespace characters.
 function getMdWords(str) {
-    let s;
+    let s = str;
     // replace all markdown links with a space
-    s = str.replace(/\[.*\]\(.*\)/g,' ');
+    s = s.replace(/\[.*\]\(.*\)/g,' ');
+    // remove all XML comments
+    s = s.replace(/<!--.*-->/g, ' ');
+    // remove all "rc://" URIs (note *? which is non-greedy)
+    s = s.replace(/\[\[rc:\/\/.*?\]\]/g, ' ');
     // handle numbers with colons between them
     s = s.replace(/(\d+):(\d+)/g, '$1_COLON_$2'); 
     // handle numbers with dashes between them

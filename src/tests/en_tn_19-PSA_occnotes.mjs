@@ -1,9 +1,9 @@
 import { readFile, writeFile } from 'fs';
 import { wordCount } from './wordCounts.mjs';
 
-const testinput = 'h0835.md';
-const ntotal = 50;
-const ndistinct = 43;
+const testinput = 'en_tn_19-PSA_occnotes.txt';
+const ntotal = 769;
+const ndistinct = 222;
 
 readFile(testinput, (err, data) => {
     if (err) throw err;

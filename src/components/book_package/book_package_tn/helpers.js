@@ -54,50 +54,5 @@ languageId,
     result["totalNoteWords"] = wcounts.total;
     result["distinctNoteWords"] = wcounts.distinct
 
-    // Now process the tA articles. Each is in markdown format in a folder
-    // with three files: title.md, sub-title.me, and 01.md.
-    // loop thru all three files and concatenating the text
-    // For each article, track distinct and total words; store in a map
-    const repo = languageId + "_ta";
-    const slash = "/";
-    const base = 'translate/';
-    const mdfiles = ["title.md","sub-title.md","01.md"];
-    let articleWordCounts = [];
-    let grandAllText = "";
-    let uniqSorted = [...new Set(tarticles)].sort()
-    for (var j=0; j < uniqSorted.length; j++) {
-        let alltext = ""; // empty it out for each set
-        for (var k=0; k < mdfiles.length; k++) {
-            let repo_path = base + uniqSorted[j] + slash + mdfiles[k];
-            let data = [];
-            try {
-                const uri = Path.join('unfoldingWord', 
-                    repo, 'raw/branch', 'master', repo_path
-                );
-                data = await gitApi.get({uri});    
-            } catch(error) {
-                data = null;
-                continue;
-            }
-            if ( data == null) {
-                continue;
-            } 
-            alltext = alltext + '\n' + data;
-        }
-        grandAllText = grandAllText + '\n' + alltext;
-        // now count the words for the article
-        let tacounts = wc.wordCount(alltext);
-        let article = {};
-        article["name"] = uniqSorted[j];
-        article["total"] = tacounts.total;
-        article["distinct"] = tacounts.distinct
-        articleWordCounts[j] = article;
-    }
-    result["articleWordCounts"] = articleWordCounts;
-    // finally get the grand totals
-    let x = wc.wordCount(grandAllText);
-    result["allArticlesDistinct"] = x.distinct;
-    result["allArticlesTotal"]    = x.total;
-    localStorage.setItem('tn',JSON.stringify(result))
     return result;
 }
