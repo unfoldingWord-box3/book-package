@@ -13,16 +13,12 @@ These resources will exist in all gateway languages, but for now, only english i
 
 The resources shown include:
 - Lexicon references as Strong's Numbers with counts and links
-*Note Since each word in the original text has a Strong's number, then the number of words in the original text is the same as the number of Strong's entries.*
-- Translation Words (tW) with counts and links 
-- Translation Notes (tN) with counts and names of referenced tA articles
+*Note: Since each word in the original text has a Strong's number, then the number of words in the original text is the same as the number of Strong's entries.*
+- Translation Words (tW) with counts and links to articles
+- Translation Notes (tN) with counts 
+- Translation Academy (tA) with counts and links to tA articles
 - Translation Questions (tQ) with counts. 
 *Note: A count of the number of level one headings is used to count the number of questions.*
-
-Resources not shown are:
-- Literal Text (ULT)
-- Simplifiex Text (UST)
-- Translation Academy articles (UTA)
 
 # Setup Notes
 
