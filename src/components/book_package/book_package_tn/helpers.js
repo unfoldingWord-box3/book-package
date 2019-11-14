@@ -1,7 +1,7 @@
 import { translationNotes } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
 import * as wc from '../../../core/wordCounts';
-import Path from 'path';
+//import Path from 'path';
 
 export async function fetchBookPackageTn({
 bookId,
@@ -30,7 +30,7 @@ languageId,
 
     // loop starts at 1, skipping the header row of the TSV file
     for (var i=1; i<_notes.length; i++) {
-        let ch = _notes[i][2]
+        let ch = _notes[i][1]
         if ( chapters !== "" ) {
             if ( ! chaparray.includes(ch) ) {
                 continue;
