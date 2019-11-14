@@ -8,7 +8,7 @@ if ( process.argv[2] && process.argv[2] === '-debug' ) {
 
 const testinput = 'h0835.md';
 const ntotal = 57;
-const ndistinct = 48;
+const ndistinct = 49;
 
 readFile(testinput, (err, data) => {
     if (err) throw err;
