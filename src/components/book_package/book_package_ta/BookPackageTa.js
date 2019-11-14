@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import {fetchBookPackageTn} from './helpers';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import {fetchBookPackageTa} from './helpers';
+import { Link, Collapse } from '@material-ui/core';
 
 import * as cav from '../../../core/chaptersAndVerses';
 
@@ -25,13 +29,19 @@ function validateInputProperties(bookId,chapters) {
   return true;
 }
 
-function BookPackageTn({
+function convertToLink(lnk) {
+  const path = 'https://git.door43.org/unfoldingWord/en_ta/src/branch/master/translate/';
+  return path+lnk;
+}
+
+function BookPackageTa({
   bookId,
   chapter,
   classes,
   style,
 }) 
 {
+  const open = true; // for collapse to manage its state
   const [_book, setVal] = useState("Waiting");
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
@@ -48,24 +58,50 @@ function BookPackageTn({
       return;
     }
     const fetchData = async () => {
-      const result = await fetchBookPackageTn(
+      const result = await fetchBookPackageTa(
         {username: 'unfoldingword', languageId:'en', 
         bookId: bookId, chapters: chapter}
       );
+      let tkeys = Array.from(result["tarticles"]);
+      let uniqueAndSorted = [...new Set(tkeys)].sort() 
 
+      //console.log("tkeys",tkeys);
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>
-            Translation Notes for "{bookId.toUpperCase()}" 
+            Translation Articles for "{bookId.toUpperCase()}" 
             and Chapters {chlist}
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Total number of notes: {result["total"]}<br/>
-            Distinct number of words in notes: {result["distinctNoteWords"]}<br/>
-            Total number of words in the notes: {result["totalNoteWords"]}
+            Total number of tA articles: {uniqueAndSorted.length-1}<br/>
+            Distinct number of words in all tA articles: {result["allArticlesDistinct"]} <br/> 
+            Total number of words in all tA articles: {result["allArticlesTotal"]}
           </Typography>
 
+          <Collapse in={open} component="details">
+            <div id="details">
+              <Typography variant="body2" gutterBottom>
+                Translation Articles are:
+              </Typography>
+              <div>
+                <List dense={true}>
+                  {result.articleWordCounts.map( (val,index) => (
+                    <ListItem key={index}>
+                      <ListItemText>
+                        <Link href={convertToLink(val.name)} target="_blank" 
+                          rel="noopener" >
+                          {val.name}
+                        </Link>
+                        : Distinct Words={val.distinct} 
+                        ; Total Words={val.total}
+                     </ListItemText>
+                    </ListItem>
+                  ))}
+                </List>
+              </div>
+            </div>
+          </Collapse>
         </Paper>
       );  
     };
@@ -81,7 +117,7 @@ function BookPackageTn({
   );
 };
   
-BookPackageTn.propTypes = {
+BookPackageTa.propTypes = {
   /** @ignore */
   classes: PropTypes.object,
   /** The Book ID to package. */
@@ -97,5 +133,5 @@ const styles = theme => ({
   },
 });
 
-export default withStyles(styles)(BookPackageTn);
+export default withStyles(styles)(BookPackageTa);
 

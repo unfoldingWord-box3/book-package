@@ -31,6 +31,7 @@ let sections = [
         'book_package_strongs',
         'book_package_tw',
         'book_package_tn',
+        'book_package_ta',
         'book_package_tq',
         'book_package_ult',
         'book_package_ust',
