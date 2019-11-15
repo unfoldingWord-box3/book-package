@@ -3,7 +3,7 @@
 function getMdWords(str) {
     let s = str;
     // replace all markdown links with a space
-    s = s.replace(/\[.*\]\(.*\)/g,' ');
+    s = s.replace(/\[.*?\]\(.*?\)/g,' ');
     // remove all XML comments
     s = s.replace(/<!--.*-->/g, ' ');
     // remove all "rc://" URIs (note *? which is non-greedy)

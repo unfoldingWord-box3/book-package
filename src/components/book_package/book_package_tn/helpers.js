@@ -54,6 +54,6 @@ languageId,
     result["totalNoteWords"] = wcounts.total;
     result["distinctNoteWords"] = wcounts.distinct
     // debug
-    console.log('tN allwords=',wcounts.allWords)
+    //console.log('tN allwords=',wcounts.allWords)
     return result;
 }
