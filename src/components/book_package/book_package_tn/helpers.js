@@ -43,7 +43,7 @@ languageId,
             tarticles.push(tarticle);
         }
         let occurrenceNote = _notes[i][8];
-        allNotes = allNotes + occurrenceNote;
+        allNotes = allNotes + ' ' + occurrenceNote;
     }
     // count words in occurrence notes
     let wcounts = wc.wordCount(allNotes);
@@ -53,6 +53,7 @@ languageId,
     result["tarticles"] = tarticles;
     result["totalNoteWords"] = wcounts.total;
     result["distinctNoteWords"] = wcounts.distinct
-
+    // debug
+    console.log('tN allwords=',wcounts.allWords)
     return result;
 }
