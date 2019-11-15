@@ -28,7 +28,8 @@ languageId,
 
     // loop starts at 1, skipping the header row of the TSV file
     for (var i=1; i<_notes.length; i++) {
-        let ch = _notes[i][2]
+        let ch = _notes[i][1]
+        if ( ch === undefined ) { continue; }
         if ( chapters !== "" ) {
             if ( ! chaparray.includes(ch) ) {
                 continue;
@@ -73,11 +74,12 @@ languageId,
             if ( data == null) {
                 continue;
             } 
-            alltext = alltext + '\n' + data;
+            alltext = alltext + ' ' + data;
         }
-        grandAllText = grandAllText + '\n' + alltext;
+        grandAllText = grandAllText + ' ' + alltext;
         // now count the words for the article
         let tacounts = wc.wordCount(alltext);
+        console.log(uniqSorted[j]+":",tacounts)
         let article = {};
         article["name"] = uniqSorted[j];
         article["total"] = tacounts.total;
@@ -89,6 +91,6 @@ languageId,
     let x = wc.wordCount(grandAllText);
     result["allArticlesDistinct"] = x.distinct;
     result["allArticlesTotal"]    = x.total;
-    localStorage.setItem('tn',JSON.stringify(result))
+    localStorage.setItem('ta',JSON.stringify(result))
     return result;
 }

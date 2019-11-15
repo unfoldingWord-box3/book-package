@@ -1,7 +1,7 @@
 import { runWordCounts } from '../wordCountsTester.mjs';
 
-const testinput = 'g01520.md';
-const ntotal = 68;
-const ndistinct = 56;
+const testinput = 'apostle.txt';
+const ntotal = 279;
+const ndistinct = 134;
 
 runWordCounts(testinput,ntotal,ndistinct);

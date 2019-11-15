@@ -74,7 +74,7 @@ function BookPackageTa({
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Total number of tA articles: {uniqueAndSorted.length-1}<br/>
+            Total number of tA articles: {uniqueAndSorted.length}<br/>
             Distinct number of words in all tA articles: {result["allArticlesDistinct"]} <br/> 
             Total number of words in all tA articles: {result["allArticlesTotal"]}
           </Typography>

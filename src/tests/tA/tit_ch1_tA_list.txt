@@ -1,0 +1,11 @@
+figs-abstractnouns
+figs-activepassive
+figs-doublet
+figs-ellipsis
+figs-explicit
+figs-hendiadys
+figs-hyperbole
+figs-inclusive
+figs-metaphor
+figs-metonymy
+figs-synecdoche

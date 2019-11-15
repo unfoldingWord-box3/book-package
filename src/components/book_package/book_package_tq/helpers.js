@@ -9,6 +9,7 @@ languageId,
 }) 
 {
     let sumtotals = {"distinct":0, "total":0, "l1count":0};
+    let grandtext = "";
     const chaparray = chapters.split(",");
     // Create the path to the repo
     // begin with chapter 1 to get the plumbing working
@@ -54,11 +55,13 @@ languageId,
                 continue;
             }
             let vcounts = wc.wordCount(_tq);
-            sumtotals.distinct = sumtotals.distinct + vcounts.distinct;
-            sumtotals.total    = sumtotals.total + vcounts.total;
+            grandtext = grandtext + " " + vcounts.allWords.join(" ");
             sumtotals.l1count  = sumtotals.l1count + vcounts.l1count;           
+            sumtotals.total    = sumtotals.total + vcounts.total;
         }
     }
+    let vcounts = wc.wordCount(grandtext);
+    sumtotals.distinct = vcounts.distinct;
     localStorage.setItem('tq',JSON.stringify(sumtotals));
     return sumtotals;
 }

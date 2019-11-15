@@ -5,7 +5,9 @@ function getMdWords(str) {
     // replace all markdown links with a space
     s = s.replace(/\[.*?\]\(.*?\)/g,' ');
     // remove all XML comments
-    s = s.replace(/<!--.*-->/g, ' ');
+    s = s.replace(/<!--.*?-->/g, ' ');
+    // remove all html tags
+    s = s.replace(/<.*?>(.*?)<\/.*?>/g,'$1');
     // remove all "rc://" URIs (note *? which is non-greedy)
     s = s.replace(/\[\[rc:\/\/.*?\]\]/g, ' ');
     // handle numbers with colons between them
