@@ -75,8 +75,8 @@ function BookPackageTa({
 
           <Typography variant="body2" gutterBottom>
             Total number of tA articles: {uniqueAndSorted.length}<br/>
-            Distinct number of words in all tA articles: {result["allArticlesDistinct"]} <br/> 
-            Total number of words in all tA articles: {result["allArticlesTotal"]}
+            Total Word Count: {result["allArticlesTotal"]} <br/> 
+            Unique words: {result["allArticlesDistinct"]} 
           </Typography>
 
           <Collapse in={open} component="details">
@@ -93,8 +93,8 @@ function BookPackageTa({
                           rel="noopener" >
                           {val.name}
                         </Link>
-                        : Distinct Words={val.distinct} 
-                        ; Total Words={val.total}
+                        : Total Word Count={val.total}
+                        ; Unique Words={val.distinct} 
                      </ListItemText>
                     </ListItem>
                   ))}

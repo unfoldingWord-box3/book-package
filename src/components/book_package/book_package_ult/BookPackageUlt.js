@@ -70,11 +70,13 @@ function BookPackageUlt({
             ULT Number of Words for "{bookId.toUpperCase()}" 
             and Chapters {chlist}
           </Typography>
+
           <Typography variant="body2" gutterBottom>
-            Distinct Number of Entries: {gkeys.length}
+            Total Word Count: {totalWordCount}
           </Typography>
+
           <Typography variant="body2" gutterBottom>
-            Total Number of Entries: {totalWordCount}
+            Unique Words: {gkeys.length}
           </Typography>
 
           <Collapse in={open} component="details">

@@ -52,13 +52,13 @@ function BookPackageTw({
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Distinct Number of tW Articles: {gkeys.length} <br/>
-            Total Number of tW Articles: {totalWordCount}
+            Total Number of tW Articles: {totalWordCount} <br/>
+            Unique Number of tW Articles: {gkeys.length} 
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-          Distinct Number of tW article words: {result.distinctTwArticleWords} <br/>
-          Total Number of tW article words: {result.totalTwArticleWords} <br/>
+          Total Word Count: {result.totalTwArticleWords} <br/>
+          Unique Words: {result.distinctTwArticleWords} <br/>
           </Typography>
 
           <Collapse in={open} component="details">
@@ -68,8 +68,8 @@ function BookPackageTw({
               <TableRow>
                 <TableCell>Translation Word</TableCell>
                 <TableCell align="center">Reference Count</TableCell>
-                <TableCell align="center">Distinct Words</TableCell>
-                <TableCell align="center">Total Words</TableCell>
+                <TableCell align="center">Total Word Count</TableCell>
+                <TableCell align="center">Unique Words</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -81,8 +81,8 @@ function BookPackageTw({
                     </Link>
                   </TableCell>
                   <TableCell align="center">{result.summary_tw_map[skey]}</TableCell>
-                  <TableCell align="center">{result.summary_ByArticle_map[skey]['distinct']}</TableCell>
                   <TableCell align="center">{result.summary_ByArticle_map[skey]['total']}</TableCell>
+                  <TableCell align="center">{result.summary_ByArticle_map[skey]['distinct']}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

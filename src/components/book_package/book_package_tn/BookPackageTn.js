@@ -62,8 +62,8 @@ function BookPackageTn({
 
           <Typography variant="body2" gutterBottom>
             Total number of notes: {result["total"]}<br/>
-            Distinct number of words in notes: {result["distinctNoteWords"]}<br/>
-            Total number of words in the notes: {result["totalNoteWords"]}
+            Total Word Count: {result["totalNoteWords"]} <br/>
+            Unique Words: {result["distinctNoteWords"]}
           </Typography>
 
         </Paper>

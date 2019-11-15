@@ -51,17 +51,15 @@ function BookPackageStrongs({
             Lexicon Entries for "{bookId.toUpperCase()}" 
             and Chapters {chlist}
           </Typography>
+
           <Typography variant="body2" gutterBottom>
-            Distinct Number of Entries: {gkeys.length}
+            Total Number of Entries: {totalWordCount} <br/>
+            Unique Number of Entries: {gkeys.length}
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Total Number of Entries: {totalWordCount}
-          </Typography>
-
-          <Typography variant="body2" gutterBottom>
-          Distinct Number of words in entries: {result.distinctArticleWords} <br/>
-          Total Number of words in entries: {result.totalArticleWords} <br/>
+          Total Word Count: {result.totalArticleWords} <br/>
+          Unique Words: {result.distinctArticleWords}
           </Typography>
 
 
@@ -73,8 +71,8 @@ function BookPackageStrongs({
               <TableRow>
                 <TableCell>Strongs Entry</TableCell>
                 <TableCell align="center">Reference Count</TableCell>
-                <TableCell align="center">Distinct Words</TableCell>
-                <TableCell align="center">Total Words</TableCell>
+                <TableCell align="center">Total Word Count</TableCell>
+                <TableCell align="center">Unique Words</TableCell>
               </TableRow>
             </TableHead>
 
@@ -87,8 +85,8 @@ function BookPackageStrongs({
                     </Link>
                   </TableCell>
                   <TableCell align="center">{result.summary_strong_map[skey]}</TableCell>
-                  <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['distinct'] : 'Non Existent'}</TableCell>
                   <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['total'] : 'Non Existent'}</TableCell>
+                  <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['distinct'] : 'Non Existent'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

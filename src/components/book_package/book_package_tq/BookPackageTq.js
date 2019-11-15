@@ -64,10 +64,10 @@ function BookPackageTq({
             Total Number of Questions: {result.l1count}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Distinct Number of Words {result.distinct}
+            Total Word Count {result.total}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total Number of Words {result.total}
+            Unique Words {result.distinct}
           </Typography>
         </Paper>
       );  
