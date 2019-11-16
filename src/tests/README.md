@@ -34,4 +34,11 @@ Failed: en_tn_19-PSA_occnotes.txt
 $
 ```
 
+## ULT and UST Tests
 
+Steps:
+- get the raw usfm text for the book: `tit_usfm.txt`
+- run `node --experimental-modules tit_usfm.mjs`
+- first output is the input converted to JSON: `tit_usfm.txt.json`
+- this JSON is iterated over to get the `children` array of verse objects
+- if the verse object has `type` property `word`, then the `text` property will contain the word needed to count.
