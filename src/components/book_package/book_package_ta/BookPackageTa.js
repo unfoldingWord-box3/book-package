@@ -82,7 +82,7 @@ function BookPackageTa({
           <Collapse in={open} component="details">
             <div id="details">
               <Typography variant="body2" gutterBottom>
-                Translation Articles are:
+                Translation Academy are:
               </Typography>
               <div>
                 <List dense={true}>
