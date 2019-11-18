@@ -69,7 +69,7 @@ function BookPackageTa({
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>
-            Translation Articles for "{bookId.toUpperCase()}" 
+            Translation Academy for "{bookId.toUpperCase()}" 
             and Chapters {chlist}
           </Typography>
 
@@ -82,7 +82,7 @@ function BookPackageTa({
           <Collapse in={open} component="details">
             <div id="details">
               <Typography variant="body2" gutterBottom>
-                Translation Articles are:
+                Translation Academy are:
               </Typography>
               <div>
                 <List dense={true}>

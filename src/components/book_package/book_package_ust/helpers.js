@@ -80,6 +80,60 @@ export async function fetchBookPackageUST({
                                 if ( children_map.get("type") === "word" ) {
                                     let thisword = children_map.get("text");
                                     process_tags(thisword,summary_ust_map);
+                                    continue;
+                                }
+                                let childrenL2 = children_map.get("children");
+                                if ( childrenL2 === undefined ) {
+                                    continue
+                                }
+                                //console.log("L2 children",childrenL2);
+                                for ( var l2=0; l2 < childrenL2.length; l2++ ) {
+                                    let childrenL2_map = obj_to_map(childrenL2[l2]);
+                                    if ( childrenL2_map.get("type") === "word" ) {
+                                        let thisword = childrenL2_map.get("text");
+                                        process_tags(thisword,summary_ust_map);
+                                        continue;
+                                    }
+                                    let childrenL3 = childrenL2_map.get("children");
+                                    if ( childrenL3 === undefined ) {
+                                        continue
+                                    }
+                                    //console.log("L3 children",childrenL3);
+                                    for ( var l3=0; l3 < childrenL3.length; l3++ ) {
+                                        let childrenL3_map = obj_to_map(childrenL3[l3]);
+                                        if ( childrenL3_map.get("type") === "word" ) {
+                                            let thisword = childrenL3_map.get("text");
+                                            process_tags(thisword,summary_ust_map);
+                                            continue;
+                                        }
+                                        let childrenL4 = childrenL3_map.get("children");
+                                        if ( childrenL4 === undefined ) {
+                                            continue
+                                        }
+                                        //console.log("L4 children",childrenL4);
+                                        for ( var l4=0; l4 < childrenL4.length; l4++ ) {
+                                            let childrenL4_map = obj_to_map(childrenL4[l4]);
+                                            if ( childrenL4_map.get("type") === "word" ) {
+                                                let thisword = childrenL4_map.get("text");
+                                                process_tags(thisword,summary_ust_map);
+                                                continue;
+                                            }
+                                            let childrenL5 = childrenL4_map.get("children");
+                                            if ( childrenL5 === undefined ) {
+                                                continue
+                                            }
+                                            console.log("UST L5 children",childrenL5);
+                                            for ( var l5=0; l5 < childrenL5.length; l5++ ) {
+                                                let childrenL5_map = obj_to_map(childrenL5[l5]);
+                                                if ( childrenL5_map.get("type") === "word" ) {
+                                                    let thisword = childrenL5_map.get("text");
+                                                    process_tags(thisword,summary_ust_map);
+                                                    continue;
+                                                }
+                                            }
+    
+                                        }
+                                    }
                                 }
                             }
                         }

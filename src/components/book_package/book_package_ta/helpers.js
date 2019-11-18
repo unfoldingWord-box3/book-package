@@ -79,7 +79,7 @@ languageId,
         grandAllText = grandAllText + ' ' + alltext;
         // now count the words for the article
         let tacounts = wc.wordCount(alltext);
-        console.log(uniqSorted[j]+":",tacounts)
+        //console.log(uniqSorted[j]+":",tacounts)
         let article = {};
         article["name"] = uniqSorted[j];
         article["total"] = tacounts.total;
