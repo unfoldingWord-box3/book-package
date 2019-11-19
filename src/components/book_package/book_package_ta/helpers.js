@@ -21,8 +21,17 @@ languageId,
         manifest: _manifests['tn']
     });
 
+    // function to convert map to object
+    const map_to_obj = ( mp => {
+        const ob = {};
+        mp.forEach((v,k) => {ob[k]=v});
+        return ob;
+    });
+    
     let tacount = 0;
     let tarticles = [];
+    let summary_tarticles_map = new Map();
+    let detail_tarticles_map = new Map();
 
     const chaparray = chapters.split(",");
 
@@ -39,6 +48,11 @@ languageId,
         if ( tarticle !== "" ) {
             tacount = tacount + 1;
             tarticles.push(tarticle);
+
+            let count = summary_tarticles_map.get(tarticle);
+            if ( count === undefined ) count = 0;
+            count = count + 1;
+            summary_tarticles_map.set(tarticle,count);
         }
     }
     // count words in occurrence notes
@@ -54,7 +68,6 @@ languageId,
     const slash = "/";
     const base = 'translate/';
     const mdfiles = ["title.md","sub-title.md","01.md"];
-    let articleWordCounts = [];
     let grandAllText = "";
     let uniqSorted = [...new Set(tarticles)].sort()
     for (var j=0; j < uniqSorted.length; j++) {
@@ -79,18 +92,19 @@ languageId,
         grandAllText = grandAllText + ' ' + alltext;
         // now count the words for the article
         let tacounts = wc.wordCount(alltext);
-        //console.log(uniqSorted[j]+":",tacounts)
-        let article = {};
-        article["name"] = uniqSorted[j];
-        article["total"] = tacounts.total;
-        article["distinct"] = tacounts.distinct
-        articleWordCounts[j] = article;
+        detail_tarticles_map.set(uniqSorted[j],tacounts);
     }
-    result["articleWordCounts"] = articleWordCounts;
+    result["summary_tarticles_map"] = map_to_obj(summary_tarticles_map);
+
+    result["detail_tarticles_map"] = map_to_obj(detail_tarticles_map);
+
     // finally get the grand totals
     let x = wc.wordCount(grandAllText);
     result["allArticlesDistinct"] = x.distinct;
     result["allArticlesTotal"]    = x.total;
-    localStorage.setItem('ta',JSON.stringify(result))
+    localStorage.removeItem('uta-summary_'+bookId);
+    localStorage.setItem('uta-summary_'+bookId,JSON.stringify(map_to_obj(summary_tarticles_map)));
+    localStorage.removeItem('uta-detail_'+bookId);
+    localStorage.setItem('uta-detail_'+bookId,JSON.stringify(result.detail_tarticles_map));
     return result;
 }

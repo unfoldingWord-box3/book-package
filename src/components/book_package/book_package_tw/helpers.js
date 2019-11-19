@@ -178,5 +178,9 @@ export async function fetchBookPackageTw({
     results.distinctTwArticleWords = summary_twArticle_map.size;
     results.totalTwArticleWords    = totalTwWordCount;
     results.summary_ByArticle_map  = map_to_obj(summary_ByArticle_map);
+    localStorage.removeItem('utw-summary_'+bookId);
+    localStorage.setItem('utw-summary_'+bookId,JSON.stringify(results.summary_tw_map));
+    localStorage.removeItem('utw-detail_'+bookId);
+    localStorage.setItem('utw-detail_'+bookId,JSON.stringify(results.summary_ByArticle_map));
     return results;
   }

@@ -183,7 +183,9 @@ export async function fetchBookPackageStrongs({
     results.distinctArticleWords = summary_article_map.size;
     results.totalArticleWords = totalStrongWordCount;
     results.detail_article_map   = map_to_obj(detail_article_map);
-    localStorage.removeItem('strong')
-    localStorage.setItem('strong',JSON.stringify(results));
+    localStorage.removeItem('strong-summary_'+bookId);
+    localStorage.setItem('strong-summary_'+bookId,JSON.stringify(results.summary_strong_map));
+    localStorage.removeItem('strong-detail_'+bookId);
+    localStorage.setItem('strong-detail_'+bookId,JSON.stringify(results.detail_article_map));
     return results;
   }

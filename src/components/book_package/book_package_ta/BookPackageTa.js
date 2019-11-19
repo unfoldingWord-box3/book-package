@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import {fetchBookPackageTa} from './helpers';
 import { Link, Collapse } from '@material-ui/core';
 
@@ -65,7 +67,7 @@ function BookPackageTa({
       let tkeys = Array.from(result["tarticles"]);
       let uniqueAndSorted = [...new Set(tkeys)].sort() 
 
-      //console.log("tkeys",tkeys);
+      console.log("tkeys",tkeys);
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>
@@ -81,25 +83,30 @@ function BookPackageTa({
 
           <Collapse in={open} component="details">
             <div id="details">
-              <Typography variant="body2" gutterBottom>
-                Translation Academy are:
-              </Typography>
-              <div>
-                <List dense={true}>
-                  {result.articleWordCounts.map( (val,index) => (
-                    <ListItem key={index}>
-                      <ListItemText>
-                        <Link href={convertToLink(val.name)} target="_blank" 
-                          rel="noopener" >
-                          {val.name}
+              <Table className={classes.table} size="small" aria-label="a dense table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Translation Academy</TableCell>
+                    <TableCell align="center">Reference Count</TableCell>
+                    <TableCell align="center">Total Word Count</TableCell>
+                    <TableCell align="center">Unique Words</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {uniqueAndSorted.map(skey => (
+                    <TableRow key={skey}>
+                      <TableCell component="th" scope="row">
+                        <Link href={convertToLink({skey})} target="_blank" rel="noopener" >
+                        {skey}
                         </Link>
-                        : Total Word Count={val.total}
-                        ; Unique Words={val.distinct} 
-                     </ListItemText>
-                    </ListItem>
+                      </TableCell>
+                      <TableCell align="center">{result.summary_tarticles_map[skey]}</TableCell>
+                      <TableCell align="center">{result.detail_tarticles_map[skey]['total']}</TableCell>
+                      <TableCell align="center">{result.detail_tarticles_map[skey]['distinct']}</TableCell>
+                    </TableRow>
                   ))}
-                </List>
-              </div>
+                </TableBody>
+              </Table>
             </div>
           </Collapse>
         </Paper>

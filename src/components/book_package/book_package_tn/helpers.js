@@ -30,7 +30,7 @@ languageId,
     for (var i=1; i<_notes.length; i++) {
         let ch = _notes[i][1]
         if ( ch === undefined ) { 
-            console.log("row i=",i," has chapter value undefined");
+            //console.log("row i=",i," has chapter value undefined");
             continue; 
         }
         if ( chapters !== "" ) {
@@ -50,7 +50,7 @@ languageId,
     result["distinctNoteWords"] = wcounts.distinct;
     result["allwords"] = wcounts.allWords;
     // debug
-    console.log('tN allwords=',wcounts.allWords)
-    console.log("allNotes length=",allNotes.length)
+    //console.log('tN allwords=',wcounts.allWords)
+    //console.log("allNotes length=",allNotes.length)
     return result;
 }
