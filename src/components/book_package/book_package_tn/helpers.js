@@ -21,8 +21,6 @@ languageId,
         manifest: _manifests['tn']
     });
 
-    let tacount = 0;
-    let tarticles = [];
     let allNotes = "";
 
     const chaparray = chapters.split(",");
@@ -31,29 +29,28 @@ languageId,
     // loop starts at 1, skipping the header row of the TSV file
     for (var i=1; i<_notes.length; i++) {
         let ch = _notes[i][1]
+        if ( ch === undefined ) { 
+            console.log("row i=",i," has chapter value undefined");
+            continue; 
+        }
         if ( chapters !== "" ) {
             if ( ! chaparray.includes(ch) ) {
                 continue;
             }
         }
         total = total + 1;
-        let tarticle = _notes[i][4];
-        if ( tarticle !== "" ) {
-            tacount = tacount + 1;
-            tarticles.push(tarticle);
-        }
         let occurrenceNote = _notes[i][8];
-        allNotes = allNotes + ' ' + occurrenceNote;
+        allNotes = allNotes + '\n' + occurrenceNote;
     }
     // count words in occurrence notes
     let wcounts = wc.wordCount(allNotes);
     let result = {};
     result["total"]   = total;
-    result["tatotal"] = tacount;
-    result["tarticles"] = tarticles;
     result["totalNoteWords"] = wcounts.total;
-    result["distinctNoteWords"] = wcounts.distinct
+    result["distinctNoteWords"] = wcounts.distinct;
+    result["allwords"] = wcounts.allWords;
     // debug
-    //console.log('tN allwords=',wcounts.allWords)
+    console.log('tN allwords=',wcounts.allWords)
+    console.log("allNotes length=",allNotes.length)
     return result;
 }

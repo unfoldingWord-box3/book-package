@@ -122,7 +122,7 @@ export async function fetchBookPackageUST({
                                             if ( childrenL5 === undefined ) {
                                                 continue
                                             }
-                                            console.log("UST L5 children",childrenL5);
+                                            //console.log("UST L5 children",childrenL5);
                                             for ( var l5=0; l5 < childrenL5.length; l5++ ) {
                                                 let childrenL5_map = obj_to_map(childrenL5[l5]);
                                                 if ( childrenL5_map.get("type") === "word" ) {
