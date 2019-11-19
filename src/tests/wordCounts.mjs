@@ -2,14 +2,19 @@
 // Find words by searching for sequences of non-whitespace characters.
 function getMdWords(str) {
     let s = str;
+    // replace ellipses with a blank
+    s = s.replace(/…/g, ' ')
+    // tN occurrence notes (tsv format) have markdown and 
+    // use <br> to indicate line breaks.
+    s = s.replace(/<br>/g, '\n'); // change <br> to new line character
+    // remove all "rc://" URIs (note *? which is non-greedy)
+    s = s.replace(/\[\[rc:\/\/.*?\]\]/g, ' ');
     // replace all markdown links with a space
     s = s.replace(/\[.*?\]\(.*?\)/g,' ');
     // remove all XML comments
     s = s.replace(/<!--.*?-->/g, ' ');
     // remove all html tags
     s = s.replace(/<.*?>(.*?)<\/.*?>/g,'$1');
-    // remove all "rc://" URIs (note *? which is non-greedy)
-    s = s.replace(/\[\[rc:\/\/.*?\]\]/g, ' ');
     // handle numbers with colons between them
     s = s.replace(/(\d+):(\d+)/g, '$1_COLON_$2'); 
     // handle numbers with dashes between them
@@ -20,9 +25,6 @@ function getMdWords(str) {
     // replace commonly used characters adjacent to words with blanks
     // for now: slash and equals
     s = s.replace(/=|\//g,' ');
-    // tN occurrence notes (tsv format) have markdown and 
-    // use <br> to indicate line breaks.
-    s = s.replace(/<br>/g, '\n'); // change <br> to new line character
     // discount the numerals used on an ordered list
     s = s.replace(/^\d+\. |\n\d+\. /g, ' ');
     // remove all non-word and non-space characters
