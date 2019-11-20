@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 import * as cav from '../../core/chaptersAndVerses';
 import BookPackageTotals from '../book_package_totals';
-import BookPackageStrongs from '../book_package/book_package_strongs';
+//import BookPackageStrongs from '../book_package/book_package_strongs';
 import BookPackageTw from '../book_package/book_package_tw';
 import BookPackageTn from '../book_package/book_package_tn';
 import BookPackageTa from '../book_package/book_package_ta';
@@ -53,7 +53,6 @@ function BookPackageRollup({
               and Chapters {chlist}
             </Typography>
             <BookPackageTotals bookId={bookId} />
-            <BookPackageStrongs bookId={bookId} chapter={chapter} />
             <BookPackageTw bookId={bookId} chapter={chapter} />
             <BookPackageTn bookId={bookId} chapter={chapter} />
             <BookPackageTa bookId={bookId} chapter={chapter} />

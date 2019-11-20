@@ -18,7 +18,6 @@ async function bp_totals(bookId,delay,iterations,setVal) {
   let utw_count;
   await (async function theLoop (iterations) {
     setTimeout(function () {
-      console.log("bp_totals(), i=",iterations, delay);
       if (--iterations) {      // If i > 0, keep going
         // skip first iteration
         if ( (_iterations - iterations) > 4 ) {
@@ -77,8 +76,8 @@ function BookPackageTotals({
   const [_totals, setVal] = useState("Waiting");
   let _delay = delay;
   let _iterations = iterations;
-  if ( _delay === undefined ) _delay = 1000;
-  if ( _iterations === undefined ) _iterations = 10;
+  if ( _delay === undefined ) _delay = 2000;
+  if ( _iterations === undefined ) _iterations = 100;
   useEffect( () => {
     const fetchData = async () => {
       await bp_totals(bookId,_delay,_iterations,setVal);

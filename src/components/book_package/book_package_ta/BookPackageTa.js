@@ -67,7 +67,6 @@ function BookPackageTa({
       let tkeys = Array.from(result["tarticles"]);
       let uniqueAndSorted = [...new Set(tkeys)].sort() 
 
-      console.log("tkeys",tkeys);
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>
