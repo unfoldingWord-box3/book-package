@@ -44,6 +44,7 @@ async function process_tags(key,val,summary_tw_map,
     let articleCounts = {};
     articleCounts.total = twcounts.allWords.length;
     articleCounts.distinct = [...new Set(twcounts.allWords)].length;
+    articleCounts.allWords = twcounts.allWords;
     summary_ByArticle_map.set(val,articleCounts);
 }
 
@@ -171,6 +172,13 @@ export async function fetchBookPackageTw({
         totalTwWordCount = totalTwWordCount + v6;
     }
 
+    // aggregate all the words across all articles
+    let wordAggregation = "";
+    for ( var w of summary_ByArticle_map.values() ) {
+        wordAggregation = wordAggregation + '\n' + w.allWords.join('\n');
+    }
+    let x = wc.wordCount(wordAggregation);
+
     let results = {};
     results.summary_tw_map = map_to_obj(summary_tw_map);
     results.totalWordCount = totalWordCount;
@@ -178,9 +186,6 @@ export async function fetchBookPackageTw({
     results.distinctTwArticleWords = summary_twArticle_map.size;
     results.totalTwArticleWords    = totalTwWordCount;
     results.summary_ByArticle_map  = map_to_obj(summary_ByArticle_map);
-    localStorage.removeItem('utw-summary_'+bookId);
-    localStorage.setItem('utw-summary_'+bookId,JSON.stringify(results.summary_tw_map));
-    localStorage.removeItem('utw-detail_'+bookId);
-    localStorage.setItem('utw-detail_'+bookId,JSON.stringify(results.summary_ByArticle_map));
+    localStorage.setItem('utw-'+bookId,JSON.stringify(x.wordFrequency));
     return results;
   }

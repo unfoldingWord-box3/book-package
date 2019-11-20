@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import * as cav from '../../core/chaptersAndVerses';
+import BookPackageTotals from '../book_package_totals';
 import BookPackageStrongs from '../book_package/book_package_strongs';
 import BookPackageTw from '../book_package/book_package_tw';
 import BookPackageTn from '../book_package/book_package_tn';
@@ -43,6 +44,7 @@ function BookPackageRollup({
     const fetchData = async () => {
       const result = await validateInputProperties(bookId, chapter);
       let chlist = chapter ? chapter : "(ALL)";
+      localStorage.clear(); // clear/reset local storage before starting components
       if ( result ) {
         setVal(
           <Paper className={classes.paper} >
@@ -50,6 +52,7 @@ function BookPackageRollup({
               Package Rollup for "{bookId.toUpperCase()}" 
               and Chapters {chlist}
             </Typography>
+            <BookPackageTotals bookId={bookId} />
             <BookPackageStrongs bookId={bookId} chapter={chapter} />
             <BookPackageTw bookId={bookId} chapter={chapter} />
             <BookPackageTn bookId={bookId} chapter={chapter} />
@@ -71,23 +74,6 @@ function BookPackageRollup({
       }
     };
     fetchData();
-    let strong = JSON.parse(localStorage.getItem('strong'))
-    console.log('strong:',strong)
-    let ult = JSON.parse(localStorage.getItem('ult'))
-    console.log('ult:',ult)
-    let ust = JSON.parse(localStorage.getItem('ust'))
-    console.log('ust:',ust)
-    let tn = JSON.parse(localStorage.getItem('tn'))
-    console.log('tn:',tn)
-    let tq = JSON.parse(localStorage.getItem('tq'))
-    console.log('tq:',tq)
-    let grandTotalWords = strong.totalWordCount +
-                          ult.totalWordCount +
-                          ust.totalWordCount +
-                          tn.totalNoteWords +
-                          tn.allArticlesTotal +
-                          tq.total;
-    console.log('Grand Total Word Count is ',grandTotalWords)
   }, []); 
   // the parameter [] allows the effect to skip if value unchanged
   // an empty [] will only update on mount of component

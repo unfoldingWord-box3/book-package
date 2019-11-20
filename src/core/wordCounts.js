@@ -1,4 +1,12 @@
 
+// function to convert map to object
+const map_to_obj = ( mp => {
+    const ob = {};
+    mp.forEach((v,k) => {ob[k]=v});
+    return ob;
+});
+    
+
 // Find words by searching for sequences of non-whitespace characters.
 function getMdWords(str) {
     let s = str;
@@ -44,6 +52,15 @@ export function wordCount(str) {
     let l1count = str.replace(/<br>/g, '\n').match(/^# |\n# /g) || [];
     counts["l1count"] = l1count.length;
     counts["allWords"] = allWords;
+    let wordFrequency_map = new Map();
+    for ( let i=0; i < allWords.length; i++ ) {
+        let w = wordFrequency_map.get(allWords[i]);
+        if ( w === undefined ) { w = 0; }
+        w += 1;
+        wordFrequency_map.set(allWords[i],w);
+    }
+    let wordFrequency = map_to_obj(wordFrequency_map);
+    counts["wordFrequency"] = wordFrequency;
     return counts;
 }
 

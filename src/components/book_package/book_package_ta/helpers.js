@@ -100,11 +100,9 @@ languageId,
 
     // finally get the grand totals
     let x = wc.wordCount(grandAllText);
+    console.log("x:",x);
     result["allArticlesDistinct"] = x.distinct;
     result["allArticlesTotal"]    = x.total;
-    localStorage.removeItem('uta-summary_'+bookId);
-    localStorage.setItem('uta-summary_'+bookId,JSON.stringify(map_to_obj(summary_tarticles_map)));
-    localStorage.removeItem('uta-detail_'+bookId);
-    localStorage.setItem('uta-detail_'+bookId,JSON.stringify(result.detail_tarticles_map));
+    localStorage.setItem('uta-'+bookId,JSON.stringify(x.wordFrequency));
     return result;
 }
