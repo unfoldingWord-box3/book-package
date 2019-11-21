@@ -28,7 +28,7 @@ languageId,
                 continue;
             }
         }
-        if ( i < 10 ) {
+        if ( i+1 < 10 ) {
             ch = "0"+ch;
         } 
         let numverses = numchapters[i];
