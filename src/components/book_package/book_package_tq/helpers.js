@@ -35,7 +35,7 @@ languageId,
         //console.log("Verses in chapter:",numverses);
         for (var j = 0; j <= numverses; j++) {
             let vrs = ""+(j+1);
-            if ( j < 10 ) {
+            if ( j+1 < 10 ) {
                 vrs = "0"+vrs;
             }
             let repo_path = slash + bookId + slash + ch + slash + vrs + mdext;
