@@ -3,69 +3,63 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { all } from 'q';
 
 async function bp_totals(bookId,delay,iterations,setVal) {
-    // function to convert object to a map
-    const obj_to_map = ( ob => {
-      const mp = new Map();
-      Object.keys ( ob ).forEach (k => { mp.set(k, ob[k]) });
-      return mp;
+  // function to convert object to a map
+  const obj_to_map = ( ob => {
+    const mp = new Map();
+    Object.keys ( ob ).forEach (k => { mp.set(k, ob[k]) });
+    return mp;
   });
 
-  const uta = 0;
-  const utw = 1;
-  const utq = 2;
-  const utn = 3;
-  const ult = 4;
-  const ust = 5;
-
-  let _iterations = iterations;
+  let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-'];
   let ucounts = [];
   await (async function theLoop (iterations) {
     setTimeout(function () {
       if (--iterations) {      // If i > 0, keep going
         // skip first iteration
         console.log("iter",iterations);
-        if ( (_iterations - iterations) > 1 ) {
-          ucounts[uta] = localStorage.getItem('uta-'+bookId);
-          ucounts[utw] = localStorage.getItem('utw-'+bookId);
-          ucounts[utq] = localStorage.getItem('utq-'+bookId);
-          ucounts[utn] = localStorage.getItem('utn-'+bookId);
-          ucounts[ult] = localStorage.getItem('ult-'+bookId);
-          ucounts[ust] = localStorage.getItem('ust-'+bookId);
-          let allPresent = true;
-          for ( let i = 0; i < ucounts.length; i++ ) {
-            if ( ucounts[i] === null ) {
+        const bookarray = bookId.split(",");
+        let all_map = new Map();
+        let resource_map = new Map();
+        let allPresent = true;
+
+        for ( let ri = 0; ri < resourcePrefixes.length; ri++ ) {
+          for ( let bi = 0; bi < bookarray.length; bi++ ) {
+            let lsk = resourcePrefixes[ri]+bookarray[bi];
+            let x = localStorage.getItem(lsk);
+            if ( x === null ) {
               allPresent = false;
               break;
             }
+            resource_map.set(lsk,x)
           }
+        }
 
-          if ( allPresent ) {
-            console.log("All Present!");
-            // sum over resources
-            let all_map = new Map();
-            for ( let i = 0; i < ucounts.length; i++ ) {
-              let umap = obj_to_map(JSON.parse(ucounts[i]));
-              for ( let [k,v] of umap.entries() ) {
-                let x = all_map.get(k);
-                if ( x === undefined ) x = 0;
-                all_map.set(k, x + v);
-              }
+        if ( allPresent ) {
+          console.log("All Present!");
+          // sum over resources
+          for ( let i = 0; i < ucounts.length; i++ ) {
+            let umap = obj_to_map(JSON.parse(ucounts[i]));
+            for ( let [k,v] of umap.entries() ) {
+              let x = all_map.get(k);
+              if ( x === undefined ) x = 0;
+              all_map.set(k, x + v);
             }
-            let totalPackcageWordCount = 0;
-            for ( let c of all_map.values() ) {
-              totalPackcageWordCount = totalPackcageWordCount + c;
-            }
-            setVal(
-              <Paper>
-                <Typography variant="h6" gutterBottom>
-                  Total Word Count for "{bookId.toUpperCase()}" {totalPackcageWordCount}
-                </Typography>
-              </Paper>
-            ); 
-            return;
-          }        
+          }
+          let totalPackcageWordCount = 0;
+          for ( let c of all_map.values() ) {
+            totalPackcageWordCount = totalPackcageWordCount + c;
+          }
+          setVal(
+            <Paper>
+              <Typography variant="h6" gutterBottom>
+                Total Word Count for "{bookId.toUpperCase()}" {totalPackcageWordCount}
+              </Typography>
+            </Paper>
+          ); 
+          return;
         }
         theLoop(iterations);   // Call the loop again, and pass it the current value of i
       } else {
@@ -92,16 +86,6 @@ function BookPackageTotals({
   useEffect( () => {
     const fetchData = async () => {
       await bp_totals(bookId,_delay,_iterations,setVal);
-      /*
-      setVal(
-        <Paper className={classes.paper} >
-          <Typography variant="h5" gutterBottom>
-            Package Totals for "{bookId.toUpperCase()}" <br/>
-            {result}
-          </Typography>
-        </Paper>
-      ); 
-      */   
     };
     fetchData();
   }, []); 

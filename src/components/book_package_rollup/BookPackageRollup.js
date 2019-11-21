@@ -42,9 +42,19 @@ function BookPackageRollup({
   const [_book, setVal] = useState("Waiting");
   useEffect( () => {
     const fetchData = async () => {
-      const result = await validateInputProperties(bookId, chapter);
-      let chlist = chapter ? chapter : "(ALL)";
+
       localStorage.clear(); // clear/reset local storage before starting components
+
+      let result;
+      const bookarray = bookId.split(",");
+      for ( let bi = 0; bi < bookarray.length; bi++ ) {
+        result = await validateInputProperties(bookarray[bi], chapter);
+        if ( !result ) {
+          break;
+        }
+      }
+     
+      let chlist = chapter ? chapter : "(ALL)";
       if ( result ) {
         setVal(
           <Paper className={classes.paper} >
@@ -53,12 +63,16 @@ function BookPackageRollup({
               and Chapters {chlist}
             </Typography>
             <BookPackageTotals bookId={bookId} />
-            <BookPackageTw bookId={bookId} chapter={chapter} />
-            <BookPackageTn bookId={bookId} chapter={chapter} />
-            <BookPackageTa bookId={bookId} chapter={chapter} />
-            <BookPackageTq bookId={bookId} chapter={chapter} />
-            <BookPackageUlt bookId={bookId} chapter={chapter} />
-            <BookPackageUst bookId={bookId} chapter={chapter} />
+            {bookarray.sort().map(skey => (
+              <Paper>
+              <BookPackageTw bookId={skey} chapter={chapter} />
+              <BookPackageTn bookId={skey} chapter={chapter} />
+              <BookPackageTa bookId={skey} chapter={chapter} />
+              <BookPackageTq bookId={skey} chapter={chapter} />
+              <BookPackageUlt bookId={skey} chapter={chapter} />
+              <BookPackageUst bookId={skey} chapter={chapter} />
+              </Paper>
+              ))}
           </Paper>
         );    
       } else {
