@@ -177,7 +177,6 @@ export async function fetchBookPackageTw({
     for ( var w of summary_ByArticle_map.values() ) {
         wordAggregation = wordAggregation + '\n' + w.allWords.join('\n');
     }
-    let x = wc.wordCount(wordAggregation);
 
     let results = {};
     results.summary_tw_map = map_to_obj(summary_tw_map);
@@ -186,6 +185,8 @@ export async function fetchBookPackageTw({
     results.distinctTwArticleWords = summary_twArticle_map.size;
     results.totalTwArticleWords    = totalTwWordCount;
     results.summary_ByArticle_map  = map_to_obj(summary_ByArticle_map);
-    localStorage.setItem('utw-'+bookId,JSON.stringify(x.wordFrequency));
+    //console.log("utw article counts", summary_ByArticle_map)
+
+    localStorage.setItem('utw-'+bookId,JSON.stringify(results.summary_ByArticle_map));
     return results;
   }

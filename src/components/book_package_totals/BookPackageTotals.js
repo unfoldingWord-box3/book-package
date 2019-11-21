@@ -36,13 +36,67 @@ async function bp_totals(bookId,delay,iterations,setVal) {
 
         if ( allPresent ) {
           console.log("All Present!");
-          // sum over resources
-          for ( let v of resource_map.values() ) {
-            let y = obj_to_map(JSON.parse(v));
+          //
+          // process uta: dedup first
+          //
+          let uta_dedup = new Map();
+          for ( let [k,v] of resource_map.entries() ) {
+            if ( k.startsWith("uta") ) {
+              let o = JSON.parse(v);
+              let omap = obj_to_map(o);
+              for ( let [x,y] of omap.entries() ) {
+                // Key x is the uta article
+                if ( uta_dedup.get(x) ) { continue; }
+                uta_dedup.set(x,y.wordFrequency);
+              }
+            }
+          }
+          // add in uta contribution
+          for ( let v of uta_dedup.values() ) {
+            let y = obj_to_map(v);
             for ( let [m,n] of y.entries() ) {
               let z = all_map.get(m);
               if ( z === undefined ) z = 0;
               all_map.set(m, z + n);
+            }
+          }
+          //
+          // process utw: dedup first
+          //
+          let utw_dedup = new Map();
+          for ( let [k,v] of resource_map.entries() ) {
+            if ( k.startsWith("utw") ) {
+              let o = JSON.parse(v);
+              let omap = obj_to_map(o);
+              for ( let [x,y] of omap.entries() ) {
+                // Key x is the utw article
+                if ( utw_dedup.get(x) ) { continue; }
+                utw_dedup.set(x,y.allWords);
+              }
+            }
+          }
+          // add in utw contribution
+          for ( let v of utw_dedup.values() ) {
+            for ( let i=0; i < v.length; i++ ) {
+              let z = all_map.get(v[i]);
+              if ( z === undefined ) z = 0;
+              z++;
+              all_map.set(v[i], z);
+            }
+          }
+          // sum over resources
+          for ( let [k,v] of resource_map.entries() ) {
+            if ( k.startsWith("uta") ) {
+              continue;
+            } else if ( k.startsWith("utw") ) {
+              continue;
+            } else {
+              let y = obj_to_map(JSON.parse(v));
+              for ( let [m,n] of y.entries() ) {
+                let z = all_map.get(m);
+                if ( z === undefined ) z = 0;
+                all_map.set(m, z + n);
+              }
             }
           }
 

@@ -95,13 +95,14 @@ languageId,
         detail_tarticles_map.set(uniqSorted[j],tacounts);
     }
     result["summary_tarticles_map"] = map_to_obj(summary_tarticles_map);
-
+    // the below has the count data arranged per article
     result["detail_tarticles_map"] = map_to_obj(detail_tarticles_map);
-
+    //console.log("detail_tarticles_map",detail_tarticles_map);
     // finally get the grand totals
     let x = wc.wordCount(grandAllText);
     result["allArticlesDistinct"] = x.distinct;
     result["allArticlesTotal"]    = x.total;
-    localStorage.setItem('uta-'+bookId,JSON.stringify(x.wordFrequency));
+    
+    localStorage.setItem('uta-'+bookId,JSON.stringify(result["detail_tarticles_map"]));
     return result;
 }
