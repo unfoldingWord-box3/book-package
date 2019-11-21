@@ -12,51 +12,60 @@ async function bp_totals(bookId,delay,iterations,setVal) {
       return mp;
   });
 
+  const uta = 0;
+  const utw = 1;
+  const utq = 2;
+  const utn = 3;
+  const ult = 4;
+  const ust = 5;
 
   let _iterations = iterations;
-  let uta_count;
-  let utw_count;
+  let ucounts = [];
   await (async function theLoop (iterations) {
     setTimeout(function () {
       if (--iterations) {      // If i > 0, keep going
         // skip first iteration
-        if ( (_iterations - iterations) > 4 ) {
-          uta_count = localStorage.getItem('uta-'+bookId);
-          utw_count = localStorage.getItem('utw-'+bookId);
-          if ( uta_count !== null ) {
-            if ( utw_count !== null ) {
-              let uta1 = JSON.parse(uta_count);
-              let utw1 = JSON.parse(utw_count);
-              let uta1_map = obj_to_map(uta1);
-              let utw1_map = obj_to_map(utw1);
-              let all_map = new Map();
-              for ( var [ka,va] of uta1_map.entries() ) {
-                let x = all_map.get(ka);
-                if ( x === undefined ) x = 0;
-                all_map.set(ka, x + parseInt(va, 10));
-              }
-              for ( var [kw,vw] of utw1_map.entries() ) {
-                let x = all_map.get(kw);
-                if ( x === undefined ) x = 0;
-                all_map.set(kw, x + parseInt(vw,10));
-              }
-              //console.log("all",all_map);
-              let totalPackcageWordCount = 0;
-              for ( let c of all_map.values() ) {
-                totalPackcageWordCount = totalPackcageWordCount + c;
-              }
-              setVal(
-                <Paper>
-                  <Typography variant="h6" gutterBottom>
-                    Total Word Count for "{bookId.toUpperCase()}" {totalPackcageWordCount}
-                  </Typography>
-                </Paper>
-              ); 
-                      return;  
+        //console.log("iter",iterations);
+        if ( (_iterations - iterations) > 1 ) {
+          ucounts[uta] = localStorage.getItem('uta-'+bookId);
+          ucounts[utw] = localStorage.getItem('utw-'+bookId);
+          ucounts[utq] = localStorage.getItem('utq-'+bookId);
+          ucounts[utn] = localStorage.getItem('utn-'+bookId);
+          ucounts[ult] = localStorage.getItem('ult-'+bookId);
+          ucounts[ust] = localStorage.getItem('ust-'+bookId);
+          let allPresent = true;
+          for ( let i = 0; i < ucounts.length; i++ ) {
+            if ( ucounts[i] === null ) {
+              allPresent = false;
+              break;
             }
-          }  
+          }
+
+          if ( allPresent ) {
+            // sum over resources
+            let all_map = new Map();
+            for ( let i = 0; i < ucounts.length; i++ ) {
+              let umap = obj_to_map(JSON.parse(ucounts[i]));
+              for ( let [k,v] of umap.entries() ) {
+                let x = all_map.get(k);
+                if ( x === undefined ) x = 0;
+                all_map.set(k, x + v);
+              }
+            }
+            let totalPackcageWordCount = 0;
+            for ( let c of all_map.values() ) {
+              totalPackcageWordCount = totalPackcageWordCount + c;
+            }
+            setVal(
+              <Paper>
+                <Typography variant="h6" gutterBottom>
+                  Total Word Count for "{bookId.toUpperCase()}" {totalPackcageWordCount}
+                </Typography>
+              </Paper>
+            ); 
+            return;
+          }        
         }
-        
         theLoop(iterations);   // Call the loop again, and pass it the current value of i
       } else {
         setVal("timeout")
@@ -76,7 +85,7 @@ function BookPackageTotals({
   const [_totals, setVal] = useState("Waiting");
   let _delay = delay;
   let _iterations = iterations;
-  if ( _delay === undefined ) _delay = 2000;
+  if ( _delay === undefined ) _delay = 500;
   if ( _iterations === undefined ) _iterations = 100;
   useEffect( () => {
     const fetchData = async () => {

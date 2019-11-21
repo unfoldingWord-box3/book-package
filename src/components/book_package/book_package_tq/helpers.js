@@ -62,6 +62,6 @@ languageId,
     }
     let vcounts = wc.wordCount(grandtext);
     sumtotals.distinct = vcounts.distinct;
-    localStorage.setItem('tq',JSON.stringify(sumtotals));
+    localStorage.setItem('utq-'+bookId,JSON.stringify(vcounts.wordFrequency))
     return sumtotals;
 }

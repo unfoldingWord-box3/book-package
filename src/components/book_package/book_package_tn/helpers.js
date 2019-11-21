@@ -52,5 +52,6 @@ languageId,
     // debug
     //console.log('tN allwords=',wcounts.allWords)
     //console.log("allNotes length=",allNotes.length)
+    localStorage.setItem('utn-'+bookId,JSON.stringify(wcounts.wordFrequency));
     return result;
 }

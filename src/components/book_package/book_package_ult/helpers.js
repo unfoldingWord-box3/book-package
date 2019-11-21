@@ -148,6 +148,6 @@ export async function fetchBookPackageULT({
     let results = {};
     results.summary_ult_map = map_to_obj(summary_ult_map);
     results.totalWordCount = totalWordCount;
-    localStorage.setItem('ult',JSON.stringify(results))
+    localStorage.setItem('ult-'+bookId,JSON.stringify(results.summary_ult_map))
     return results;
   }

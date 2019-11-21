@@ -169,7 +169,7 @@ export async function fetchBookPackageStrongs({
         totalWordCount = totalWordCount + v5;
     }
 
-    // count the number of words in the tw articles
+    // count the number of words in the articles
     let totalStrongWordCount = 0;
     for ( var v6 of summary_article_map.values() ) {
         totalStrongWordCount = totalStrongWordCount + v6;
@@ -183,9 +183,7 @@ export async function fetchBookPackageStrongs({
     results.distinctArticleWords = summary_article_map.size;
     results.totalArticleWords = totalStrongWordCount;
     results.detail_article_map   = map_to_obj(detail_article_map);
-    localStorage.removeItem('strong-summary_'+bookId);
-    localStorage.setItem('strong-summary_'+bookId,JSON.stringify(results.summary_strong_map));
-    localStorage.removeItem('strong-detail_'+bookId);
-    localStorage.setItem('strong-detail_'+bookId,JSON.stringify(results.detail_article_map));
+    // below is not words with counts; it is lex entries with counts
+    //localStorage.setItem('lex-'+bookId,JSON.stringify(results.summary_strong_map));
     return results;
   }

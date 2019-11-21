@@ -149,6 +149,6 @@ export async function fetchBookPackageUST({
     let results = {};
     results.summary_ust_map = map_to_obj(summary_ust_map);
     results.totalWordCount = totalWordCount;
-    localStorage.setItem('ust',JSON.stringify(results))
+    localStorage.setItem('ust-'+bookId,JSON.stringify(results.summary_ust_map))
     return results;
   }
