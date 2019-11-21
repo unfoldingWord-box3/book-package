@@ -25,7 +25,7 @@ async function bp_totals(bookId,delay,iterations,setVal) {
     setTimeout(function () {
       if (--iterations) {      // If i > 0, keep going
         // skip first iteration
-        //console.log("iter",iterations);
+        console.log("iter",iterations);
         if ( (_iterations - iterations) > 1 ) {
           ucounts[uta] = localStorage.getItem('uta-'+bookId);
           ucounts[utw] = localStorage.getItem('utw-'+bookId);
@@ -42,6 +42,7 @@ async function bp_totals(bookId,delay,iterations,setVal) {
           }
 
           if ( allPresent ) {
+            console.log("All Present!");
             // sum over resources
             let all_map = new Map();
             for ( let i = 0; i < ucounts.length; i++ ) {
@@ -68,6 +69,7 @@ async function bp_totals(bookId,delay,iterations,setVal) {
         }
         theLoop(iterations);   // Call the loop again, and pass it the current value of i
       } else {
+        console.log("timeout on iter=",iterations)
         setVal("timeout")
       }
     }, delay);
@@ -85,8 +87,8 @@ function BookPackageTotals({
   const [_totals, setVal] = useState("Waiting");
   let _delay = delay;
   let _iterations = iterations;
-  if ( _delay === undefined ) _delay = 500;
-  if ( _iterations === undefined ) _iterations = 100;
+  if ( _delay === undefined ) _delay = 1000;
+  if ( _iterations === undefined ) _iterations = 1000;
   useEffect( () => {
     const fetchData = async () => {
       await bp_totals(bookId,_delay,_iterations,setVal);
