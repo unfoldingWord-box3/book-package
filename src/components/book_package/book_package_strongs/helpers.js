@@ -184,6 +184,6 @@ export async function fetchBookPackageStrongs({
     results.totalArticleWords = totalStrongWordCount;
     results.detail_article_map   = map_to_obj(detail_article_map);
     // below is not words with counts; it is lex entries with counts
-    //localStorage.setItem('lex-'+bookId,JSON.stringify(results.summary_strong_map));
+    localStorage.setItem('lex-'+bookId,JSON.stringify(results.summary_article_map));
     return results;
   }
