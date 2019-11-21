@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { all } from 'q';
 
 async function bp_totals(bookId,delay,iterations,setVal) {
   // function to convert object to a map
@@ -14,11 +13,9 @@ async function bp_totals(bookId,delay,iterations,setVal) {
   });
 
   let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-'];
-  let ucounts = [];
   await (async function theLoop (iterations) {
     setTimeout(function () {
       if (--iterations) {      // If i > 0, keep going
-        // skip first iteration
         console.log("iter",iterations);
         const bookarray = bookId.split(",");
         let all_map = new Map();
@@ -40,14 +37,15 @@ async function bp_totals(bookId,delay,iterations,setVal) {
         if ( allPresent ) {
           console.log("All Present!");
           // sum over resources
-          for ( let i = 0; i < ucounts.length; i++ ) {
-            let umap = obj_to_map(JSON.parse(ucounts[i]));
-            for ( let [k,v] of umap.entries() ) {
-              let x = all_map.get(k);
-              if ( x === undefined ) x = 0;
-              all_map.set(k, x + v);
+          for ( let v of resource_map.values() ) {
+            let y = obj_to_map(JSON.parse(v));
+            for ( let [m,n] of y.entries() ) {
+              let z = all_map.get(m);
+              if ( z === undefined ) z = 0;
+              all_map.set(m, z + n);
             }
           }
+
           let totalPackcageWordCount = 0;
           for ( let c of all_map.values() ) {
             totalPackcageWordCount = totalPackcageWordCount + c;
