@@ -1,5 +1,6 @@
 import { fetchBook } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
+import * as wc from '../../../core/wordCounts';
 
 // function to convert object to a map
 const obj_to_map = ( ob => {
@@ -60,6 +61,7 @@ export async function fetchBookPackageUST({
     var book_map = obj_to_map(_book);
     var summary_ust_map = new Map();
     const chaparray = chapters.split(",");
+    let alltext = [];
 
     for (var [k,v] of book_map.entries()) {
         //console.log("Working on Chapter:"+k);
@@ -83,6 +85,11 @@ export async function fetchBookPackageUST({
                 //console.log(".. Working on v2:",v2);
                 for (var i=0; i < v2.length; i++) {
                     var verse_obj_map = obj_to_map(v2[i]);
+                    // unaligned text method
+                    if ( verse_obj_map.has("text") ) {
+                        alltext.push(verse_obj_map.get("text").toLowerCase());
+                    }
+                    // aligned text method
                     if ( verse_obj_map.get("type") === "word" ) {
                         let thisword = verse_obj_map.get("text");
                         let lowerCaseVal = thisword.toLowerCase();
@@ -97,6 +104,19 @@ export async function fetchBookPackageUST({
                         }
                     }
                 }
+            }
+        }
+    }
+    // first process unaligned text
+    let wcounts = wc.wordCount(alltext.join('\n'));
+    if ( wcounts.total !== 0 ) {
+        //console.log("wcounts for unaligned text:",wcounts.wordFrequency);
+        let x = obj_to_map(wcounts.wordFrequency);
+        for ( let [k,v] of x.entries() ) {
+            if ( summary_ust_map.has(k) ) { 
+                summary_ust_map.set(k, summary_ust_map.get(k) + v );
+            } else {
+                summary_ust_map.set(k,v);
             }
         }
     }
