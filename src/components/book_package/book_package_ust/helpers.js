@@ -76,8 +76,8 @@ export async function fetchBookPackageUST({
         // the value is a verses object where key is verse number
         // and value is an array of verse objects
         var verses_map = obj_to_map(v);
-        for (var [k1,v1] of verses_map.entries()) {
-            if ( k1 === "front" ) continue;
+        for (var v1 of verses_map.values()) {
+            //if ( k1 === "front" ) continue;
             //console.log(". Working on verse:"+k1);
             // the value is a set of tags for each object in a verse
             var verse_map = obj_to_map(v1);

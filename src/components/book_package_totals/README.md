@@ -1,16 +1,26 @@
 
 ### Example
 
-This component simply includes all the Book Package components onto
-one page. It will validate `bookId` and `chapter`.
+This component looks for and queries data from the other components.
 
-Optionally, a chapter in the book may be specified or a comma delimited list for multiple chapters.
+In order to run, you must first define the book package using the `BookPackageRollup` component.
+Once the components have all run and contributed their data, this component may 
+be used to query the component data, then process it and, in some cases, deduping the
+counts (UTA and UTW) across the Books.
 
-The book identifiers are per standards found at:
-http://ubsicap.github.io/usfm/identification/books.html
+Finally it will display a "total word count" across all the books.
+
+**NOTE! the components save their data to `LocalStorage` and this is the source of queries.**
+
+This component takes two parameters:
+
+- `delay` which defaults to 1000ms (1 second). This controls how often it queries `LocalStorage`.
+- `iterations` which defaults 1000. This controls how many retries it will make before timing out.
+
+The default combination will wait for almost 17 minutes before timing out.
 
 ```js
-<BookPackageTotals bookId='tit' delay='' iterations='' />
+<BookPackageTotals bookId='tit' delay={1000} iterations={1000} />
 ```
 
 

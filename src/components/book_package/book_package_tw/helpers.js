@@ -7,7 +7,7 @@ import * as wc from '../../../core/wordCounts';
 async function process_tags(key,val,summary_tw_map,
     summary_twArticle_map,summary_ByArticle_map) {
     if ( key !== "tw" ) {return;}
-
+    console.log("tw key,val=",key,val)
     // article count
     let count = summary_tw_map.get(val);
     if ( count === undefined ) count = 0;
@@ -28,8 +28,7 @@ async function process_tags(key,val,summary_tw_map,
         );
         data = await gitApi.get({uri});    
     } catch(error) {
-        data = null;
-        return;
+        data = " ";
     }
     let twcounts = wc.wordCount(""+data);
     for ( var i=0; i < twcounts.allWords.length; i++ ) {
@@ -131,8 +130,9 @@ export async function fetchBookPackageTw({
         // the value is a verses object where key is verse number
         // and value is an array of verse objects
         var verses_map = obj_to_map(v);
-        for (var [k1,v1] of verses_map.entries()) {
-            if ( k1 === "front" ) continue;
+        //for (var [k1,v1] of verses_map.entries()) {
+        for (var v1 of verses_map.values()) {
+            //if ( k1 === "front" ) continue;
             //console.log(". Working on verse:"+k1);
             // the value is a set of tags for each object in a verse
             var verse_map = obj_to_map(v1);
@@ -186,6 +186,11 @@ export async function fetchBookPackageTw({
     results.totalTwArticleWords    = totalTwWordCount;
     results.summary_ByArticle_map  = map_to_obj(summary_ByArticle_map);
     //console.log("utw article counts", summary_ByArticle_map)
+    for ( let k of summary_tw_map.keys() ) {
+        if ( ! summary_ByArticle_map.has(k) ) {
+            console.log("Key does not exist in by article map",k);
+        }
+    }
 
     localStorage.setItem('utw-'+bookId,JSON.stringify(results.summary_ByArticle_map));
     return results;
