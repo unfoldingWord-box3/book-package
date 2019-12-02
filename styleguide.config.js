@@ -25,19 +25,6 @@ let sections = [
     }
   },
   {
-    name: 'BookPackageTotals',
-    components: () => {
-      const componentNames = [
-        'book_package_totals',
-      ];
-      return componentNames.map(componentName => {
-        const filename = upperFirst(camelCase(componentName));
-        const fpath = Path.resolve(__dirname, `src/components//${componentName}`, `${filename}.js`);
-        return fpath;
-      });
-    }
-  },
-  {
     name: 'BookPackage',
     components: () => {
       const componentNames = [
@@ -59,6 +46,19 @@ let sections = [
   {
     name: 'Core',
     content: 'src/core/README.md',
+  },
+  {
+    name: 'BookPackageTotals',
+    components: () => {
+      const componentNames = [
+        'book_package_totals',
+      ];
+      return componentNames.map(componentName => {
+        const filename = upperFirst(camelCase(componentName));
+        const fpath = Path.resolve(__dirname, `src/components//${componentName}`, `${filename}.js`);
+        return fpath;
+      });
+    }
   },
 ];
 

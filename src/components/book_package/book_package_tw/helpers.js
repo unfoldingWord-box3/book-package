@@ -7,7 +7,7 @@ import * as wc from '../../../core/wordCounts';
 async function process_tags(key,val,summary_tw_map,
     summary_twArticle_map,summary_ByArticle_map) {
     if ( key !== "tw" ) {return;}
-    console.log("tw key,val=",key,val)
+    //console.log("tw key,val=",key,val)
     // article count
     let count = summary_tw_map.get(val);
     if ( count === undefined ) count = 0;

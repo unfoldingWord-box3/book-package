@@ -32,7 +32,7 @@ function BookPackageTn({
   style,
 }) 
 {
-  const [_book, setVal] = useState("Waiting");
+  const [_book, setVal] = useState("Waiting-BookPackageTn");
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
     let chlist = chapter ? chapter : "(ALL)";

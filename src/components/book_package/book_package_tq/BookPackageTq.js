@@ -34,7 +34,7 @@ function BookPackageTq({
 }) 
 {
 
-  const [_tq, setVal] = useState("Waiting");
+  const [_tq, setVal] = useState("Waiting-BookPackageTq");
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
     let chlist = chapter ? chapter : "(ALL)";

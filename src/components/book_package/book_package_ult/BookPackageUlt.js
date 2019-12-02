@@ -41,7 +41,7 @@ function BookPackageUlt({
 }) 
 {
   const open = true; // for collapse component to manage its state
-  const [_book, setVal] = useState("Waiting");
+  const [_book, setVal] = useState("Waiting-BookPackageUlt");
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
     let chlist = chapter ? chapter : "(ALL)";

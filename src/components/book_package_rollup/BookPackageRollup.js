@@ -39,7 +39,7 @@ function BookPackageRollup({
   style,
 }) 
 {
-  const [_book, setVal] = useState("Waiting");
+  const [_book, setVal] = useState("Waiting-BookPackageRollup");
   useEffect( () => {
     const fetchData = async () => {
 
@@ -56,6 +56,7 @@ function BookPackageRollup({
      
       let chlist = chapter ? chapter : "(ALL)";
       if ( result ) {
+        localStorage.setItem('bookid',bookId);
         setVal(
           <Paper className={classes.paper} >
             <Typography variant="h5" gutterBottom>
