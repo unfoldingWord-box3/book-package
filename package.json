@@ -18,7 +18,8 @@
     "js-yaml-parser": "^1.0.0",
     "jszip": "^3.2.0",
     "localforage": "^1.7.3",
-    "usfm-js": "^2.0.0"
+    "usfm-js": "^2.0.0",
+    "uw-word-count": "^0.1.0"
   },
   "scripts": {
     "start": "styleguidist server",

@@ -1,6 +1,6 @@
 import { translationNotes } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
-import * as wc from '../../../core/wordCounts';
+import * as wc from 'uw-word-count';
 //import Path from 'path';
 
 export async function fetchBookPackageTn({

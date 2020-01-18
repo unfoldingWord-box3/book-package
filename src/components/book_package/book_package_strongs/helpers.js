@@ -2,7 +2,7 @@ import Path from 'path';
 import { fetchOriginalBook } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
 import * as cav from '../../../core/chaptersAndVerses';
-import * as wc from '../../../core/wordCounts';
+import * as wc from 'uw-word-count';
 
 async function process_tags(key,val,bookId,summary_strong_map,
     summary_article_map,detail_article_map) 

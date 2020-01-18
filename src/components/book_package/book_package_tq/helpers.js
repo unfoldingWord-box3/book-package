@@ -1,5 +1,5 @@
 import * as gitApi from '../../../core/gitApi';
-import * as wc from '../../../core/wordCounts';
+import * as wc from 'uw-word-count';
 import {chaptersInBook} from '../../../core/chaptersAndVerses';
 
 export async function fetchBookPackageTq({

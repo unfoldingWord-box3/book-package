@@ -1,6 +1,6 @@
 import { fetchBook } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
-import * as wc from '../../../core/wordCounts';
+import * as wc from 'uw-word-count';
 
 // function to convert object to a map
 const obj_to_map = ( ob => {
