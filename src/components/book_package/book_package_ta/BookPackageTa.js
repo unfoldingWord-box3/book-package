@@ -75,9 +75,9 @@ function BookPackageTa({
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Total number of tA articles: {uniqueAndSorted.length}<br/>
-            Total Word Count: {result["allArticlesTotal"]} <br/> 
-            Unique words: {result["allArticlesDistinct"]} 
+            Total number of tA articles: <strong>{uniqueAndSorted.length}</strong><br/>
+            Total Word Count: <strong>{result["allArticlesTotal"]}</strong> <br/> 
+            Unique words: <strong>{result["allArticlesDistinct"]}</strong> 
           </Typography>
 
           <Collapse in={open} component="details">

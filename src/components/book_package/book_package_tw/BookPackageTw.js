@@ -52,13 +52,13 @@ function BookPackageTw({
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total Number of tW Articles: {totalWordCount} <br/>
-            Unique Number of tW Articles: {gkeys.length} 
+            Total Number of tW Articles: <strong>{totalWordCount}</strong> <br/>
+            Unique Number of tW Articles: <strong>{gkeys.length}</strong> 
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-          Total Word Count: {result.totalTwArticleWords} <br/>
-          Unique Words: {result.distinctTwArticleWords} <br/>
+          Total Word Count: <strong>{result.totalTwArticleWords}</strong> <br/>
+          Unique Words: <strong>{result.distinctTwArticleWords}</strong> <br/>
           </Typography>
 
           <Collapse in={open} component="details">

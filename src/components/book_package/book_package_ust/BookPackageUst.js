@@ -71,11 +71,11 @@ function BookPackageUst({
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total Word Count: {totalWordCount}
+            Total Word Count: <strong>{totalWordCount}</strong>
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Unique Words: {gkeys.length}
+            Unique Words: <strong>{gkeys.length}</strong>
           </Typography>
 
           <Collapse in={open} component="details">
