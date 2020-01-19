@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import { Collapse } from '@material-ui/core';
+
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -20,9 +21,10 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import MaterialTable from 'material-table';
+import { forwardRef } from 'react';
 
 import * as wc from 'uw-word-count';
-
+ 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -45,6 +47,7 @@ const tableIcons = {
 
 
 async function bp_totals(delay,iterations,setVal) {
+  const open = true; // for collapse component to manage its state
   // function to convert object to a map
   const obj_to_map = ( ob => {
     const mp = new Map();
@@ -155,12 +158,16 @@ async function bp_totals(delay,iterations,setVal) {
               <Typography variant="h6" gutterBottom>
                 Total Word Count for "{tbid.toUpperCase()}" {totalPackcageWordCount}
               </Typography>
-              <MaterialTable
-                icons={tableIcons}
-                title={mt.title}
-                columns={mt.columns}
-                data={mt.data}
-              />
+              <Collapse in={open} component="details">
+                <div id="details">
+                  <MaterialTable
+                    icons={tableIcons}
+                    title={mt.title}
+                    columns={mt.columns}
+                    data={mt.data}
+                  />
+                </div>
+              </Collapse>
             </Paper>
           ); 
           return;

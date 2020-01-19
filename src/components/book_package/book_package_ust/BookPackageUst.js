@@ -1,17 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Collapse } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 import {fetchBookPackageUST} from './helpers';
 import * as cav from '../../../core/chaptersAndVerses';
+import { forwardRef } from 'react';
+
+import * as wc from 'uw-word-count';
+
+/* begin material box imports and icons */
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Check from '@material-ui/icons/Check';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+import Clear from '@material-ui/icons/Clear';
+import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import Edit from '@material-ui/icons/Edit';
+import FilterList from '@material-ui/icons/FilterList';
+import FirstPage from '@material-ui/icons/FirstPage';
+import LastPage from '@material-ui/icons/LastPage';
+import Remove from '@material-ui/icons/Remove';
+import SaveAlt from '@material-ui/icons/SaveAlt';
+import Search from '@material-ui/icons/Search';
+import ViewColumn from '@material-ui/icons/ViewColumn';
+import MaterialTable from 'material-table';
+
+const tableIcons = {
+  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+  Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+  Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+  DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+  Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+  Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+  Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+  FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+  LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+  NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+  PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
+  ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+  Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+  SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+  ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
+  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+};
+/* end material box imports and icons */
 
 
 function validateInputProperties(bookId,chapters) {
@@ -62,8 +99,8 @@ function BookPackageUst({
         {username: 'unfoldingword', languageId:'en', 
         bookId: bookId, chapters: chapter
       });
-      let gkeys = Array.from(Object.keys(result.summary_ust_map));
       let totalWordCount = result.totalWordCount;
+      let mt = wc.wf_to_mt(result.summary_ust_map);
       setVal(
         <Paper className={classes.paper} >
           <Typography variant="h6" gutterBottom>
@@ -74,32 +111,14 @@ function BookPackageUst({
             Total Word Count: <strong>{totalWordCount}</strong>
           </Typography>
 
-          <Typography variant="body2" gutterBottom>
-            Unique Words: <strong>{gkeys.length}</strong>
-          </Typography>
-
           <Collapse in={open} component="details">
           <div id="details">
-          <Table className={classes.table} 
-          size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Word</TableCell>
-                <TableCell align="center">Count</TableCell>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {gkeys.sort().map(skey => (
-                <TableRow key={skey}>
-                  <TableCell component="th" scope="row">
-                      {skey}
-                  </TableCell>
-                  <TableCell align="center">{result.summary_ust_map[skey]}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+            <MaterialTable
+              icons={tableIcons}
+              title={mt.title}
+              columns={mt.columns}
+              data={mt.data}
+            />
           </div>
           </Collapse>
 
