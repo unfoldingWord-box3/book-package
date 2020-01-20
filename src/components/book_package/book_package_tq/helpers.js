@@ -47,11 +47,9 @@ languageId,
             throw new Error(err);
         }
         let _verses = await JSON.parse(JSON.stringify(data));
-        console.log("_verses=",_verses)
 
         for (var j = 0; j < _verses.length; j++) {
             let git_url = _verses[j].git_url;
-            console.log("git_url=",git_url)
             let _tq;
             try {
                 _tq = await gitApi.getURL({uri: git_url});    
@@ -63,7 +61,6 @@ languageId,
                 continue;
             }
             let blob = JSON.parse(JSON.stringify(_tq));
-            console.log("blob=",blob)
             let content;
             try {
                 content = atob(blob.content);
