@@ -1,6 +1,7 @@
 import * as gitApi from '../../../core/gitApi';
 import * as wc from 'uw-word-count';
 import {chaptersInBook} from '../../../core/chaptersAndVerses';
+import Path from 'path';
 
 export async function fetchBookPackageTq({
 bookId,
@@ -16,7 +17,9 @@ languageId,
     const repo = languageId + "_tq";
     const numchapters = chaptersInBook(bookId);
     const slash = "/";
-    const mdext = ".md";
+    const baseURL = 'https://git.door43.org/';
+    const owner   = 'unfoldingword';
+
     //console.log("Number of chapters in book:",numchapters.length);
     for (var i = 0; i < numchapters.length; i++) {
         let ch = ""+(i+1);
@@ -31,30 +34,45 @@ languageId,
         if ( i+1 < 10 ) {
             ch = "0"+ch;
         } 
-        let numverses = numchapters[i];
+        //let numverses = numchapters[i];
         //console.log("Verses in chapter:",numverses);
-        for (var j = 0; j <= numverses; j++) {
-            let vrs = ""+(j+1);
-            if ( j+1 < 10 ) {
-                vrs = "0"+vrs;
-            }
-            let repo_path = slash + bookId + slash + ch + slash + vrs + mdext;
-            //console.log("Path:",repo_path);
-            let _tq = [];
+        let data;
+        let uri;
+        try {
+            let path = bookId+slash+ch;
+            uri = baseURL+Path.join('api/v1/repos', owner, repo, 'contents', path);
+            data = await gitApi.getURL({uri});    
+        } catch(error) {
+            const err = "contents Error on:"+uri+" is:"+error;
+            throw new Error(err);
+        }
+        let _verses = await JSON.parse(JSON.stringify(data));
+        console.log("_verses=",_verses)
+
+        for (var j = 0; j < _verses.length; j++) {
+            let git_url = _verses[j].git_url;
+            console.log("git_url=",git_url)
+            let _tq;
             try {
-                _tq = await gitApi.getFile(
-                    {username: 'unfoldingword', 
-                    repository: repo, 
-                    path: repo_path, 
-                    branch: 'master',
-                });    
+                _tq = await gitApi.getURL({uri: git_url});    
             } catch(error) {
-                _tq = null;
+                const err = "getURL() Error on:"+git_url+" is:"+error;
+                throw new Error(err);
             }
             if ( _tq == null) {
                 continue;
             }
-            let vcounts = wc.wordCount(_tq);
+            let blob = JSON.parse(JSON.stringify(_tq));
+            console.log("blob=",blob)
+            let content;
+            try {
+                content = atob(blob.content);
+            } catch(error) {
+                const err = "atob() Error on:"+git_url+" is:"+error;
+                throw new Error(err);
+            }
+    
+            let vcounts = wc.wordCount(content);
             grandtext = grandtext + " " + vcounts.allWords.join(" ");
             sumtotals.l1count  = sumtotals.l1count + vcounts.l1count;           
             sumtotals.total    = sumtotals.total + vcounts.total;
@@ -62,6 +80,7 @@ languageId,
     }
     let vcounts = wc.wordCount(grandtext);
     sumtotals.distinct = vcounts.distinct;
+    sumtotals.wordFrequency = vcounts.wordFrequency;
     localStorage.setItem('utq-'+bookId,JSON.stringify(vcounts.wordFrequency))
     return sumtotals;
 }
