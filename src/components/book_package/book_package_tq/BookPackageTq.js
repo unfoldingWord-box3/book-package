@@ -95,10 +95,20 @@ function BookPackageTq({
       return;
     }
     const fetchData = async () => {
-      const result = await fetchBookPackageTq(
-        {username: 'unfoldingword', languageId:'en', 
-        bookId: bookId, chapters: chapter}
-      );
+      let result;
+      try {
+        result = await fetchBookPackageTq(
+          {username: 'unfoldingword', languageId:'en', 
+          bookId: bookId, chapters: chapter}
+        );
+      } catch (error) {
+        setVal(
+          <div>
+            {error.message}
+          </div>
+        )
+        return;
+      }
 
       let mt = wc.wf_to_mt(result.wordFrequency);
 

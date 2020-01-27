@@ -39,10 +39,20 @@ function BookPackageTw({
       return;
     }
     const fetchData = async () => {
-      const result = await fetchBookPackageTw(
-        {username: 'unfoldingword', languageId:'en', 
-        bookId: bookId, chapters: chapter
-      });
+      let result;
+      try {
+        result = await fetchBookPackageTw(
+          {username: 'unfoldingword', languageId:'en', 
+          bookId: bookId, chapters: chapter
+        });
+      } catch (error) {
+        setVal(
+          <div>
+            {error.message}
+          </div>
+        )
+        return;
+      }
       let gkeys = Array.from(Object.keys(result.summary_tw_map));
       let totalWordCount = result.totalWordCount;
       setVal(

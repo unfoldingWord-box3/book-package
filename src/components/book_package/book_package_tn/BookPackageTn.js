@@ -48,10 +48,20 @@ function BookPackageTn({
       return;
     }
     const fetchData = async () => {
-      const result = await fetchBookPackageTn(
-        {username: 'unfoldingword', languageId:'en', 
-        bookId: bookId, chapters: chapter}
-      );
+      let result;
+      try {
+        result = await fetchBookPackageTn(
+          {username: 'unfoldingword', languageId:'en', 
+          bookId: bookId, chapters: chapter}
+        );
+      } catch (error) {
+        setVal(
+          <div>
+            {error.message}
+          </div>
+        )
+        return;
+      }
 
       setVal(
         <Paper className={classes.paper}>

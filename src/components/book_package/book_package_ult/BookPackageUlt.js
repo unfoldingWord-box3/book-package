@@ -96,10 +96,20 @@ function BookPackageUlt({
     }
 
     const fetchData = async () => {
-      const result = await fetchBookPackageULT(
-        {username: 'unfoldingword', languageId:'en', 
-        bookId: bookId, chapters: chapter
-      });
+      let result;
+      try {
+        result = await fetchBookPackageULT(
+          {username: 'unfoldingword', languageId:'en', 
+          bookId: bookId, chapters: chapter
+        });  
+      } catch (error) {
+        setVal(
+          <div>
+            {error.message}
+          </div>
+        )
+        return;
+      }
       let mt = wc.wf_to_mt(result.summary_ult_map);
       let totalWordCount = result.totalWordCount;
       setVal(

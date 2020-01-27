@@ -60,10 +60,20 @@ function BookPackageTa({
       return;
     }
     const fetchData = async () => {
-      const result = await fetchBookPackageTa(
-        {username: 'unfoldingword', languageId:'en', 
-        bookId: bookId, chapters: chapter}
-      );
+      let result;
+      try {
+        result = await fetchBookPackageTa(
+          {username: 'unfoldingword', languageId:'en', 
+          bookId: bookId, chapters: chapter}
+        );
+        } catch (error) {
+        setVal(
+          <div>
+            {error.message}
+          </div>
+        )
+        return;
+      }
       let tkeys = Array.from(result["tarticles"]);
       let uniqueAndSorted = [...new Set(tkeys)].sort() 
 

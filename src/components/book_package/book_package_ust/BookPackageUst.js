@@ -95,10 +95,20 @@ function BookPackageUst({
     }
 
     const fetchData = async () => {
-      const result = await fetchBookPackageUST(
-        {username: 'unfoldingword', languageId:'en', 
-        bookId: bookId, chapters: chapter
-      });
+      let result;
+      try {
+        result = await fetchBookPackageUST(
+          {username: 'unfoldingword', languageId:'en', 
+          bookId: bookId, chapters: chapter
+        });  
+      } catch (error) {
+        setVal(
+          <div>
+            {error.message}
+          </div>
+        )
+        return;
+      }
       let totalWordCount = result.totalWordCount;
       let mt = wc.wf_to_mt(result.summary_ust_map);
       setVal(
