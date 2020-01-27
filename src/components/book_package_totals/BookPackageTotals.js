@@ -156,7 +156,7 @@ async function bp_totals(delay,iterations,setVal) {
           setVal(
             <Paper>
               <Typography variant="h6" gutterBottom>
-                Total Word Count for "{tbid.toUpperCase()}" {totalPackcageWordCount}
+                Total Word Count for "{tbid.toUpperCase()}" <strong>{totalPackcageWordCount}</strong>
               </Typography>
               <Collapse in={open} component="details">
                 <div id="details">
