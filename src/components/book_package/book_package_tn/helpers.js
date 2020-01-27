@@ -49,6 +49,7 @@ languageId,
     result["totalNoteWords"] = wcounts.total;
     result["distinctNoteWords"] = wcounts.distinct;
     result["allwords"] = wcounts.allWords;
+    result["wordFrequency"] = wcounts.wordFrequency;
     // debug
     //console.log('tN allwords=',wcounts.allWords)
     //console.log("allNotes length=",allNotes.length)

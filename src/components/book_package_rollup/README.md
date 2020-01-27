@@ -21,4 +21,10 @@ http://ubsicap.github.io/usfm/identification/books.html
 <BookPackageRollup bookId='tit' chapter='' />
 ```
 
+**Why are Lexicon results not included in the book package**
 
+A book package is only meaningful in the context of translating a 
+"Gateway Language" (GL) into an "Other Language" (OL). The Strongs Lexicon
+is only used for the "mother" gateway language, namely, English.
+All other GL to OL rely on the other resources to guide the 
+translation effort.
