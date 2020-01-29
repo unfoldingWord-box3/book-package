@@ -1,7 +1,7 @@
 import { translationNotes } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
 import * as wc from 'uw-word-count';
-//import Path from 'path';
+import {bpstore} from '../../../core/setupBpDatabase';
 
 export async function fetchBookPackageTn({
 bookId,
@@ -50,9 +50,6 @@ languageId,
     result["distinctNoteWords"] = wcounts.distinct;
     result["allwords"] = wcounts.allWords;
     result["wordFrequency"] = wcounts.wordFrequency;
-    // debug
-    //console.log('tN allwords=',wcounts.allWords)
-    //console.log("allNotes length=",allNotes.length)
-    localStorage.setItem('utn-'+bookId,JSON.stringify(wcounts.wordFrequency));
+    bpstore.setItem('utn-'+bookId,JSON.stringify(wcounts));
     return result;
 }

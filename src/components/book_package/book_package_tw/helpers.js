@@ -3,6 +3,7 @@ import { fetchOriginalBook } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
 import * as cav from '../../../core/chaptersAndVerses';
 import * as wc from 'uw-word-count';
+import {bpstore} from '../../../core/setupBpDatabase';
 
 async function process_tags(key,val,summary_tw_map,
     summary_twArticle_map,summary_ByArticle_map) {
@@ -40,11 +41,7 @@ async function process_tags(key,val,summary_tw_map,
         count = count + 1;
         summary_twArticle_map.set(thisword,count);
     }
-    let articleCounts = {};
-    articleCounts.total = twcounts.allWords.length;
-    articleCounts.distinct = [...new Set(twcounts.allWords)].length;
-    articleCounts.allWords = twcounts.allWords;
-    summary_ByArticle_map.set(val,articleCounts);
+    summary_ByArticle_map.set(val,twcounts);
 }
 
 export function convertRC2Link(lnk) {
@@ -192,6 +189,6 @@ export async function fetchBookPackageTw({
         }
     }
 
-    localStorage.setItem('utw-'+bookId,JSON.stringify(results.summary_ByArticle_map));
+    bpstore.setItem('utw-'+bookId,JSON.stringify(results.summary_ByArticle_map));
     return results;
   }

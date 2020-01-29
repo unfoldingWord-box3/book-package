@@ -109,8 +109,8 @@ function BookPackageUst({
         )
         return;
       }
-      let totalWordCount = result.totalWordCount;
-      let mt = wc.wf_to_mt(result.summary_ust_map);
+      let mt = wc.wf_to_mt(result.wordFrequency);
+      let totalWordCount = result.total;
       setVal(
         <Paper className={classes.paper} >
           <Typography variant="h6" gutterBottom>

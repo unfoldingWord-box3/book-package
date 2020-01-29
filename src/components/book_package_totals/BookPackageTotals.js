@@ -24,6 +24,8 @@ import MaterialTable from 'material-table';
 import { forwardRef } from 'react';
 
 import * as wc from 'uw-word-count';
+import {bpstore} from '../../core/setupBpDatabase';
+
  
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -57,8 +59,8 @@ async function bp_totals(delay,iterations,setVal) {
 
   let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-'];
   await (async function theLoop (iterations) {
-    setTimeout(function () {
-      let tbid = localStorage.getItem('bookid');
+    setTimeout( async function () {
+      let tbid = await bpstore.getItem('bookid');
       if ( tbid === null ) {
         setVal("Please run BookPackageRollup")
       } else if (--iterations) {      // If i > 0, keep going
@@ -70,7 +72,7 @@ async function bp_totals(delay,iterations,setVal) {
         for ( let ri = 0; ri < resourcePrefixes.length; ri++ ) {
           for ( let bi = 0; bi < bookarray.length; bi++ ) {
             let lsk = resourcePrefixes[ri]+bookarray[bi];
-            let x = localStorage.getItem(lsk);
+            let x = await bpstore.getItem(lsk);
             if ( x === null ) {
               allPresent = false;
               console.log("iter",iterations,",missing:",lsk);
@@ -94,6 +96,7 @@ async function bp_totals(delay,iterations,setVal) {
                 // Key x is the uta article
                 if ( uta_dedup.get(x) ) { continue; }
                 uta_dedup.set(x,y.wordFrequency);
+                //console.log("uta_dedup.set()",x,y.wordFrequency)
               }
             }
           }
@@ -104,6 +107,7 @@ async function bp_totals(delay,iterations,setVal) {
               let z = all_map.get(m);
               if ( z === undefined ) z = 0;
               all_map.set(m, z + n);
+              //console.log("UTA all_map.set()",m,z,n)
             }
           }
           //
@@ -117,19 +121,23 @@ async function bp_totals(delay,iterations,setVal) {
               for ( let [x,y] of omap.entries() ) {
                 // Key x is the utw article
                 if ( utw_dedup.get(x) ) { continue; }
-                utw_dedup.set(x,y.allWords);
+                utw_dedup.set(x,y.wordFrequency);
+                //console.log("utw_dedup.set()",x,y.wordFrequency)
               }
             }
           }
           // add in utw contribution
           for ( let v of utw_dedup.values() ) {
-            for ( let i=0; i < v.length; i++ ) {
-              let z = all_map.get(v[i]);
+            let y = obj_to_map(v);
+            for ( let [m,n] of y.entries() ) {
+              let z = all_map.get(m);
               if ( z === undefined ) z = 0;
-              z++;
-              all_map.set(v[i], z);
+              all_map.set(m, z + n);
+              //console.log("UTW all_map.set()",m,z,n)
             }
           }
+
+          console.log("Post UTA/W all_map",all_map)
           // sum over resources
           for ( let [k,v] of resource_map.entries() ) {
             if ( k.startsWith("uta") ) {
@@ -137,7 +145,9 @@ async function bp_totals(delay,iterations,setVal) {
             } else if ( k.startsWith("utw") ) {
               continue;
             } else {
-              let y = obj_to_map(JSON.parse(v));
+              let x = obj_to_map(JSON.parse(v));
+              let y = obj_to_map(x.get('wordFrequency'));
+              console.log("y=",y)
               for ( let [m,n] of y.entries() ) {
                 let z = all_map.get(m);
                 if ( z === undefined ) z = 0;

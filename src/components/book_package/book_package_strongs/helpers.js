@@ -2,7 +2,9 @@ import Path from 'path';
 import { fetchOriginalBook } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
 import * as cav from '../../../core/chaptersAndVerses';
+import {bpstore} from '../../../core/setupBpDatabase';
 import * as wc from 'uw-word-count';
+
 
 async function process_tags(key,val,bookId,summary_strong_map,
     summary_article_map,detail_article_map) 
@@ -51,10 +53,7 @@ async function process_tags(key,val,bookId,summary_strong_map,
         count = count + 1;
         summary_article_map.set(thisword,count);
     }
-    let articleCounts = {};
-    articleCounts.total = counts.allWords.length;
-    articleCounts.distinct = [...new Set(counts.allWords)].length;
-    detail_article_map.set(val,articleCounts);
+    detail_article_map.set(val,counts);
 }
 
 export function convertToLink(lnk,bookId) {
@@ -185,6 +184,6 @@ export async function fetchBookPackageStrongs({
     results.totalArticleWords = totalStrongWordCount;
     results.detail_article_map   = map_to_obj(detail_article_map);
     // below is not words with counts; it is lex entries with counts
-    localStorage.setItem('lex-'+bookId,JSON.stringify(results.summary_article_map));
+    bpstore.setItem('lex-'+bookId,JSON.stringify(results.detail_article_map));
     return results;
   }

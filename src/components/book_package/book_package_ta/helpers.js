@@ -2,6 +2,7 @@ import { translationNotes } from '../../../core/helpers.js'
 import * as gitApi from '../../../core/gitApi';
 import * as wc from 'uw-word-count';
 import Path from 'path';
+import {bpstore} from '../../../core/setupBpDatabase';
 
 export async function fetchBookPackageTa({
 bookId,
@@ -103,6 +104,6 @@ languageId,
     result["allArticlesDistinct"] = x.distinct;
     result["allArticlesTotal"]    = x.total;
     
-    localStorage.setItem('uta-'+bookId,JSON.stringify(result["detail_tarticles_map"]));
+    bpstore.setItem('uta-'+bookId,JSON.stringify(result["detail_tarticles_map"]));
     return result;
 }

@@ -2,6 +2,7 @@ import * as gitApi from '../../../core/gitApi';
 import * as wc from 'uw-word-count';
 import {chaptersInBook} from '../../../core/chaptersAndVerses';
 import Path from 'path';
+import {bpstore} from '../../../core/setupBpDatabase';
 
 export async function fetchBookPackageTq({
 bookId,
@@ -76,8 +77,11 @@ languageId,
         }
     }
     let vcounts = wc.wordCount(grandtext);
+    // overwrite l1count with correct value
+    vcounts.l1count = sumtotals.l1count;
     sumtotals.distinct = vcounts.distinct;
     sumtotals.wordFrequency = vcounts.wordFrequency;
-    localStorage.setItem('utq-'+bookId,JSON.stringify(vcounts.wordFrequency))
+    //.setItem('utq-'+bookId,JSON.stringify(vcounts.wordFrequency))
+    bpstore.setItem('utq-'+bookId,JSON.stringify(vcounts))
     return sumtotals;
 }

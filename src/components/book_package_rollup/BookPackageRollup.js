@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 import * as cav from '../../core/chaptersAndVerses';
+import {bpstore} from '../../core/setupBpDatabase'
 import BookPackageTotals from '../book_package_totals';
 //import BookPackageStrongs from '../book_package/book_package_strongs';
 import BookPackageTw from '../book_package/book_package_tw';
@@ -43,7 +44,7 @@ function BookPackageRollup({
   useEffect( () => {
     const fetchData = async () => {
 
-      localStorage.clear(); // clear/reset local storage before starting components
+      bpstore.clear(); // clear/reset local storage before starting components
 
       let result;
       const bookarray = bookId.split(",");
@@ -56,7 +57,7 @@ function BookPackageRollup({
      
       let chlist = chapter ? chapter : "(ALL)";
       if ( result ) {
-        localStorage.setItem('bookid',bookId);
+        bpstore.setItem('bookid',bookId);
         setVal(
           <Paper className={classes.paper} >
             <Typography variant="h5" gutterBottom>

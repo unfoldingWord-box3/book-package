@@ -9,11 +9,11 @@ counts (UTA and UTW) across the Books.
 
 Finally it will display a "total word count" across all the books.
 
-**NOTE! the components save their data to `LocalStorage` and this is the data source for this component.**
+**NOTE! the components save their data to `indexedDB` and this is the data source for this component.**
 
 This component takes two parameters:
 
-- `delay` which defaults to 1000ms (1 second). This controls how often it queries `LocalStorage`.
+- `delay` which defaults to 1000ms (1 second). This controls how often it queries `indexedDB`.
 - `iterations` which defaults 1000. This controls how many retries it will make before timing out.
 
 The default combination will wait for almost 17 minutes before timing out.
