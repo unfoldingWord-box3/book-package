@@ -93,6 +93,6 @@ export async function fetchBookPackageUST({
     }
 
     let wcounts = wc.wordCount(alltext.join('\n'));
-    bpstore.setItem('ust-'+bookId,JSON.stringify(wcounts))
+    await bpstore.setItem('ust-'+bookId,JSON.stringify(wcounts))
     return wcounts;
   }

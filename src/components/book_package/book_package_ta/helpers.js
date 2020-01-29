@@ -104,6 +104,6 @@ languageId,
     result["allArticlesDistinct"] = x.distinct;
     result["allArticlesTotal"]    = x.total;
     
-    bpstore.setItem('uta-'+bookId,JSON.stringify(result["detail_tarticles_map"]));
+    await bpstore.setItem('uta-'+bookId,JSON.stringify(result["detail_tarticles_map"]));
     return result;
 }

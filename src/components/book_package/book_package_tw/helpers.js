@@ -189,6 +189,6 @@ export async function fetchBookPackageTw({
         }
     }
 
-    bpstore.setItem('utw-'+bookId,JSON.stringify(results.summary_ByArticle_map));
+    await bpstore.setItem('utw-'+bookId,JSON.stringify(results.summary_ByArticle_map));
     return results;
   }

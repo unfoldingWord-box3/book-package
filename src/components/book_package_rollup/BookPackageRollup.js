@@ -44,7 +44,7 @@ function BookPackageRollup({
   useEffect( () => {
     const fetchData = async () => {
 
-      bpstore.clear(); // clear/reset local storage before starting components
+      await bpstore.clear(); // clear/reset local storage before starting components
 
       let result;
       const bookarray = bookId.split(",");
@@ -57,7 +57,7 @@ function BookPackageRollup({
      
       let chlist = chapter ? chapter : "(ALL)";
       if ( result ) {
-        bpstore.setItem('bookid',bookId);
+        await bpstore.setItem('bookid',bookId);
         setVal(
           <Paper className={classes.paper} >
             <Typography variant="h5" gutterBottom>

@@ -9,12 +9,16 @@ describe('Book Package Total Tests', function () {
         cy.get('.rsg--sectionName-12').should('have.text', 'README')
     })
 
-    it('Should find a total of 57480 words in Titus', function() {
+    // NOTE: this will be found only after all the other components have 
+    // set their data in the database. So this has a long timeout.
+    // Once it is able to run, then the others will have also finished.
+    // Thus they don't need to have a long timeout.
+    it('Should find a total of 57487 words in Titus', function() {
         // always return to the book package totals page
         cy.get(':nth-child(2) > .rsg--list-53 > .rsg--item-54 > .rsg--link-26')
         .click()
         cy.get('.BookPackageTotals-root-60 > .MuiPaper-elevation1 > .MuiTypography-gutterBottom > strong',  { timeout: 100000 })
-        .should('have.text','57480')
+        .should('have.text','57487')
     })
 
 
@@ -66,14 +70,14 @@ describe('Book Package Total Tests', function () {
         .should('have.text', '784')
     })
 
-    it('Should find 16 articles & 15577 words in UTA', function () {
+    it('Should find 16 articles & 15584 words in UTA', function () {
         // always return to the book package totals page
         cy.get(':nth-child(2) > .rsg--list-53 > .rsg--item-54 > .rsg--link-26')
         .click()
         cy.get('.BookPackageTa-root-63 > .MuiPaper-root > .MuiTypography-body2 > :nth-child(1)')
         .should('have.text', '16')
         cy.get('.BookPackageTa-root-63 > .MuiPaper-root > .MuiTypography-body2 > :nth-child(3)')
-        .should('have.text', '15577')
+        .should('have.text', '15584')
     })
 
 })

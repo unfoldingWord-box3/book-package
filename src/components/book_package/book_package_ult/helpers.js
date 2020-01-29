@@ -94,6 +94,6 @@ export async function fetchBookPackageULT({
     }
 
     let wcounts = wc.wordCount(alltext.join('\n'));
-    bpstore.setItem('ult-'+bookId,JSON.stringify(wcounts))
+    await bpstore.setItem('ult-'+bookId,JSON.stringify(wcounts))
     return wcounts;
   }

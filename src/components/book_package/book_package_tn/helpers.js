@@ -50,6 +50,6 @@ languageId,
     result["distinctNoteWords"] = wcounts.distinct;
     result["allwords"] = wcounts.allWords;
     result["wordFrequency"] = wcounts.wordFrequency;
-    bpstore.setItem('utn-'+bookId,JSON.stringify(wcounts));
+    await bpstore.setItem('utn-'+bookId,JSON.stringify(wcounts));
     return result;
 }

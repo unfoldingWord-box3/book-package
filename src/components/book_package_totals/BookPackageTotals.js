@@ -96,7 +96,6 @@ async function bp_totals(delay,iterations,setVal) {
                 // Key x is the uta article
                 if ( uta_dedup.get(x) ) { continue; }
                 uta_dedup.set(x,y.wordFrequency);
-                //console.log("uta_dedup.set()",x,y.wordFrequency)
               }
             }
           }
@@ -107,7 +106,6 @@ async function bp_totals(delay,iterations,setVal) {
               let z = all_map.get(m);
               if ( z === undefined ) z = 0;
               all_map.set(m, z + n);
-              //console.log("UTA all_map.set()",m,z,n)
             }
           }
           //
@@ -122,7 +120,6 @@ async function bp_totals(delay,iterations,setVal) {
                 // Key x is the utw article
                 if ( utw_dedup.get(x) ) { continue; }
                 utw_dedup.set(x,y.wordFrequency);
-                //console.log("utw_dedup.set()",x,y.wordFrequency)
               }
             }
           }
@@ -133,11 +130,10 @@ async function bp_totals(delay,iterations,setVal) {
               let z = all_map.get(m);
               if ( z === undefined ) z = 0;
               all_map.set(m, z + n);
-              //console.log("UTW all_map.set()",m,z,n)
             }
           }
 
-          console.log("Post UTA/W all_map",all_map)
+          //console.log("Post UTA/W all_map",all_map)
           // sum over resources
           for ( let [k,v] of resource_map.entries() ) {
             if ( k.startsWith("uta") ) {
@@ -147,7 +143,6 @@ async function bp_totals(delay,iterations,setVal) {
             } else {
               let x = obj_to_map(JSON.parse(v));
               let y = obj_to_map(x.get('wordFrequency'));
-              console.log("y=",y)
               for ( let [m,n] of y.entries() ) {
                 let z = all_map.get(m);
                 if ( z === undefined ) z = 0;

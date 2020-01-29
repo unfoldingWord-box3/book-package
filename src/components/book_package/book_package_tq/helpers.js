@@ -82,6 +82,6 @@ languageId,
     sumtotals.distinct = vcounts.distinct;
     sumtotals.wordFrequency = vcounts.wordFrequency;
     //.setItem('utq-'+bookId,JSON.stringify(vcounts.wordFrequency))
-    bpstore.setItem('utq-'+bookId,JSON.stringify(vcounts))
+    await bpstore.setItem('utq-'+bookId,JSON.stringify(vcounts))
     return sumtotals;
 }
