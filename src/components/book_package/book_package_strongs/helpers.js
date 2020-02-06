@@ -91,9 +91,21 @@ export function validateInputProperties(bookId,chapters) {
 export async function fetchBookPackageStrongs({
     bookId,
     chapters,
+    clearFlag,
     languageId,
   }) 
   {
+    let results = {};
+    if ( clearFlag === undefined ) { clearFlag = true }
+
+    if ( !clearFlag ) {
+        // use the data already present
+        results = await bpstore.getItem('lex-'+bookId);
+        if ( results !== null ) {
+            return results;
+        }
+    }
+
     let _book;
     const _manifests = await gitApi.fetchResourceManifests(
         {username: 'unfoldingword', 
@@ -176,7 +188,6 @@ export async function fetchBookPackageStrongs({
     }
     
     
-    let results = {};
     results.summary_strong_map   = map_to_obj(summary_strong_map);
     results.totalWordCount       = totalWordCount;
     results.summary_article_map  = map_to_obj(summary_article_map);
@@ -184,6 +195,6 @@ export async function fetchBookPackageStrongs({
     results.totalArticleWords = totalStrongWordCount;
     results.detail_article_map   = map_to_obj(detail_article_map);
     // below is not words with counts; it is lex entries with counts
-    await bpstore.setItem('lex-'+bookId,JSON.stringify(results.detail_article_map));
+    await bpstore.setItem('lex-'+bookId,results);
     return results;
   }

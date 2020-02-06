@@ -17,8 +17,10 @@ Optionally, a chapter in the book may be specified or a comma delimited list for
 The book identifiers are per standards found at:
 http://ubsicap.github.io/usfm/identification/books.html
 
+The `clearFlag` attribute is set to true. This will fetch all data from scratch. If set to false, it will re-use data if exists.
+
 ```js
-<BookPackageRollup bookId='tit' chapter='' />
+<BookPackageRollup bookId='tit' chapter='' clearFlag={true} />
 ```
 
 **Why are Lexicon results not included in the book package**

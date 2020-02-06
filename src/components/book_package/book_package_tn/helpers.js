@@ -6,9 +6,21 @@ import {bpstore} from '../../../core/setupBpDatabase';
 export async function fetchBookPackageTn({
 bookId,
 chapters,
+clearFlag,
 languageId,
 }) 
 {
+    let result = {};
+    if ( clearFlag === undefined ) { clearFlag = true }
+
+    if ( !clearFlag ) {
+        // use the data already present
+        result = await bpstore.getItem('utn-'+bookId);
+        if ( result !== null ) {
+            return result;
+        }
+    }
+
     let _notes = [];
     const _manifests = await gitApi.fetchResourceManifests(
         {username: 'unfoldingword', 
@@ -44,12 +56,11 @@ languageId,
     }
     // count words in occurrence notes
     let wcounts = wc.wordCount(allNotes);
-    let result = {};
     result["total"]   = total;
     result["totalNoteWords"] = wcounts.total;
     result["distinctNoteWords"] = wcounts.distinct;
     result["allwords"] = wcounts.allWords;
     result["wordFrequency"] = wcounts.wordFrequency;
-    await bpstore.setItem('utn-'+bookId,JSON.stringify(wcounts));
+    await bpstore.setItem('utn-'+bookId,result);
     return result;
 }

@@ -78,9 +78,22 @@ export function validateInputProperties(bookId,chapters) {
 export async function fetchBookPackageTw({
     bookId,
     chapters,
+    clearFlag,
     languageId,
   }) 
   {
+    let results = {};
+
+    if ( clearFlag === undefined ) { clearFlag = true }
+
+    if ( !clearFlag ) {
+        // use the data already present
+        results = await bpstore.getItem('utw-'+bookId);
+        if ( results !== null ) {
+            return results;
+        }
+    }
+
     let _book;
     const _manifests = await gitApi.fetchResourceManifests(
         {username: 'unfoldingword', 
@@ -175,7 +188,6 @@ export async function fetchBookPackageTw({
         wordAggregation = wordAggregation + '\n' + w.allWords.join('\n');
     }
 
-    let results = {};
     results.summary_tw_map = map_to_obj(summary_tw_map);
     results.totalWordCount = totalWordCount;
     results.summary_twArticle_map = map_to_obj(summary_twArticle_map);
@@ -189,6 +201,6 @@ export async function fetchBookPackageTw({
         }
     }
 
-    await bpstore.setItem('utw-'+bookId,JSON.stringify(results.summary_ByArticle_map));
+    await bpstore.setItem('utw-'+bookId,results);
     return results;
   }

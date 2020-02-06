@@ -72,6 +72,7 @@ function validateInputProperties(bookId,chapters) {
 function BookPackageTn({
   bookId,
   chapter,
+  clearFlag,
   classes,
   style,
 }) 
@@ -98,7 +99,7 @@ function BookPackageTn({
       try {
         result = await fetchBookPackageTn(
           {username: 'unfoldingword', languageId:'en', 
-          bookId: bookId, chapters: chapter}
+          bookId: bookId, chapters: chapter, clearFlag: clearFlag}
         );
       } catch (error) {
         setVal(
@@ -157,6 +158,8 @@ BookPackageTn.propTypes = {
   bookId: PropTypes.string.isRequired,
   /** Comma list of chapters to package. Default is zero and returns all chapters of book*/
   chapter: PropTypes.string,
+  /** Optional flag to clear and refetch all data. Default is true. */
+  clearFlag: PropTypes.bool,
   /** The overriding CSS for this component */
   style: PropTypes.object,
 };

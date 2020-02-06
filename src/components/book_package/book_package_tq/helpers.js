@@ -7,10 +7,24 @@ import {bpstore} from '../../../core/setupBpDatabase';
 export async function fetchBookPackageTq({
 bookId,
 chapters,
+clearFlag,
 languageId,
 }) 
 {
-    let sumtotals = {"distinct":0, "total":0, "l1count":0};
+    let sumtotals = {};
+
+    if ( clearFlag === undefined ) { clearFlag = true }
+
+    if ( !clearFlag ) {
+        // use the data already present
+        sumtotals = await bpstore.getItem('utq-'+bookId);
+        if ( sumtotals !== null ) {
+            return sumtotals;
+        }
+    }
+
+
+    sumtotals = {"distinct":0, "total":0, "l1count":0};
     let grandtext = "";
     const chaparray = chapters.split(",");
     // Create the path to the repo
@@ -82,6 +96,6 @@ languageId,
     sumtotals.distinct = vcounts.distinct;
     sumtotals.wordFrequency = vcounts.wordFrequency;
     //.setItem('utq-'+bookId,JSON.stringify(vcounts.wordFrequency))
-    await bpstore.setItem('utq-'+bookId,JSON.stringify(vcounts))
+    await bpstore.setItem('utq-'+bookId, sumtotals)
     return sumtotals;
 }

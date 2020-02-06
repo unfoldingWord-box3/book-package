@@ -29,9 +29,20 @@ function process_tags(v3,alltext,level) {
 export async function fetchBookPackageULT({
     bookId,
     chapters,
+    clearFlag,
     languageId,
   }) 
   {
+    if ( clearFlag === undefined ) { clearFlag = true }
+
+    if ( !clearFlag ) {
+        // use the data already present
+        let x = await bpstore.getItem('ult-'+bookId);
+        if ( x !== null ) {
+            return x;
+        }
+   }
+
     let _book;
     const _manifests = await gitApi.fetchResourceManifests(
         {username: 'unfoldingword', 
@@ -94,6 +105,6 @@ export async function fetchBookPackageULT({
     }
 
     let wcounts = wc.wordCount(alltext.join('\n'));
-    await bpstore.setItem('ult-'+bookId,JSON.stringify(wcounts))
+    await bpstore.setItem('ult-'+bookId,wcounts)
     return wcounts;
   }

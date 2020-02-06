@@ -13,34 +13,34 @@ describe('Book Package Total Tests', function () {
     // set their data in the database. So this has a long timeout.
     // Once it is able to run, then the others will have also finished.
     // Thus they don't need to have a long timeout.
-    it('Should find a total of 57352 words in Titus', function() {
+    it('Should find a total of 59931 words in Titus', function() {
         // always return to the book package totals page
         cy.get(':nth-child(2) > .rsg--list-53 > .rsg--item-54 > .rsg--link-26')
         .click()
         cy.get('.BookPackageTotals-root-60 > .MuiPaper-elevation1 > .MuiTypography-gutterBottom > strong',  { timeout: 100000 })
-        .should('have.text','57352')
+        .should('have.text','59931')
     })
 
 
-    it('Should find 189 notes and 3993 words in UTN', function () {
+    it('Should find 195 notes and 4202 words in UTN', function () {
         // always return to the book package totals page
         cy.get(':nth-child(2) > .rsg--list-53 > .rsg--item-54 > .rsg--link-26')
         .click()
         cy.get('.BookPackageTn-root-62 > .MuiPaper-elevation1 > .MuiTypography-body2.MuiTypography-gutterBottom > :nth-child(1)')
-        .should('have.text', '189')
+        .should('have.text', '195')
         cy.get('.BookPackageTn-root-62 > .MuiPaper-elevation1 > .MuiTypography-body2.MuiTypography-gutterBottom > :nth-child(3)')
-        .should('have.text', '3993')
+        .should('have.text', '4202')
     })
 
 
-    it('Should find 118 articles and 34307 words in UTW', function () {
+    it('Should find 116 articles and 34307 words in UTW', function () {
         // always return to the book package totals page
         cy.get(':nth-child(2) > .rsg--list-53 > .rsg--item-54 > .rsg--link-26')
         .click()
         cy.get('.BookPackageTw-root-61 > .MuiPaper-root > :nth-child(2) > :nth-child(3)')
-        .should('have.text', '118')
+        .should('have.text', '116')
         cy.get('.BookPackageTw-root-61 > .MuiPaper-root > :nth-child(3) > :nth-child(1)')
-        .should('have.text', '34307')
+        .should('have.text', '34088')
     })
 
 
@@ -70,14 +70,14 @@ describe('Book Package Total Tests', function () {
         .should('have.text', '784')
     })
 
-    it('Should find 16 articles & 15584 words in UTA', function () {
+    it('Should find 19 articles & 15584 words in UTA', function () {
         // always return to the book package totals page
         cy.get(':nth-child(2) > .rsg--list-53 > .rsg--item-54 > .rsg--link-26')
         .click()
         cy.get('.BookPackageTa-root-63 > .MuiPaper-root > .MuiTypography-body2 > :nth-child(1)')
-        .should('have.text', '16')
+        .should('have.text', '19')
         cy.get('.BookPackageTa-root-63 > .MuiPaper-root > .MuiTypography-body2 > :nth-child(3)')
-        .should('have.text', '15584')
+        .should('have.text', '18173')
     })
 
 })

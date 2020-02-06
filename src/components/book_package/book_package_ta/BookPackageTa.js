@@ -39,6 +39,7 @@ function convertToLink(lnk) {
 function BookPackageTa({
   bookId,
   chapter,
+  clearFlag,
   classes,
   style,
 }) 
@@ -64,7 +65,7 @@ function BookPackageTa({
       try {
         result = await fetchBookPackageTa(
           {username: 'unfoldingword', languageId:'en', 
-          bookId: bookId, chapters: chapter}
+          bookId: bookId, chapters: chapter, clearFlag: clearFlag}
         );
         } catch (error) {
         setVal(
@@ -140,6 +141,8 @@ BookPackageTa.propTypes = {
   bookId: PropTypes.string.isRequired,
   /** Comma list of chapters to package. Default is zero and returns all chapters of book*/
   chapter: PropTypes.string,
+  /** Optional flag to clear and refetch all data. Default is true. */
+  clearFlag: PropTypes.bool,
   /** The overriding CSS for this component */
   style: PropTypes.object,
 };

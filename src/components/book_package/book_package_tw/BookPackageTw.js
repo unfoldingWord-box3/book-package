@@ -17,6 +17,7 @@ import {convertRC2Link} from './helpers';
 function BookPackageTw({
   bookId,
   chapter,
+  clearFlag,
   classes,
   style,
 }) 
@@ -43,7 +44,7 @@ function BookPackageTw({
       try {
         result = await fetchBookPackageTw(
           {username: 'unfoldingword', languageId:'en', 
-          bookId: bookId, chapters: chapter
+          bookId: bookId, chapters: chapter, clearFlag: clearFlag
         });
       } catch (error) {
         setVal(
@@ -122,6 +123,8 @@ BookPackageTw.propTypes = {
   bookId: PropTypes.string.isRequired,
   /** Comma list of chapters to package. Default is zero and returns all chapters of book*/
   chapter: PropTypes.string,
+  /** Optional flag to clear and refetch all data. Default is true. */
+  clearFlag: PropTypes.bool,
   /** The overriding CSS for this component */
   style: PropTypes.object,
 };

@@ -74,6 +74,7 @@ function validateInputProperties(bookId,chapters) {
 function BookPackageUlt({
   bookId,
   chapter,
+  clearFlag,
   classes,
   style,
 }) 
@@ -100,7 +101,7 @@ function BookPackageUlt({
       try {
         result = await fetchBookPackageULT(
           {username: 'unfoldingword', languageId:'en', 
-          bookId: bookId, chapters: chapter
+          bookId: bookId, chapters: chapter, clearFlag: clearFlag
         });  
       } catch (error) {
         setVal(
@@ -156,6 +157,8 @@ BookPackageUlt.propTypes = {
   bookId: PropTypes.string.isRequired,
   /** Comma list of chapters to package. Default is empty string and returns all chapters of book*/
   chapter: PropTypes.string,
+  /** Optional flag to clear and refetch all data. Default is true. */
+  clearFlag: PropTypes.bool,
   /** The overriding CSS for this component */
   style: PropTypes.object,
 };

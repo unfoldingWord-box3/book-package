@@ -7,9 +7,21 @@ import {bpstore} from '../../../core/setupBpDatabase';
 export async function fetchBookPackageTa({
 bookId,
 chapters,
+clearFlag,
 languageId,
 }) 
 {
+    let result = {};
+
+    if ( clearFlag === undefined ) { clearFlag = true }
+
+    if ( !clearFlag ) {
+        // use the data already present
+        result = await bpstore.getItem('uta-'+bookId);
+        if ( result !== null ) {
+            return result;
+        }
+    }
     let _notes = [];
     const _manifests = await gitApi.fetchResourceManifests(
         {username: 'unfoldingword', 
@@ -57,7 +69,6 @@ languageId,
         }
     }
     // count words in occurrence notes
-    let result = {};
     result["tatotal"] = tacount;
     result["tarticles"] = tarticles;
 
@@ -104,6 +115,6 @@ languageId,
     result["allArticlesDistinct"] = x.distinct;
     result["allArticlesTotal"]    = x.total;
     
-    await bpstore.setItem('uta-'+bookId,JSON.stringify(result["detail_tarticles_map"]));
+    await bpstore.setItem('uta-'+bookId,result);
     return result;
 }

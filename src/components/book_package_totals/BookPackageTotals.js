@@ -90,8 +90,8 @@ async function bp_totals(delay,iterations,setVal) {
           let uta_dedup = new Map();
           for ( let [k,v] of resource_map.entries() ) {
             if ( k.startsWith("uta") ) {
-              let o = JSON.parse(v);
-              let omap = obj_to_map(o);
+              //let o = JSON.parse(v);
+              let omap = obj_to_map(v.detail_tarticles_map);
               for ( let [x,y] of omap.entries() ) {
                 // Key x is the uta article
                 if ( uta_dedup.get(x) ) { continue; }
@@ -114,8 +114,8 @@ async function bp_totals(delay,iterations,setVal) {
           let utw_dedup = new Map();
           for ( let [k,v] of resource_map.entries() ) {
             if ( k.startsWith("utw") ) {
-              let o = JSON.parse(v);
-              let omap = obj_to_map(o);
+              //let o = JSON.parse(v);
+              let omap = obj_to_map(v.summary_ByArticle_map);
               for ( let [x,y] of omap.entries() ) {
                 // Key x is the utw article
                 if ( utw_dedup.get(x) ) { continue; }
@@ -141,7 +141,8 @@ async function bp_totals(delay,iterations,setVal) {
             } else if ( k.startsWith("utw") ) {
               continue;
             } else {
-              let x = obj_to_map(JSON.parse(v));
+              //let x = obj_to_map(JSON.parse(v));
+              let x = obj_to_map(v);
               let y = obj_to_map(x.get('wordFrequency'));
               for ( let [m,n] of y.entries() ) {
                 let z = all_map.get(m);

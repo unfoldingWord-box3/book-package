@@ -36,15 +36,20 @@ async function validateInputProperties(bookId,chapters) {
 function BookPackageRollup({
   bookId,
   chapter,
+  clearFlag,
   classes,
   style,
 }) 
 {
+  if ( clearFlag === undefined ) { clearFlag = true }
+
   const [_book, setVal] = useState("Waiting-BookPackageRollup");
   useEffect( () => {
     const fetchData = async () => {
 
-      await bpstore.clear(); // clear/reset local storage before starting components
+      if ( clearFlag ) {
+        await bpstore.clear(); // clear/reset local storage before starting components
+      }
 
       let result;
       const bookarray = bookId.split(",");
@@ -67,12 +72,12 @@ function BookPackageRollup({
             <BookPackageTotals bookId={bookId} />
             {bookarray.sort().map(skey => (
               <Paper>
-              <BookPackageTw bookId={skey} chapter={chapter} />
-              <BookPackageTn bookId={skey} chapter={chapter} />
-              <BookPackageTa bookId={skey} chapter={chapter} />
-              <BookPackageTq bookId={skey} chapter={chapter} />
-              <BookPackageUlt bookId={skey} chapter={chapter} />
-              <BookPackageUst bookId={skey} chapter={chapter} />
+              <BookPackageTw bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+              <BookPackageTn bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+              <BookPackageTa bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+              <BookPackageTq bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+              <BookPackageUlt bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+              <BookPackageUst bookId={skey} chapter={chapter} clearFlag={clearFlag} />
               </Paper>
               ))}
           </Paper>
@@ -107,6 +112,8 @@ BookPackageRollup.propTypes = {
   bookId: PropTypes.string.isRequired,
   /** Comma list of chapters to package. Default is empty string and returns all chapters of book*/
   chapter: PropTypes.string,
+  /** Optional flag to clear and refetch all data. Default is true. */
+  clearFlag: PropTypes.bool,
   /** The overriding CSS for this component */
   style: PropTypes.object,
 };

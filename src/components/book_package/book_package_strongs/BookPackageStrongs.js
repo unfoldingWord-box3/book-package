@@ -17,6 +17,7 @@ import {validateInputProperties, convertToLink} from './helpers';
 function BookPackageStrongs({
   bookId,
   chapter,
+  clearFlag,
   classes,
   style,
 }) 
@@ -43,7 +44,7 @@ function BookPackageStrongs({
       try {
         result = await fetchBookPackageStrongs(
           {username: 'unfoldingword', languageId:'en', 
-          bookId: bookId, chapters: chapter
+          bookId: bookId, chapters: chapter, clearFlag: clearFlag
         });  
       } catch (error) {
         setVal(
@@ -126,6 +127,8 @@ BookPackageStrongs.propTypes = {
   bookId: PropTypes.string.isRequired,
   /** Comma list of chapters to package. Default is empty string and returns all chapters of book*/
   chapter: PropTypes.string,
+  /** Optional flag to clear and refetch all data. Default is true. */
+  clearFlag: PropTypes.bool,
   /** The overriding CSS for this component */
   style: PropTypes.object,
 };
