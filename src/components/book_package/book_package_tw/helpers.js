@@ -173,17 +173,6 @@ export async function fetchBookPackageTw({
             }
         }
     }
-    // count the number of referenced articles (not distinct)
-    let totalWordCount = 0;
-    for ( var v5 of summary_tw_map.values() ) {
-        totalWordCount = totalWordCount + v5;
-    }
-
-    // count the number of words in the tw articles
-    let totalTwWordCount = 0;
-    for ( var v6 of summary_twArticle_map.values() ) {
-        totalTwWordCount = totalTwWordCount + v6;
-    }
 
     // aggregate all the words across all articles
     let wordAggregation = "";
@@ -196,9 +185,15 @@ export async function fetchBookPackageTw({
     results.summary_article_map = map_to_obj(summary_twArticle_map);
     results.detail_article_map  = map_to_obj(summary_ByArticle_map);
 
+    // count the total article references
+    let x = 0;
+    for (let v of summary_tw_map.values()) {
+        x = x + v;
+    }
+
     results.grandTotalWordCount    = wcounts.total;
     results.grandDistinctWordCount = wcounts.distinct;
-    results.totalReferences        = totalTwWordCount;
+    results.totalReferences        = x;
     results.distinctReferences     = summary_tw_map.size;
     //console.log("utw article counts", summary_ByArticle_map)
     for ( let k of summary_tw_map.keys() ) {

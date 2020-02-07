@@ -55,7 +55,6 @@ function BookPackageTw({
         return;
       }
       let gkeys = Array.from(Object.keys(result.summary_ref_map));
-      let totalWordCount = result.grandTotalWordCount;
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>
@@ -63,7 +62,7 @@ function BookPackageTw({
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total Number of tW Articles: <strong>{totalWordCount}</strong> <br/>
+            Total Number of tW Articles: <strong>{result.totalReferences}</strong> <br/>
             Unique Number of tW Articles: <strong>{gkeys.length}</strong> 
           </Typography>
 
