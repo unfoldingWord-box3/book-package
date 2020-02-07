@@ -13,23 +13,23 @@ describe('Book Package Total Tests', function () {
     // set their data in the database. So this has a long timeout.
     // Once it is able to run, then the others will have also finished.
     // Thus they don't need to have a long timeout.
-    it('Should find a total of 59931 words in Titus', function() {
+    it('Should find a total of 59927 words in Titus', function() {
         // always return to the book package totals page
         cy.get(':nth-child(2) > .rsg--list-53 > .rsg--item-54 > .rsg--link-26')
         .click()
         cy.get('.BookPackageTotals-root-60 > .MuiPaper-elevation1 > .MuiTypography-gutterBottom > strong',  { timeout: 100000 })
-        .should('have.text','59931')
+        .should('have.text','59927')
     })
 
 
-    it('Should find 195 notes and 4202 words in UTN', function () {
+    it('Should find 195 notes and 4198 words in UTN', function () {
         // always return to the book package totals page
         cy.get(':nth-child(2) > .rsg--list-53 > .rsg--item-54 > .rsg--link-26')
         .click()
         cy.get('.BookPackageTn-root-62 > .MuiPaper-elevation1 > .MuiTypography-body2.MuiTypography-gutterBottom > :nth-child(1)')
         .should('have.text', '195')
         cy.get('.BookPackageTn-root-62 > .MuiPaper-elevation1 > .MuiTypography-body2.MuiTypography-gutterBottom > :nth-child(3)')
-        .should('have.text', '4202')
+        .should('have.text', '4198')
     })
 
 
