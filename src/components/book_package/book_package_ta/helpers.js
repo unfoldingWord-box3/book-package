@@ -106,15 +106,31 @@ languageId,
         let tacounts = wc.wordCount(alltext);
         detail_tarticles_map.set(uniqSorted[j],tacounts);
     }
-    result["summary_tarticles_map"] = map_to_obj(summary_tarticles_map);
+    result["summary_ref_map"] = map_to_obj(summary_tarticles_map);
     // the below has the count data arranged per article
-    result["detail_tarticles_map"] = map_to_obj(detail_tarticles_map);
-    //console.log("detail_tarticles_map",detail_tarticles_map);
+    result["detail_article_map"] = map_to_obj(detail_tarticles_map);
     // finally get the grand totals
     let x = wc.wordCount(grandAllText);
-    result["allArticlesDistinct"] = x.distinct;
-    result["allArticlesTotal"]    = x.total;
-    
+    result["summary_article_map"]    = x.wordFrequency;
+    result["grandDistinctWordCount"] = x.distinct;
+    result["grandTotalWordCount"]    = x.total;
+
+    result["totalReferences"] = tacount;
+    result["distinctReferences"] = summary_tarticles_map.size;
+
     await bpstore.setItem('uta-'+bookId,result);
     return result;
 }
+
+/*
+## maps:
+- summary_ref_map     - how many times is each article referenced; number of entries is distinct number of articles referenced
+- summary_article_map - word frequency map across all articles
+- detail_article_map  - word counts for each article 
+
+## attributes:
+- grandTotalWordCount = total across all articles
+- grandDistinctWordCount = distinct words across all articles
+- totalReferences - number of entries in summary_ref_map
+- distinctReferences - distinct number of articles referenced
+*/

@@ -54,8 +54,8 @@ function BookPackageStrongs({
         )
         return;
       }
-      let gkeys = Array.from(Object.keys(result.summary_strong_map));
-      let totalWordCount = result.totalWordCount;
+      let gkeys = Array.from(Object.keys(result.summary_ref_map));
+      //let totalReferences = result.totalReferences;
       setVal(
         <Paper className={classes.paper} >
           <Typography variant="h6" gutterBottom>
@@ -64,13 +64,13 @@ function BookPackageStrongs({
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Total Number of Entries: {totalWordCount} <br/>
-            Unique Number of Entries: {gkeys.length}
+            Total Number of Entries: {result.totalReferences} <br/>
+            Unique Number of Entries: {result.distinctReferences}
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-          Total Word Count: {result.totalArticleWords} <br/>
-          Unique Words: {result.distinctArticleWords}
+          Total Word Count: {result.grandTotalWordCount} <br/>
+          Unique Words: {result.grandDistinctWordCount}
           </Typography>
 
 
@@ -95,7 +95,7 @@ function BookPackageStrongs({
                       {skey}
                     </Link>
                   </TableCell>
-                  <TableCell align="center">{result.summary_strong_map[skey]}</TableCell>
+                  <TableCell align="center">{result.summary_ref_map[skey]}</TableCell>
                   <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['total'] : 'Non Existent'}</TableCell>
                   <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['distinct'] : 'Non Existent'}</TableCell>
                 </TableRow>

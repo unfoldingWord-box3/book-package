@@ -54,8 +54,8 @@ function BookPackageTw({
         )
         return;
       }
-      let gkeys = Array.from(Object.keys(result.summary_tw_map));
-      let totalWordCount = result.totalWordCount;
+      let gkeys = Array.from(Object.keys(result.summary_ref_map));
+      let totalWordCount = result.grandTotalWordCount;
       setVal(
         <Paper className={classes.paper}>
           <Typography variant="h6" gutterBottom>
@@ -68,8 +68,8 @@ function BookPackageTw({
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-          Total Word Count: <strong>{result.totalTwArticleWords}</strong> <br/>
-          Unique Words: <strong>{result.distinctTwArticleWords}</strong> <br/>
+          Total Word Count: <strong>{result.grandTotalWordCount}</strong> <br/>
+          Unique Words: <strong>{result.grandDistinctWordCount}</strong> <br/>
           </Typography>
 
           <Collapse in={open} component="details">
@@ -91,9 +91,9 @@ function BookPackageTw({
                     {skey}
                     </Link>
                   </TableCell>
-                  <TableCell align="center">{result.summary_tw_map[skey]}</TableCell>
-                  <TableCell align="center">{result.summary_ByArticle_map[skey]['total']}</TableCell>
-                  <TableCell align="center">{result.summary_ByArticle_map[skey]['distinct']}</TableCell>
+                  <TableCell align="center">{result.summary_ref_map[skey]}</TableCell>
+                  <TableCell align="center">{result.detail_article_map[skey]['total']}</TableCell>
+                  <TableCell align="center">{result.detail_article_map[skey]['distinct']}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

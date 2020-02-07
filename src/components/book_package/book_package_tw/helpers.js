@@ -188,12 +188,14 @@ export async function fetchBookPackageTw({
         wordAggregation = wordAggregation + '\n' + w.allWords.join('\n');
     }
 
-    results.summary_tw_map = map_to_obj(summary_tw_map);
-    results.totalWordCount = totalWordCount;
-    results.summary_twArticle_map = map_to_obj(summary_twArticle_map);
-    results.distinctTwArticleWords = summary_twArticle_map.size;
-    results.totalTwArticleWords    = totalTwWordCount;
-    results.summary_ByArticle_map  = map_to_obj(summary_ByArticle_map);
+    results.summary_ref_map = map_to_obj(summary_tw_map);
+    results.summary_article_map = map_to_obj(summary_twArticle_map);
+    results.detail_article_map  = map_to_obj(summary_ByArticle_map);
+
+    results.grandTotalWordCount    = totalWordCount;
+    results.grandDistinctWordCount = summary_twArticle_map.size;
+    results.totalReferences        = totalTwWordCount;
+    results.distinctReferences     = summary_tw_map.size;
     //console.log("utw article counts", summary_ByArticle_map)
     for ( let k of summary_tw_map.keys() ) {
         if ( ! summary_ByArticle_map.has(k) ) {
@@ -204,3 +206,16 @@ export async function fetchBookPackageTw({
     await bpstore.setItem('utw-'+bookId,results);
     return results;
   }
+
+  /*
+  ## maps:
+- summary_ref_map     - how many times is each article referenced; number of entries is distinct number of articles referenced
+- summary_article_map - word frequency map across all articles
+- detail_article_map  - word counts for each article 
+
+## attributes:
+- grandTotalWordCount = total across all articles
+- grandDistinctWordCount = distinct words across all articles
+- totalReferences - number of entries in summary_ref_map
+- distinctReferences - distinct number of articles referenced
+*/

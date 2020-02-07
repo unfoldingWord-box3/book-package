@@ -188,13 +188,28 @@ export async function fetchBookPackageStrongs({
     }
     
     
-    results.summary_strong_map   = map_to_obj(summary_strong_map);
-    results.totalWordCount       = totalWordCount;
-    results.summary_article_map  = map_to_obj(summary_article_map);
-    results.distinctArticleWords = summary_article_map.size;
-    results.totalArticleWords = totalStrongWordCount;
-    results.detail_article_map   = map_to_obj(detail_article_map);
+    results.summary_ref_map        = map_to_obj(summary_strong_map);
+    results.summary_article_map    = map_to_obj(summary_article_map);
+    results.detail_article_map     = map_to_obj(detail_article_map);
+    results.grandTotalWordCount    = totalStrongWordCount;
+    results.grandDistinctWordCount = summary_article_map.size;
+    results.totalReferences        = totalWordCount; 
+    results.distinctReferences     = summary_strong_map.size;
     // below is not words with counts; it is lex entries with counts
     await bpstore.setItem('lex-'+bookId,results);
     return results;
   }
+/*
+
+## maps:
+- summary_ref_map     - how many times is each article referenced; number of entries is distinct number of articles referenced
+- summary_article_map - word frequency map across all articles
+- detail_article_map  - word counts for each article 
+
+## attributes:
+- grandTotalWordCount = total across all articles
+- grandDistinctWordCount = distinct words across all articles
+- totalReferences - number of entries in summary_ref_map
+- distinctReferences - distinct number of articles referenced
+
+*/

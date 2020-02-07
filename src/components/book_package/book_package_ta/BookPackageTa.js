@@ -75,7 +75,8 @@ function BookPackageTa({
         )
         return;
       }
-      let tkeys = Array.from(result["tarticles"]);
+
+      let tkeys = Array.from(Object.keys(result.summary_ref_map));
       let uniqueAndSorted = [...new Set(tkeys)].sort() 
 
       setVal(
@@ -87,8 +88,8 @@ function BookPackageTa({
 
           <Typography variant="body2" gutterBottom>
             Total number of tA articles: <strong>{uniqueAndSorted.length}</strong><br/>
-            Total Word Count: <strong>{result["allArticlesTotal"]}</strong> <br/> 
-            Unique words: <strong>{result["allArticlesDistinct"]}</strong> 
+            Total Word Count: <strong>{result["grandTotalWordCount"]}</strong> <br/> 
+            Unique words: <strong>{result["grandDistinctWordCount"]}</strong> 
           </Typography>
 
           <Collapse in={open} component="details">
@@ -110,9 +111,9 @@ function BookPackageTa({
                         {skey}
                         </Link>
                       </TableCell>
-                      <TableCell align="center">{result.summary_tarticles_map[skey]}</TableCell>
-                      <TableCell align="center">{result.detail_tarticles_map[skey]['total']}</TableCell>
-                      <TableCell align="center">{result.detail_tarticles_map[skey]['distinct']}</TableCell>
+                      <TableCell align="center">{result.summary_ref_map[skey]}</TableCell>
+                      <TableCell align="center">{result.detail_article_map[skey]['total']}</TableCell>
+                      <TableCell align="center">{result.detail_article_map[skey]['distinct']}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
