@@ -15,12 +15,10 @@ NOTE: the term "word counts" refers to output from component `uw-word-count`.
 
 
 
-## UST, ULT, UTQ
+## UST, ULT, UTQ, UTN
 
 - word counts output only
 
-NOTE: output includes `l1count` which is the number of questions for UTQ
+**NOTE 1**: output includes `l1count` which is the total number of questions for UTQ.
 
-## UTN
-
-- 
+**NOTE 2**: attribute `totalNotes` added to capture total number of notes processed.

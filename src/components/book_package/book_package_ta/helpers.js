@@ -12,12 +12,15 @@ languageId,
 }) 
 {
     let result = {};
+    let dbkey = 'uta-'+bookId
 
     if ( clearFlag === undefined ) { clearFlag = true }
 
-    if ( !clearFlag ) {
+    if ( clearFlag ) {
+        await bpstore.removeItem(dbkey);
+    } else { 
         // use the data already present
-        result = await bpstore.getItem('uta-'+bookId);
+        result = await bpstore.getItem(dbkey);
         if ( result !== null ) {
             return result;
         }
@@ -118,7 +121,7 @@ languageId,
     result["totalReferences"] = tacount;
     result["distinctReferences"] = summary_tarticles_map.size;
 
-    await bpstore.setItem('uta-'+bookId,result);
+    await bpstore.setItem(dbkey,result);
     return result;
 }
 

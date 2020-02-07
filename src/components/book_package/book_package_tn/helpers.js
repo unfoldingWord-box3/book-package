@@ -11,11 +11,14 @@ languageId,
 }) 
 {
     let result = {};
+    let dbkey = 'utn-'+bookId;
     if ( clearFlag === undefined ) { clearFlag = true }
 
-    if ( !clearFlag ) {
+    if ( clearFlag ) {
+        await bpstore.removeItem(dbkey);
+    } else { 
         // use the data already present
-        result = await bpstore.getItem('utn-'+bookId);
+        result = await bpstore.getItem(dbkey);
         if ( result !== null ) {
             return result;
         }
@@ -56,11 +59,8 @@ languageId,
     }
     // count words in occurrence notes
     let wcounts = wc.wordCount(allNotes);
-    result["total"]   = total;
-    result["totalNoteWords"] = wcounts.total;
-    result["distinctNoteWords"] = wcounts.distinct;
-    result["allwords"] = wcounts.allWords;
-    result["wordFrequency"] = wcounts.wordFrequency;
-    await bpstore.setItem('utn-'+bookId,result);
-    return result;
+    // add one more UTN attribute, namely, the number of notes
+    wcounts.totalNotes = total;
+    await bpstore.setItem(dbkey,wcounts);
+    return wcounts;
 }

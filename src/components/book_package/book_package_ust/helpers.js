@@ -35,11 +35,14 @@ export async function fetchBookPackageUST({
     languageId,
   }) 
   {
+    let dbkey = 'ust-'+bookId;
     if ( clearFlag === undefined ) { clearFlag = true }
 
-    if ( !clearFlag ) {
+    if ( clearFlag ) {
+        await bpstore.removeItem(dbkey);
+    } else { 
         // use the data already present
-        let x = await bpstore.getItem('ust-'+bookId);
+        let x = await bpstore.getItem(dbkey);
         if ( x !== null ) {
             return x;
         }
@@ -104,6 +107,6 @@ export async function fetchBookPackageUST({
     }
 
     let wcounts = wc.wordCount(alltext.join('\n'));
-    await bpstore.setItem('ust-'+bookId,wcounts)
+    await bpstore.setItem(dbkey,wcounts)
     return wcounts;
   }

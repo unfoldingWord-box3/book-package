@@ -11,20 +11,21 @@ clearFlag,
 languageId,
 }) 
 {
-    let sumtotals = {};
-
+    let dbkey = 'utq-'+bookId;
     if ( clearFlag === undefined ) { clearFlag = true }
 
-    if ( !clearFlag ) {
+    if ( clearFlag ) {
+        await bpstore.removeItem(dbkey);
+    } else { 
         // use the data already present
-        sumtotals = await bpstore.getItem('utq-'+bookId);
+        let sumtotals = await bpstore.getItem(dbkey);
         if ( sumtotals !== null ) {
             return sumtotals;
         }
     }
 
 
-    sumtotals = {"distinct":0, "total":0, "l1count":0};
+    let totalL1count = 0;
     let grandtext = "";
     const chaparray = chapters.split(",");
     // Create the path to the repo
@@ -86,16 +87,13 @@ languageId,
     
             let vcounts = wc.wordCount(content);
             grandtext = grandtext + " " + vcounts.allWords.join(" ");
-            sumtotals.l1count  = sumtotals.l1count + vcounts.l1count;           
-            sumtotals.total    = sumtotals.total + vcounts.total;
+            totalL1count  = totalL1count + vcounts.l1count;           
         }
     }
     let vcounts = wc.wordCount(grandtext);
     // overwrite l1count with correct value
-    vcounts.l1count = sumtotals.l1count;
-    sumtotals.distinct = vcounts.distinct;
-    sumtotals.wordFrequency = vcounts.wordFrequency;
+    vcounts.l1count = totalL1count;
     //.setItem('utq-'+bookId,JSON.stringify(vcounts.wordFrequency))
-    await bpstore.setItem('utq-'+bookId, sumtotals)
-    return sumtotals;
+    await bpstore.setItem(dbkey, vcounts)
+    return vcounts;
 }

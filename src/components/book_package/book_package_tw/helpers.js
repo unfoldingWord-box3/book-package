@@ -83,12 +83,15 @@ export async function fetchBookPackageTw({
   }) 
   {
     let results = {};
+    let dbkey = 'utw-'+bookId;
 
     if ( clearFlag === undefined ) { clearFlag = true }
 
-    if ( !clearFlag ) {
+    if ( clearFlag ) {
+        await bpstore.removeItem(dbkey);
+    } else { 
         // use the data already present
-        results = await bpstore.getItem('utw-'+bookId);
+        results = await bpstore.getItem(dbkey);
         if ( results !== null ) {
             return results;
         }
@@ -188,12 +191,13 @@ export async function fetchBookPackageTw({
         wordAggregation = wordAggregation + '\n' + w.allWords.join('\n');
     }
 
+    let wcounts = wc.wordCount(wordAggregation);
     results.summary_ref_map = map_to_obj(summary_tw_map);
     results.summary_article_map = map_to_obj(summary_twArticle_map);
     results.detail_article_map  = map_to_obj(summary_ByArticle_map);
 
-    results.grandTotalWordCount    = totalWordCount;
-    results.grandDistinctWordCount = summary_twArticle_map.size;
+    results.grandTotalWordCount    = wcounts.total;
+    results.grandDistinctWordCount = wcounts.distinct;
     results.totalReferences        = totalTwWordCount;
     results.distinctReferences     = summary_tw_map.size;
     //console.log("utw article counts", summary_ByArticle_map)
@@ -203,7 +207,7 @@ export async function fetchBookPackageTw({
         }
     }
 
-    await bpstore.setItem('utw-'+bookId,results);
+    await bpstore.setItem(dbkey,results);
     return results;
   }
 

@@ -91,7 +91,7 @@ async function bp_totals(delay,iterations,setVal) {
           for ( let [k,v] of resource_map.entries() ) {
             if ( k.startsWith("uta") ) {
               //let o = JSON.parse(v);
-              let omap = obj_to_map(v.detail_tarticles_map);
+              let omap = obj_to_map(v.detail_article_map);
               for ( let [x,y] of omap.entries() ) {
                 // Key x is the uta article
                 if ( uta_dedup.get(x) ) { continue; }
@@ -115,7 +115,7 @@ async function bp_totals(delay,iterations,setVal) {
           for ( let [k,v] of resource_map.entries() ) {
             if ( k.startsWith("utw") ) {
               //let o = JSON.parse(v);
-              let omap = obj_to_map(v.summary_ByArticle_map);
+              let omap = obj_to_map(v.detail_article_map);
               for ( let [x,y] of omap.entries() ) {
                 // Key x is the utw article
                 if ( utw_dedup.get(x) ) { continue; }

@@ -96,15 +96,19 @@ export async function fetchBookPackageStrongs({
   }) 
   {
     let results = {};
+    let dbkey   = 'lex-'+bookId;
     if ( clearFlag === undefined ) { clearFlag = true }
 
-    if ( !clearFlag ) {
+    if ( clearFlag ) {
+        await bpstore.removeItem(dbkey)
+    } else {
         // use the data already present
-        results = await bpstore.getItem('lex-'+bookId);
+        results = await bpstore.getItem(dbkey);
         if ( results !== null ) {
             return results;
         }
     }
+    
 
     let _book;
     const _manifests = await gitApi.fetchResourceManifests(
@@ -196,7 +200,7 @@ export async function fetchBookPackageStrongs({
     results.totalReferences        = totalWordCount; 
     results.distinctReferences     = summary_strong_map.size;
     // below is not words with counts; it is lex entries with counts
-    await bpstore.setItem('lex-'+bookId,results);
+    await bpstore.setItem(dbkey,results);
     return results;
   }
 /*
