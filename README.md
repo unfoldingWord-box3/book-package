@@ -1,5 +1,5 @@
 # book-package-rcl
-[https://unfoldingWord-box3.github.io/book-package/](https://unfoldingWord-box3.github.io/book-package/)
+[https://unfoldingWord.github.io/book-package-rcl/](https://unfoldingWord.github.io/book-package-rcl/)
 
 Identifying resources needed to enable single piece workflow.
 
