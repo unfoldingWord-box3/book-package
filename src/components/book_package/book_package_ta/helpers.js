@@ -71,9 +71,6 @@ languageId,
             summary_tarticles_map.set(tarticle,count);
         }
     }
-    // count words in occurrence notes
-    result["tatotal"] = tacount;
-    result["tarticles"] = tarticles;
 
     // Now process the tA articles. Each is in markdown format in a folder
     // with three files: title.md, sub-title.me, and 01.md.
