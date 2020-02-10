@@ -20,7 +20,7 @@ http://ubsicap.github.io/usfm/identification/books.html
 The `clearFlag` attribute is set to true. This will fetch all data from scratch. If set to false, it will re-use data if exists.
 
 ```js
-<BookPackageRollup bookId='tit' chapter='' clearFlag={true} />
+<BookPackageRollup bookId='tit' chapter='' clearFlag={false} />
 ```
 
 **Why are Lexicon results not included in the book package**

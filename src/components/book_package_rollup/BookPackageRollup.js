@@ -47,9 +47,6 @@ function BookPackageRollup({
   useEffect( () => {
     const fetchData = async () => {
 
-      if ( clearFlag ) {
-        await bpstore.clear(); // clear/reset local storage before starting components
-      }
 
       let result;
       const bookarray = bookId.split(",");

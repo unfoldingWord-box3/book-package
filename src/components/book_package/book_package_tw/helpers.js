@@ -82,7 +82,6 @@ export async function fetchBookPackageTw({
     languageId,
   }) 
   {
-    let results = {};
     let dbkey = 'utw-'+bookId;
 
     if ( clearFlag === undefined ) { clearFlag = true }
@@ -91,9 +90,9 @@ export async function fetchBookPackageTw({
         await bpstore.removeItem(dbkey);
     } else { 
         // use the data already present
-        results = await bpstore.getItem(dbkey);
-        if ( results !== null ) {
-            return results;
+        let x = await bpstore.getItem(dbkey);
+        if ( x !== null ) {
+            return x;
         }
     }
 
@@ -181,6 +180,7 @@ export async function fetchBookPackageTw({
     }
 
     let wcounts = wc.wordCount(wordAggregation);
+    let results = {};
     results.summary_ref_map = map_to_obj(summary_tw_map);
     results.summary_article_map = map_to_obj(summary_twArticle_map);
     results.detail_article_map  = map_to_obj(summary_ByArticle_map);

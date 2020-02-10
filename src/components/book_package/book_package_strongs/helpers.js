@@ -95,7 +95,6 @@ export async function fetchBookPackageStrongs({
     languageId,
   }) 
   {
-    let results = {};
     let dbkey   = 'lex-'+bookId;
     if ( clearFlag === undefined ) { clearFlag = true }
 
@@ -103,9 +102,9 @@ export async function fetchBookPackageStrongs({
         await bpstore.removeItem(dbkey)
     } else {
         // use the data already present
-        results = await bpstore.getItem(dbkey);
-        if ( results !== null ) {
-            return results;
+        let x = await bpstore.getItem(dbkey);
+        if ( x !== null ) {
+            return x;
         }
     }
     
@@ -192,6 +191,7 @@ export async function fetchBookPackageStrongs({
     }
     
     
+    let results = {};
     results.summary_ref_map        = map_to_obj(summary_strong_map);
     results.summary_article_map    = map_to_obj(summary_article_map);
     results.detail_article_map     = map_to_obj(detail_article_map);

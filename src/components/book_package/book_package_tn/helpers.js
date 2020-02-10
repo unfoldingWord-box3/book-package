@@ -10,7 +10,6 @@ clearFlag,
 languageId,
 }) 
 {
-    let result = {};
     let dbkey = 'utn-'+bookId;
     if ( clearFlag === undefined ) { clearFlag = true }
 
@@ -18,9 +17,9 @@ languageId,
         await bpstore.removeItem(dbkey);
     } else { 
         // use the data already present
-        result = await bpstore.getItem(dbkey);
-        if ( result !== null ) {
-            return result;
+        let x = await bpstore.getItem(dbkey);
+        if ( x !== null ) {
+            return x;
         }
     }
 

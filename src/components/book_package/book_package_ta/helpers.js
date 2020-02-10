@@ -11,7 +11,6 @@ clearFlag,
 languageId,
 }) 
 {
-    let result = {};
     let dbkey = 'uta-'+bookId
 
     if ( clearFlag === undefined ) { clearFlag = true }
@@ -20,9 +19,9 @@ languageId,
         await bpstore.removeItem(dbkey);
     } else { 
         // use the data already present
-        result = await bpstore.getItem(dbkey);
-        if ( result !== null ) {
-            return result;
+        let x = await bpstore.getItem(dbkey);
+        if ( x !== null ) {
+            return x;
         }
     }
     let _notes = [];
@@ -106,6 +105,7 @@ languageId,
         let tacounts = wc.wordCount(alltext);
         detail_tarticles_map.set(uniqSorted[j],tacounts);
     }
+    let result = {};
     result["summary_ref_map"] = map_to_obj(summary_tarticles_map);
     // the below has the count data arranged per article
     result["detail_article_map"] = map_to_obj(detail_tarticles_map);

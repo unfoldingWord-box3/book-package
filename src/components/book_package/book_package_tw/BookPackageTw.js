@@ -49,7 +49,7 @@ function BookPackageTw({
       } catch (error) {
         setVal(
           <div>
-            {error.message}
+            fetchBookPackageTw() Error: {error.message}
           </div>
         )
         return;

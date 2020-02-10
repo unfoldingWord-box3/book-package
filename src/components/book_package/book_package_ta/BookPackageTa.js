@@ -70,7 +70,7 @@ function BookPackageTa({
         } catch (error) {
         setVal(
           <div>
-            {error.message}
+            fetchBookPackageTa() Error: {error.message}
           </div>
         )
         return;
