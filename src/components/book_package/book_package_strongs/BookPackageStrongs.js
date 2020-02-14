@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Link, Collapse } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {fetchBookPackageStrongs} from './helpers';
 import {validateInputProperties, convertToLink} from './helpers';
@@ -23,7 +24,7 @@ function BookPackageStrongs({
 }) 
 {
   const open = true; // for collapse component to manage its state
-  const [_book, setVal] = useState("Waiting-BookPackageStrongs");
+  const [_book, setVal] = useState(<CircularProgress />);
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
     let chlist = chapter ? chapter : "(ALL)";

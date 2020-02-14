@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {fetchBookPackageTn} from './helpers';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import * as cav from '../../../core/chaptersAndVerses';
 
@@ -79,7 +80,7 @@ function BookPackageTn({
 {
   const open = true; // for collapse component to manage its state
 
-  const [_book, setVal] = useState("Waiting-BookPackageTn");
+  const [_book, setVal] = useState(<CircularProgress />);
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
     let chlist = chapter ? chapter : "(ALL)";

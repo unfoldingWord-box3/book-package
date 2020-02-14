@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Collapse } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {fetchBookPackageUST} from './helpers';
 import * as cav from '../../../core/chaptersAndVerses';
@@ -79,7 +80,7 @@ function BookPackageUst({
 }) 
 {
   const open = true; // for collapse component to manage its state
-  const [_book, setVal] = useState("Waiting-BookPackageUst");
+  const [_book, setVal] = useState(<CircularProgress />);
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
     let chlist = chapter ? chapter : "(ALL)";

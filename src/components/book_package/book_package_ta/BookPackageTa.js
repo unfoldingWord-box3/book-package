@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {fetchBookPackageTa} from './helpers';
 import { Link, Collapse } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import * as cav from '../../../core/chaptersAndVerses';
 
@@ -45,7 +46,7 @@ function BookPackageTa({
 }) 
 {
   const open = true; // for collapse to manage its state
-  const [_book, setVal] = useState("Waiting-BookPackageTa");
+  const [_book, setVal] = useState(<CircularProgress />);
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
     let chlist = chapter ? chapter : "(ALL)";

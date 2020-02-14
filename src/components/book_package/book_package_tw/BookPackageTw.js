@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Link, Collapse } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import {fetchBookPackageTw} from './helpers';
 import {validateInputProperties} from './helpers';
@@ -24,7 +25,7 @@ function BookPackageTw({
 {
   const open = true;
 
-  const [_book, setVal] = useState("Waiting-BookPackageTw");
+  const [_book, setVal] = useState(<CircularProgress />);
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
     let chlist = chapter ? chapter : "(ALL)";
