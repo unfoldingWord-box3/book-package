@@ -56,6 +56,9 @@ function BookPackageRollup({
           break;
         }
       }
+
+      // add space to bookId for UI so it can wrap when really long
+      let bidTitle = bookarray.join(", ");
      
       let chlist = chapter ? chapter : "(ALL)";
       if ( result ) {
@@ -63,7 +66,7 @@ function BookPackageRollup({
         setVal(
           <Paper className={classes.paper} >
             <Typography variant="h5" gutterBottom>
-              Package Rollup for "{bookId.toUpperCase()}" 
+              Package Rollup for "{bidTitle.toUpperCase()}" 
               and Chapters {chlist}
             </Typography>
             <BookPackageTotals bookId={bookId} />

@@ -87,8 +87,8 @@ function BookPackageTa({
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Total number of tA articles: <strong>{uniqueAndSorted.length}</strong><br/>
-            Total Word Count: <strong>{result["grandTotalWordCount"]}</strong> <br/> 
+            Number of tA articles: <strong>{uniqueAndSorted.length}</strong><br/>
+            Word Count: <strong>{result["grandTotalWordCount"]}</strong> <br/> 
             Unique words: <strong>{result["grandDistinctWordCount"]}</strong> 
           </Typography>
 
@@ -99,7 +99,7 @@ function BookPackageTa({
                   <TableRow>
                     <TableCell>Translation Academy</TableCell>
                     <TableCell align="center">Reference Count</TableCell>
-                    <TableCell align="center">Total Word Count</TableCell>
+                    <TableCell align="center">Word Count</TableCell>
                     <TableCell align="center">Unique Words</TableCell>
                   </TableRow>
                 </TableHead>

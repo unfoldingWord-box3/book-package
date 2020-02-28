@@ -62,12 +62,12 @@ function BookPackageTw({
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total Number of tW Articles: <strong>{result.totalReferences}</strong> <br/>
+            Number of tW Articles: <strong>{result.totalReferences}</strong> <br/>
             Unique Number of tW Articles: <strong>{gkeys.length}</strong> 
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-          Total Word Count: <strong>{result.grandTotalWordCount}</strong> <br/>
+          Word Count: <strong>{result.grandTotalWordCount}</strong> <br/>
           Unique Words: <strong>{result.grandDistinctWordCount}</strong> <br/>
           </Typography>
 
@@ -78,7 +78,7 @@ function BookPackageTw({
               <TableRow>
                 <TableCell>Translation Word</TableCell>
                 <TableCell align="center">Reference Count</TableCell>
-                <TableCell align="center">Total Word Count</TableCell>
+                <TableCell align="center">Word Count</TableCell>
                 <TableCell align="center">Unique Words</TableCell>
               </TableRow>
             </TableHead>

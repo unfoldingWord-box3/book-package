@@ -120,10 +120,10 @@ function BookPackageTq({
             and Chapters {chlist}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total Number of Questions: <strong>{result.l1count}</strong>
+            Number of Questions: <strong>{result.l1count}</strong>
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Total Word Count <strong>{result.total}</strong>
+            Word Count <strong>{result.total}</strong>
           </Typography>
           <Collapse in={open} component="details">
           <div id="details">

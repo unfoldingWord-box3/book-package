@@ -120,8 +120,8 @@ function BookPackageTn({
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Total number of notes: <strong>{result["totalNotes"]}</strong><br/>
-            Total Word Count: <strong>{result["total"]}</strong> <br/>
+            Number of notes: <strong>{result["totalNotes"]}</strong><br/>
+            Word Count: <strong>{result["total"]}</strong> <br/>
             Unique Words: <strong>{result["distinct"]}</strong>
           </Typography>
 

@@ -64,12 +64,12 @@ function BookPackageStrongs({
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Total Number of Entries: {result.totalReferences} <br/>
+            Number of Entries: {result.totalReferences} <br/>
             Unique Number of Entries: {result.distinctReferences}
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-          Total Word Count: {result.grandTotalWordCount} <br/>
+          Word Count: {result.grandTotalWordCount} <br/>
           Unique Words: {result.grandDistinctWordCount}
           </Typography>
 
@@ -82,7 +82,7 @@ function BookPackageStrongs({
               <TableRow>
                 <TableCell>Strongs Entry</TableCell>
                 <TableCell align="center">Reference Count</TableCell>
-                <TableCell align="center">Total Word Count</TableCell>
+                <TableCell align="center">Word Count</TableCell>
                 <TableCell align="center">Unique Words</TableCell>
               </TableRow>
             </TableHead>

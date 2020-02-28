@@ -121,7 +121,7 @@ function BookPackageUlt({
           </Typography>
 
           <Typography variant="body2" gutterBottom>
-            Total Word Count: <strong>{totalWordCount}</strong>
+            Word Count: <strong>{totalWordCount}</strong>
           </Typography>
 
           <Collapse in={open} component="details">
