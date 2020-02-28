@@ -11928,10 +11928,10 @@ uuid@^3.0.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.3.tgz#4568f0216e78760ee1dbf3a4d2cf53e224112866"
   integrity sha512-pW0No1RGHgzlpHJO1nsVrHKpOEIxkGg1xB+v0ZmdNH5OAeAwzAVrCnI2/6Mtx+Uys6iaylxa+D3g4j63IKKjSQ==
 
-uw-word-count@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/uw-word-count/-/uw-word-count-0.1.1.tgz#b4a7f48061431349e8cddf1e478737369f621ea8"
-  integrity sha512-EuqmWGMa8jS7tkyY96g/kbT6bXafNoBzrGrwM/gEmdr9twUikSmCjvjXKo6CNyZ9VOaWXitJVikiSJ1x6prADw==
+uw-word-count@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/uw-word-count/-/uw-word-count-0.1.2.tgz#071b136b1b1cb23e1ef84338c65e9e518caffc76"
+  integrity sha512-1fH5IzVy/W5jfT7El2rSkVyUj221SO1az8AXP3l7ZgDX0Wy0wK4mNpSsCDhukJEGhXLNFdeD0eXeTZqbbncXkQ==
   dependencies:
     "@date-io/core" "^1.3.6"
     "@material-ui/core" "^4.5.1"

@@ -30,7 +30,7 @@
     "serialize-javascript": "^2.1.2",
     "url-loader": "^2.1.0",
     "usfm-js": "^2.0.0",
-    "uw-word-count": "^0.1.1"
+    "uw-word-count": "^0.1.2"
   },
   "scripts": {
     "start": "styleguidist server",

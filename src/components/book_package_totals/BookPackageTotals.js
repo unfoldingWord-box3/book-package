@@ -173,6 +173,7 @@ async function bp_totals(delay,iterations,setVal) {
                     title={mt.title}
                     columns={mt.columns}
                     data={mt.data}
+                    options={mt.options}
                   />
                 </div>
               </Collapse>
@@ -235,14 +236,3 @@ const styles = theme => ({
 export default withStyles(styles)(BookPackageTotals);
 
 
-/*
-
-              <MaterialTable
-                icons={tableIcons}
-                title={mt.title}
-                columns={mt.columns}
-                data={mt.data}
-                options={mt.options}
-              />
-
-*/

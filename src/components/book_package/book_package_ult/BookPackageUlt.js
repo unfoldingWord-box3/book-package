@@ -132,6 +132,7 @@ function BookPackageUlt({
               title={mt.title}
               columns={mt.columns}
               data={mt.data}
+              options={mt.options}
             />
           </div>
           </Collapse>
