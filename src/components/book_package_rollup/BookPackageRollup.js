@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import * as cav from '../../core/chaptersAndVerses';
 import {bpstore} from '../../core/setupBpDatabase'
@@ -43,7 +44,7 @@ function BookPackageRollup({
 {
   if ( clearFlag === undefined ) { clearFlag = true }
 
-  const [_book, setVal] = useState("Waiting-BookPackageRollup");
+  const [_book, setVal] = useState(<CircularProgress />);
   useEffect( () => {
     const fetchData = async () => {
 

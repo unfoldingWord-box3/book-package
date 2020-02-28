@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import Paper from '@material-ui/core/Paper';
 import { Collapse } from '@material-ui/core';
 
@@ -194,7 +196,7 @@ function BookPackageTotals({
   style,
 }) 
 {
-  const [_totals, setVal] = useState("Waiting-BookPackageTotals");
+  const [_totals, setVal] = useState(<CircularProgress />);
   let _delay = delay;
   let _iterations = iterations;
   if ( _delay === undefined ) _delay = 1000;
