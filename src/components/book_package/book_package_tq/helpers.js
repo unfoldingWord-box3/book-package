@@ -25,6 +25,7 @@ languageId,
     }
 
 
+    let errors = [];
     let totalL1count = 0;
     let grandtext = "";
     const chaparray = chapters.split(",");
@@ -60,6 +61,7 @@ languageId,
             data = await gitApi.getURL({uri});    
         } catch(error) {
             const err = "contents Error on:"+uri+" is:"+error;
+            errors.push(err);
             throw new Error(err);
         }
         let _verses = await JSON.parse(JSON.stringify(data));
@@ -71,6 +73,7 @@ languageId,
                 _tq = await gitApi.getURL({uri: git_url});    
             } catch(error) {
                 const err = "getURL() Error on:"+git_url+" is:"+error;
+                errors.push(err);
                 throw new Error(err);
             }
             if ( _tq == null) {
@@ -94,6 +97,9 @@ languageId,
     // overwrite l1count with correct value
     vcounts.l1count = totalL1count;
     //.setItem('utq-'+bookId,JSON.stringify(vcounts.wordFrequency))
-    await bpstore.setItem(dbkey, vcounts)
+    await bpstore.setItem(dbkey, vcounts);
+    if ( errors.length > 0 ) {
+        await bpstore.setItem(dbkey+"-errors", errors);
+    }
     return vcounts;
 }

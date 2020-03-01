@@ -6,7 +6,7 @@ import * as wc from 'uw-word-count';
 import {bpstore} from '../../../core/setupBpDatabase';
 
 async function process_tags(key,val,summary_tw_map,
-    summary_twArticle_map,summary_ByArticle_map) {
+    summary_twArticle_map,summary_ByArticle_map, errors) {
     if ( key !== "tw" ) {return;}
     //console.log("tw key,val=",key,val)
     // article count
@@ -29,6 +29,7 @@ async function process_tags(key,val,summary_tw_map,
         );
         data = await gitApi.get({uri});    
     } catch(error) {
+        errors.push(error);
         data = " ";
     }
     let twcounts = wc.wordCount(""+data);
@@ -128,6 +129,7 @@ export async function fetchBookPackageTw({
     var summary_twArticle_map = new Map();
     var summary_ByArticle_map = new Map();
     const chaparray = chapters.split(",");
+    let errors = [];
 
     for (var [k,v] of book_map.entries()) {
         //console.log("Working on Chapter:"+k);
@@ -154,7 +156,7 @@ export async function fetchBookPackageTw({
                     for ( var [k3,v3] of verse_obj_map.entries()) {
                         await process_tags(k3,v3,summary_tw_map,
                             summary_twArticle_map,
-                            summary_ByArticle_map
+                            summary_ByArticle_map, errors
                         );
                         if ( k3 === "children" ) {
                             for (var j=0; j < v3.length; j++) {
@@ -162,7 +164,7 @@ export async function fetchBookPackageTw({
                                 for ( var [k4,v4] of children_map.entries()) {
                                     await process_tags(k4,v4,summary_tw_map,
                                         summary_twArticle_map,
-                                        summary_ByArticle_map
+                                        summary_ByArticle_map, errors
                                     );
                                 }
                             }
@@ -203,6 +205,9 @@ export async function fetchBookPackageTw({
     }
 
     await bpstore.setItem(dbkey,results);
+    if ( errors.length > 0 ) {
+        await bpstore.setItem(dbkey+"-errors", errors);
+    }
     return results;
   }
 

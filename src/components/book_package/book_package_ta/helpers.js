@@ -81,6 +81,7 @@ languageId,
     const mdfiles = ["title.md","sub-title.md","01.md"];
     let grandAllText = "";
     let uniqSorted = [...new Set(tarticles)].sort()
+    let errors = [];
     for (var j=0; j < uniqSorted.length; j++) {
         let alltext = ""; // empty it out for each set
         for (var k=0; k < mdfiles.length; k++) {
@@ -92,6 +93,7 @@ languageId,
                 );
                 data = await gitApi.get({uri});    
             } catch(error) {
+                errors.push(errors);
                 data = null;
                 continue;
             }
@@ -119,6 +121,9 @@ languageId,
     result["distinctReferences"] = summary_tarticles_map.size;
 
     await bpstore.setItem(dbkey,result);
+    if ( errors.length > 0 ) {
+        await bpstore.setItem(dbkey+"-errors", errors);
+    }
     return result;
 }
 
