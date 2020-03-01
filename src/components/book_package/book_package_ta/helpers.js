@@ -93,7 +93,7 @@ languageId,
                 );
                 data = await gitApi.get({uri});    
             } catch(error) {
-                errors.push(errors);
+                errors.push(""+errors);
                 data = null;
                 continue;
             }

@@ -29,7 +29,7 @@ async function process_tags(key,val,summary_tw_map,
         );
         data = await gitApi.get({uri});    
     } catch(error) {
-        errors.push(error);
+        errors.push(""+error);
         data = " ";
     }
     let twcounts = wc.wordCount(""+data);
