@@ -23,14 +23,17 @@ async function process_tags(key,val,summary_tw_map,
     // word count in the articles
     let data = [];
     let repo_path = val.replace(/^rc.*dict(\/.*$)/, '$1.md');
+    let uri;
     try {
-        const uri = Path.join('unfoldingWord', 
+        uri = Path.join('unfoldingWord', 
             'en_tw', 'raw/branch', 'master', repo_path
         );
         data = await gitApi.get({uri});    
     } catch(error) {
-        errors.push(""+error);
-        data = " ";
+        const err = "UTW Error on:"+uri+" is:"+error;
+        errors.push(err);
+        console.log(err);
+    data = " ";
     }
     let twcounts = wc.wordCount(""+data);
     for ( var i=0; i < twcounts.allWords.length; i++ ) {

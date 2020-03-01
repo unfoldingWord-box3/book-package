@@ -60,8 +60,9 @@ languageId,
             uri = baseURL+Path.join('api/v1/repos', owner, repo, 'contents', path);
             data = await gitApi.getURL({uri});    
         } catch(error) {
-            const err = "contents Error on:"+uri+" is:"+error;
+            const err = "UTQ Error on:"+uri+" is:"+error;
             errors.push(err);
+            console.log(err);
             throw new Error(err);
         }
         let _verses = await JSON.parse(JSON.stringify(data));
@@ -72,8 +73,9 @@ languageId,
             try {
                 _tq = await gitApi.getURL({uri: git_url});    
             } catch(error) {
-                const err = "getURL() Error on:"+git_url+" is:"+error;
+                const err = "UTQ Error on:"+git_url+" is:"+error;
                 errors.push(err);
+                console.log(err);
                 throw new Error(err);
             }
             if ( _tq == null) {

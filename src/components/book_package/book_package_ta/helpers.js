@@ -87,14 +87,17 @@ languageId,
         for (var k=0; k < mdfiles.length; k++) {
             let repo_path = base + uniqSorted[j] + slash + mdfiles[k];
             let data = [];
+            let uri;
             try {
-                const uri = Path.join('unfoldingWord', 
+                uri = Path.join('unfoldingWord', 
                     repo, 'raw/branch', 'master', repo_path
                 );
                 data = await gitApi.get({uri});    
             } catch(error) {
-                errors.push(""+errors);
-                data = null;
+                const err = "UTA Error on:"+uri+" is:"+error;
+                errors.push(err);
+                console.log(err);
+                    data = null;
                 continue;
             }
             if ( data == null) {
