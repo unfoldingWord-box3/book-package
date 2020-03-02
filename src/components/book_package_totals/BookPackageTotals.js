@@ -60,6 +60,14 @@ async function bp_totals(delay,iterations,setVal) {
   });
 
   let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-'];
+  // ult,ust,utn,utq,utw,uta
+  let ult_total = 0;
+  let ust_total = 0;
+  let utn_total = 0;
+  let utq_total = 0;
+  let utw_total = 0;
+  let uta_total = 0;
+  
   await (async function theLoop (iterations) {
     setTimeout( async function () {
       let tbid = await bpstore.getItem('bookid');
@@ -108,6 +116,7 @@ async function bp_totals(delay,iterations,setVal) {
               let z = all_map.get(m);
               if ( z === undefined ) z = 0;
               all_map.set(m, z + n);
+              uta_total = uta_total + n;
             }
           }
           //
@@ -132,6 +141,7 @@ async function bp_totals(delay,iterations,setVal) {
               let z = all_map.get(m);
               if ( z === undefined ) z = 0;
               all_map.set(m, z + n);
+              utw_total = utw_total + n;
             }
           }
 
@@ -150,6 +160,15 @@ async function bp_totals(delay,iterations,setVal) {
                 let z = all_map.get(m);
                 if ( z === undefined ) z = 0;
                 all_map.set(m, z + n);
+                if ( k.startsWith("ult") ) {
+                  ult_total = ult_total + n;
+                } else if ( k.startsWith("ust") ) {
+                  ust_total = ust_total + n;
+                } else if ( k.startsWith("utn") ) {
+                  utn_total = utn_total + n;
+                } else if ( k.startsWith("utq") ) {
+                  utq_total = utq_total + n;
+                }
               }
             }
           }
@@ -161,10 +180,17 @@ async function bp_totals(delay,iterations,setVal) {
         
           let wf = wc.map_to_obj(all_map);
           let mt = wc.wf_to_mt(wf);
+          // ult,ust,utn,utq,utw,uta
           setVal(
             <Paper>
               <Typography variant="h6" gutterBottom>
-                Total Word Count for "{tbid.toUpperCase()}" <strong>{totalPackcageWordCount}</strong>
+                Total Word Count <strong>{totalPackcageWordCount}</strong> <br/>
+                ULT Total <strong>{ult_total}</strong> <br/>
+                UST Total <strong>{ust_total}</strong> <br/>
+                UTN Total <strong>{utn_total}</strong> <br/>
+                UTQ Total <strong>{utq_total}</strong> <br/>
+                UTW Total <strong>{utw_total}</strong> <br/>
+                UTA Total <strong>{uta_total}</strong> <br/>
               </Typography>
               <Collapse in={open} component="details">
                 <div id="details">
