@@ -7,7 +7,7 @@ import * as wc from 'uw-word-count';
 
 
 async function process_tags(key,val,bookId,summary_strong_map,
-    summary_article_map,detail_article_map) 
+    summary_article_map,detail_article_map, errors) 
 {
     if ( key !== 'strong' ) {return;}
 
@@ -34,12 +34,16 @@ async function process_tags(key,val,bookId,summary_strong_map,
         repo_path = 'content/' + val + '/01.md';
     }
     let data = [];
+    let uri;
     try {
-        const uri = Path.join('unfoldingWord', 
+        uri = Path.join('unfoldingWord', 
             repo, 'raw/branch', 'master', repo_path
         );
         data = await gitApi.get({uri});    
     } catch(error) {
+        const err = "Lex Error on:"+uri+" is:"+error;
+        errors.push(err);
+        console.log(err);
         data = null;
         return;
     }
@@ -108,7 +112,7 @@ export async function fetchBookPackageStrongs({
         }
     }
     
-
+    let errors = [];
     let _book;
     const _manifests = await gitApi.fetchResourceManifests(
         {username: 'unfoldingword', 
@@ -165,12 +169,12 @@ export async function fetchBookPackageStrongs({
                 for (var i=0; i < v2.length; i++) {
                     var verse_obj_map = obj_to_map(v2[i]);
                     for ( var [k3,v3] of verse_obj_map.entries()) {
-                        await process_tags(k3,v3,bookId,summary_strong_map,summary_article_map,detail_article_map);
+                        await process_tags(k3,v3,bookId,summary_strong_map,summary_article_map,detail_article_map,errors);
                         if ( k3 === "children" ) {
                             for (var j=0; j < v3.length; j++) {
                                 var children_map = obj_to_map(v3[j]);
                                 for ( var [k4,v4] of children_map.entries()) {
-                                    await process_tags(k4,v4,bookId,summary_strong_map,summary_article_map,detail_article_map);
+                                    await process_tags(k4,v4,bookId,summary_strong_map,summary_article_map,detail_article_map,errors);
                                 }
                             }
                         }
@@ -201,6 +205,9 @@ export async function fetchBookPackageStrongs({
     results.distinctReferences     = summary_strong_map.size;
     // below is not words with counts; it is lex entries with counts
     await bpstore.setItem(dbkey,results);
+    if ( errors.length > 0 ) {
+        await bpstore.setItem(dbkey+"-errors", errors);
+    }
     return results;
   }
 /*

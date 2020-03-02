@@ -33,7 +33,7 @@ async function process_tags(key,val,summary_tw_map,
         const err = "UTW Error on:"+uri+" is:"+error;
         errors.push(err);
         console.log(err);
-    data = " ";
+        data = " ";
     }
     let twcounts = wc.wordCount(""+data);
     for ( var i=0; i < twcounts.allWords.length; i++ ) {

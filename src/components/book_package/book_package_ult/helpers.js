@@ -59,6 +59,11 @@ export async function fetchBookPackageULT({
         manifest: _manifests['ult'], 
     });
 
+    let errors = [];
+    if ( _book === null ) {
+        errors.push("ULT Error: Cannot access ",bookId," -- error message not available")
+    }
+
     //console.log("_book ult",_book);
     var book_map = obj_to_map(_book);
     //var summary_ult_map = new Map();
@@ -109,5 +114,8 @@ export async function fetchBookPackageULT({
 
     let wcounts = wc.wordCount(alltext.join('\n'));
     await bpstore.setItem(dbkey,wcounts)
+    if ( errors.length > 0 ) {
+        await bpstore.setItem(dbkey+"-errors", errors);
+    }
     return wcounts;
   }

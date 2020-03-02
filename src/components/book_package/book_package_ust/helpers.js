@@ -61,6 +61,11 @@ export async function fetchBookPackageUST({
         manifest: _manifests['ust'], 
     });
 
+    let errors = [];
+    if ( _book === null ) {
+        errors.push("UST Error: Cannot access ",bookId," -- error message not available")
+    }
+
     var book_map = obj_to_map(_book);
     //var summary_ust_map = new Map();
     const chaparray = chapters.split(",");
@@ -108,5 +113,8 @@ export async function fetchBookPackageUST({
 
     let wcounts = wc.wordCount(alltext.join('\n'));
     await bpstore.setItem(dbkey,wcounts)
+    if ( errors.length > 0 ) {
+        await bpstore.setItem(dbkey+"-errors", errors);
+    }
     return wcounts;
   }

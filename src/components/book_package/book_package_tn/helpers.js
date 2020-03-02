@@ -35,6 +35,11 @@ languageId,
         manifest: _manifests['tn']
     });
 
+    let errors = [];
+    if ( _notes === null ) {
+        errors.push("UTN Error: Cannot access:",bookId," -- error message not available")
+    }
+
     let allNotes = "";
 
     const chaparray = chapters.split(",");
@@ -61,5 +66,8 @@ languageId,
     // add one more UTN attribute, namely, the number of notes
     wcounts.totalNotes = total;
     await bpstore.setItem(dbkey,wcounts);
+    if ( errors.length > 0 ) {
+        await bpstore.setItem(dbkey+"-errors", errors);
+    }
     return wcounts;
 }
