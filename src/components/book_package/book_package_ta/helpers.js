@@ -60,6 +60,7 @@ languageId,
             }
         }
         let tarticle = _notes[i][4];
+        if ( tarticle === undefined ) { continue; }
         if ( tarticle !== "" ) {
             tacount = tacount + 1;
             tarticles.push(tarticle);
