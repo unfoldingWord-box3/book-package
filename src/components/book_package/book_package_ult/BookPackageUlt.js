@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { Collapse } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import TreeView from '@material-ui/lab/TreeView';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import TreeItem from '@material-ui/lab/TreeItem';
 
 import {fetchBookPackageULT} from './helpers';
 import * as cav from '../../../core/chaptersAndVerses';
@@ -80,7 +84,6 @@ function BookPackageUlt({
   style,
 }) 
 {
-  const open = true; // for collapse component to manage its state
   const [_book, setVal] = useState(<CircularProgress />);
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
@@ -114,29 +117,32 @@ function BookPackageUlt({
       }
       let mt = wc.wf_to_mt(result.wordFrequency);
       let totalWordCount = result.total;
+
+      let rootTitle = 'ULT Word Count: '+ totalWordCount.toLocaleString();
+      let bodyTitle = 'Details'
+
       setVal(
         <Paper className={classes.paper} >
-          <Typography variant="h6" gutterBottom>
-            ULT Number of Words for "{bookId.toUpperCase()}" 
-            and Chapters {chlist}
-          </Typography>
-
-          <Typography variant="body2" gutterBottom>
-            Word Count: <strong>{totalWordCount}</strong>
-          </Typography>
-
-          <Collapse in={open} component="details">
-          <div id="details">
-            <MaterialTable
-              icons={tableIcons}
-              title={mt.title}
-              columns={mt.columns}
-              data={mt.data}
-              options={mt.options}
-            />
-          </div>
-          </Collapse>
-
+          <TreeView
+            className={classes.root}
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpandIcon={<ChevronRightIcon />}
+          >
+            <TreeItem nodeId="1" label={rootTitle}>
+              <Typography variant="body2" gutterBottom>
+                Number of Notes:{result.totalNotes}
+              </Typography>
+              <TreeItem nodeId="2" label={bodyTitle}>
+                <MaterialTable
+                  icons={tableIcons}
+                  title={mt.title}
+                  columns={mt.columns}
+                  data={mt.data}
+                  options={mt.options}
+                />
+              </TreeItem>
+            </TreeItem>
+          </TreeView>
         </Paper>
       );  
     };

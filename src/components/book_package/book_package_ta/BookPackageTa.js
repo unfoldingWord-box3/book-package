@@ -9,8 +9,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {fetchBookPackageTa} from './helpers';
-import { Link, Collapse } from '@material-ui/core';
+import { Link } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import TreeView from '@material-ui/lab/TreeView';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import TreeItem from '@material-ui/lab/TreeItem';
 
 import * as cav from '../../../core/chaptersAndVerses';
 
@@ -45,7 +50,6 @@ function BookPackageTa({
   style,
 }) 
 {
-  const open = true; // for collapse to manage its state
   const [_book, setVal] = useState(<CircularProgress />);
   useEffect( () => {
     const result = validateInputProperties(bookId, chapter);
@@ -80,47 +84,49 @@ function BookPackageTa({
       let tkeys = Array.from(Object.keys(result.summary_ref_map));
       let uniqueAndSorted = [...new Set(tkeys)].sort() 
 
+      let rootTitle = 'UTA Word Count: '+ result.grandTotalWordCount.toLocaleString();
+      let bodyTitle = 'Details'
+
       setVal(
         <Paper className={classes.paper}>
-          <Typography variant="h6" gutterBottom>
-            Translation Academy for "{bookId.toUpperCase()}" 
-            and Chapters {chlist}
-          </Typography>
+          <TreeView
+            className={classes.root}
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpandIcon={<ChevronRightIcon />}
+          >
 
-          <Typography variant="body2" gutterBottom>
-            Number of tA articles: <strong>{uniqueAndSorted.length}</strong><br/>
-            Word Count: <strong>{result["grandTotalWordCount"]}</strong> <br/> 
-            Unique words: <strong>{result["grandDistinctWordCount"]}</strong> 
-          </Typography>
-
-          <Collapse in={open} component="details">
-            <div id="details">
-              <Table className={classes.table} size="small" aria-label="a dense table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Translation Academy</TableCell>
-                    <TableCell align="center">Reference Count</TableCell>
-                    <TableCell align="center">Word Count</TableCell>
-                    <TableCell align="center">Unique Words</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {uniqueAndSorted.map(skey => (
-                    <TableRow key={skey}>
-                      <TableCell component="th" scope="row">
-                        <Link href={convertToLink({skey})} target="_blank" rel="noopener" >
-                        {skey}
-                        </Link>
-                      </TableCell>
-                      <TableCell align="center">{result.summary_ref_map[skey]}</TableCell>
-                      <TableCell align="center">{result.detail_article_map[skey]['total']}</TableCell>
-                      <TableCell align="center">{result.detail_article_map[skey]['distinct']}</TableCell>
+            <TreeItem nodeId="1" label={rootTitle}>
+              <Typography variant="body2" gutterBottom>
+                Linked entries:{uniqueAndSorted.length} unique, {tkeys.length} total links
+              </Typography>
+              <TreeItem nodeId="2" label={bodyTitle}>
+                <Table className={classes.table} size="small" aria-label="a dense table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Translation Academy</TableCell>
+                      <TableCell align="center">Reference Count</TableCell>
+                      <TableCell align="center">Word Count</TableCell>
+                      <TableCell align="center">Unique Words</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </Collapse>
+                  </TableHead>
+                  <TableBody>
+                    {uniqueAndSorted.map(skey => (
+                      <TableRow key={skey}>
+                        <TableCell component="th" scope="row">
+                          <Link href={convertToLink({skey})} target="_blank" rel="noopener" >
+                          {skey}
+                          </Link>
+                        </TableCell>
+                        <TableCell align="center">{result.summary_ref_map[skey]}</TableCell>
+                        <TableCell align="center">{result.detail_article_map[skey]['total']}</TableCell>
+                        <TableCell align="center">{result.detail_article_map[skey]['distinct']}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TreeItem>
+            </TreeItem>
+          </TreeView>
         </Paper>
       );  
     };

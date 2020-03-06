@@ -60,7 +60,7 @@ function BookPackageStrongs({
         return;
       }
       let gkeys = Array.from(Object.keys(result.summary_ref_map));
-      let rootTitle = 'Lexicon Word Count: '+ result.grandTotalWordCount;
+      let rootTitle = 'Lexicon Word Count: '+ result.grandTotalWordCount.toLocaleString();
       let bodyTitle = 'Details'
       setVal(
         <Paper className={classes.paper} >
@@ -75,33 +75,32 @@ function BookPackageStrongs({
                 Linked entries:{result.distinctReferences} unique, {result.totalReferences} total links
               </Typography>
               <TreeItem nodeId="2" label={bodyTitle}>
-              <Table className={classes.table} size="small" aria-label="a dense table" >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Strongs Entry</TableCell>
-                    <TableCell align="center">Reference Count</TableCell>
-                    <TableCell align="center">Word Count</TableCell>
-                    <TableCell align="center">Unique Words</TableCell>
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  {gkeys.sort().map(skey => (
-                    <TableRow key={skey}>
-                      <TableCell component="th" scope="row">
-                        <Link href={convertToLink(skey,bookId)} target="_blank" rel="noopener" >
-                          {skey}
-                        </Link>
-                      </TableCell>
-                      <TableCell align="center">{result.summary_ref_map[skey]}</TableCell>
-                      <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['total'] : 'Non Existent'}</TableCell>
-                      <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['distinct'] : 'Non Existent'}</TableCell>
+                <Table className={classes.table} size="small" aria-label="a dense table" >
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Strongs Entry</TableCell>
+                      <TableCell align="center">Reference Count</TableCell>
+                      <TableCell align="center">Word Count</TableCell>
+                      <TableCell align="center">Unique Words</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TreeItem>
-          
+                  </TableHead>
+
+                  <TableBody>
+                    {gkeys.sort().map(skey => (
+                      <TableRow key={skey}>
+                        <TableCell component="th" scope="row">
+                          <Link href={convertToLink(skey,bookId)} target="_blank" rel="noopener" >
+                            {skey}
+                          </Link>
+                        </TableCell>
+                        <TableCell align="center">{result.summary_ref_map[skey]}</TableCell>
+                        <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['total'] : 'Non Existent'}</TableCell>
+                        <TableCell align="center">{result.detail_article_map[skey] ? result.detail_article_map[skey]['distinct'] : 'Non Existent'}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TreeItem>
             </TreeItem>
           
           </TreeView>
