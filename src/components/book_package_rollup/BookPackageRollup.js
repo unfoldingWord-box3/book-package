@@ -76,7 +76,7 @@ function BookPackageRollup({
                   defaultCollapseIcon={<ExpandMoreIcon />}
                   defaultExpandIcon={<ChevronRightIcon />}
                 >
-                  <TreeItem nodeId={skey} label={skey}>
+                  <TreeItem nodeId={skey} label={cav.bookTitleById(skey)}>
                     <BookPackageUlt bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageUst bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTa bookId={skey} chapter={chapter} clearFlag={clearFlag} />
