@@ -5,6 +5,11 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import TreeView from '@material-ui/lab/TreeView';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import TreeItem from '@material-ui/lab/TreeItem';
+
 import * as cav from '../../core/chaptersAndVerses';
 import {bpstore} from '../../core/setupBpDatabase'
 import BookPackageTotals from '../book_package_totals';
@@ -58,29 +63,30 @@ function BookPackageRollup({
         }
       }
 
-      // add space to bookId for UI so it can wrap when really long
-      let bidTitle = bookarray.join(", ");
-     
       let chlist = chapter ? chapter : "(ALL)";
       if ( result ) {
         await bpstore.setItem('bookid',bookId);
         setVal(
           <Paper className={classes.paper} >
-            <Typography variant="h5" gutterBottom>
-              Package Rollup for "{bidTitle.toUpperCase()}" 
-              and Chapters {chlist}
-            </Typography>
             <BookPackageTotals bookId={bookId} />
             {bookarray.sort().map(skey => (
               <Paper>
-              <BookPackageTw bookId={skey} chapter={chapter} clearFlag={clearFlag} />
-              <BookPackageTn bookId={skey} chapter={chapter} clearFlag={clearFlag} />
-              <BookPackageTa bookId={skey} chapter={chapter} clearFlag={clearFlag} />
-              <BookPackageTq bookId={skey} chapter={chapter} clearFlag={clearFlag} />
-              <BookPackageUlt bookId={skey} chapter={chapter} clearFlag={clearFlag} />
-              <BookPackageUst bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                <TreeView
+                  className={classes.root}
+                  defaultCollapseIcon={<ExpandMoreIcon />}
+                  defaultExpandIcon={<ChevronRightIcon />}
+                >
+                  <TreeItem nodeId={skey} label={skey}>
+                    <BookPackageUlt bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                    <BookPackageUst bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                    <BookPackageTa bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                    <BookPackageTw bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                    <BookPackageTn bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                    <BookPackageTq bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                  </TreeItem>
+                </TreeView>
               </Paper>
-              ))}
+            ))}
           </Paper>
         );    
       } else {

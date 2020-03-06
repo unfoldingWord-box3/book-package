@@ -128,9 +128,6 @@ function BookPackageUst({
             defaultExpandIcon={<ChevronRightIcon />}
           >
             <TreeItem nodeId="1" label={rootTitle}>
-              <Typography variant="body2" gutterBottom>
-                Number of Notes:{result.totalNotes}
-              </Typography>
               <TreeItem nodeId="2" label={bodyTitle}>
                 <MaterialTable
                   icons={tableIcons}

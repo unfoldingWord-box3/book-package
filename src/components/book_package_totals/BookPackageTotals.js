@@ -4,8 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import TreeView from '@material-ui/lab/TreeView';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import TreeItem from '@material-ui/lab/TreeItem';
+
 import Paper from '@material-ui/core/Paper';
-import { Collapse } from '@material-ui/core';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -51,7 +55,6 @@ const tableIcons = {
 
 
 async function bp_totals(delay,iterations,setVal) {
-  const open = true; // for collapse component to manage its state
   // function to convert object to a map
   const obj_to_map = ( ob => {
     const mp = new Map();
@@ -181,28 +184,38 @@ async function bp_totals(delay,iterations,setVal) {
           let wf = wc.map_to_obj(all_map);
           let mt = wc.wf_to_mt(wf);
           // ult,ust,utn,utq,utw,uta
+
+          let rootTitle = 'Book Packages Total Word Count: '+ totalPackcageWordCount.toLocaleString();
+          let bodyTitle = 'Details'
+    
           setVal(
             <Paper>
-              <Typography variant="h6" gutterBottom>
-                Total Word Count <strong>{totalPackcageWordCount}</strong> <br/>
-                ULT Total <strong>{ult_total}</strong> <br/>
-                UST Total <strong>{ust_total}</strong> <br/>
-                UTN Total <strong>{utn_total}</strong> <br/>
-                UTQ Total <strong>{utq_total}</strong> <br/>
-                UTW Total <strong>{utw_total}</strong> <br/>
-                UTA Total <strong>{uta_total}</strong> <br/>
-              </Typography>
-              <Collapse in={open} component="details">
-                <div id="details">
-                  <MaterialTable
-                    icons={tableIcons}
-                    title={mt.title}
-                    columns={mt.columns}
-                    data={mt.data}
-                    options={mt.options}
-                  />
-                </div>
-              </Collapse>
+              <TreeView
+                defaultCollapseIcon={<ExpandMoreIcon />}
+                defaultExpandIcon={<ChevronRightIcon />}
+              >
+                <TreeItem nodeId="1" label={rootTitle}>
+                  <TreeItem nodeId="2" label="Book Packages Subtotals">
+                    <Typography variant="body2" gutterBottom>
+                      ULT Total <strong>{ult_total.toLocaleString()}</strong> <br/>
+                      UST Total <strong>{ust_total.toLocaleString()}</strong> <br/>
+                      UTA Total <strong>{uta_total.toLocaleString()}</strong> <br/>
+                      UTW Total <strong>{utw_total.toLocaleString()}</strong> <br/>
+                      UTN Total <strong>{utn_total.toLocaleString()}</strong> <br/>
+                      UTQ Total <strong>{utq_total.toLocaleString()}</strong> <br/>
+                    </Typography>
+                  </TreeItem>
+                  <TreeItem nodeId="3" label={bodyTitle}>
+                    <MaterialTable
+                      icons={tableIcons}
+                      title={mt.title}
+                      columns={mt.columns}
+                      data={mt.data}
+                      options={mt.options}
+                    />
+                  </TreeItem>
+                </TreeItem>
+              </TreeView>
             </Paper>
           ); 
           return;
