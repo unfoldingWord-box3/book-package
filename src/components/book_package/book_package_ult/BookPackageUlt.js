@@ -119,7 +119,7 @@ function BookPackageUlt({
       let totalWordCount = result.total;
 
       let rootTitle = 'ULT Word Count: '+ totalWordCount.toLocaleString();
-      let bodyTitle = 'Details'
+      //let bodyTitle = 'Details'
 
       setVal(
         <Paper className={classes.paper} >
@@ -129,7 +129,6 @@ function BookPackageUlt({
             defaultExpandIcon={<ChevronRightIcon />}
           >
             <TreeItem nodeId="1" label={rootTitle}>
-              <TreeItem nodeId="2" label={bodyTitle}>
                 <MaterialTable
                   icons={tableIcons}
                   title={mt.title}
@@ -137,7 +136,6 @@ function BookPackageUlt({
                   data={mt.data}
                   options={mt.options}
                 />
-              </TreeItem>
             </TreeItem>
           </TreeView>
         </Paper>

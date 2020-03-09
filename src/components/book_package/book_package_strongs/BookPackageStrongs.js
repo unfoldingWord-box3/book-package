@@ -61,7 +61,7 @@ function BookPackageStrongs({
       }
       let gkeys = Array.from(Object.keys(result.summary_ref_map));
       let rootTitle = 'Lexicon Word Count: '+ result.grandTotalWordCount.toLocaleString();
-      let bodyTitle = 'Details'
+      //let bodyTitle = 'Details'
       setVal(
         <Paper className={classes.paper} >
           <TreeView
@@ -72,9 +72,8 @@ function BookPackageStrongs({
 
             <TreeItem nodeId="1" label={rootTitle}>
               <Typography variant="body2" gutterBottom>
-                Linked entries:{result.distinctReferences} unique, {result.totalReferences} total links
+                <i>Linked entries:<b>{result.distinctReferences} unique</b>, {result.totalReferences} total links</i>
               </Typography>
-              <TreeItem nodeId="2" label={bodyTitle}>
                 <Table className={classes.table} size="small" aria-label="a dense table" >
                   <TableHead>
                     <TableRow>
@@ -100,7 +99,6 @@ function BookPackageStrongs({
                     ))}
                   </TableBody>
                 </Table>
-              </TreeItem>
             </TreeItem>
           
           </TreeView>

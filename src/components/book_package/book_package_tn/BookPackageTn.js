@@ -117,7 +117,7 @@ function BookPackageTn({
       let mt = wc.wf_to_mt(result.wordFrequency);
 
       let rootTitle = 'UTN Word Count: '+ result.total.toLocaleString();
-      let bodyTitle = 'Details'
+      //let bodyTitle = 'Details'
 
       setVal(
         <Paper className={classes.paper}>
@@ -128,9 +128,8 @@ function BookPackageTn({
           >
             <TreeItem nodeId="1" label={rootTitle}>
               <Typography variant="body2" gutterBottom>
-                Number of Notes:{result.totalNotes}
+                <i>Number of Notes:<b>{result.totalNotes}</b></i>
               </Typography>
-              <TreeItem nodeId="2" label={bodyTitle}>
                 <MaterialTable
                   icons={tableIcons}
                   title={mt.title}
@@ -138,7 +137,6 @@ function BookPackageTn({
                   data={mt.data}
                   options={mt.options}
                 />
-              </TreeItem>
             </TreeItem>
           </TreeView>
         </Paper>

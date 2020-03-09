@@ -193,16 +193,19 @@ async function bp_totals(delay,iterations,setVal) {
               <TreeView
                 defaultCollapseIcon={<ExpandMoreIcon />}
                 defaultExpandIcon={<ChevronRightIcon />}
+                defaultExpanded={['1','2']}
               >
                 <TreeItem nodeId="1" label={rootTitle}>
                   <TreeItem nodeId="2" label="Book Packages Subtotals">
                     <Typography variant="body2" gutterBottom>
-                      ULT Total <strong>{ult_total.toLocaleString()}</strong> <br/>
-                      UST Total <strong>{ust_total.toLocaleString()}</strong> <br/>
-                      UTA Total <strong>{uta_total.toLocaleString()}</strong> <br/>
-                      UTW Total <strong>{utw_total.toLocaleString()}</strong> <br/>
-                      UTN Total <strong>{utn_total.toLocaleString()}</strong> <br/>
-                      UTQ Total <strong>{utq_total.toLocaleString()}</strong> <br/>
+                      <ul>
+                      <li>ULT <strong>{ult_total.toLocaleString()}</strong> </li>
+                      <li>UST <strong>{ust_total.toLocaleString()}</strong> </li>
+                      <li>UTA <strong>{uta_total.toLocaleString()}</strong> </li>
+                      <li>UTW <strong>{utw_total.toLocaleString()}</strong> </li>
+                      <li>UTN <strong>{utn_total.toLocaleString()}</strong> </li>
+                      <li>UTQ <strong>{utq_total.toLocaleString()}</strong> </li>
+                      </ul>
                     </Typography>
                   </TreeItem>
                   <TreeItem nodeId="3" label={bodyTitle}>

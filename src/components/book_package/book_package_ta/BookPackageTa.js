@@ -85,7 +85,7 @@ function BookPackageTa({
       let uniqueAndSorted = [...new Set(tkeys)].sort() 
 
       let rootTitle = 'UTA Word Count: '+ result.grandTotalWordCount.toLocaleString();
-      let bodyTitle = 'Details'
+      //let bodyTitle = 'Details'
 
       setVal(
         <Paper className={classes.paper}>
@@ -97,9 +97,8 @@ function BookPackageTa({
 
             <TreeItem nodeId="1" label={rootTitle}>
               <Typography variant="body2" gutterBottom>
-                Linked entries:{uniqueAndSorted.length} unique, {tkeys.length} total links
+                <i>Linked entries:<b>{uniqueAndSorted.length} unique</b>, {result.totalReferences} total links</i>
               </Typography>
-              <TreeItem nodeId="2" label={bodyTitle}>
                 <Table className={classes.table} size="small" aria-label="a dense table">
                   <TableHead>
                     <TableRow>
@@ -124,7 +123,6 @@ function BookPackageTa({
                     ))}
                   </TableBody>
                 </Table>
-              </TreeItem>
             </TreeItem>
           </TreeView>
         </Paper>

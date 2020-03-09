@@ -116,7 +116,7 @@ function BookPackageTq({
       let mt = wc.wf_to_mt(result.wordFrequency);
 
       let rootTitle = 'UTQ Word Count: '+ result.total.toLocaleString();
-      let bodyTitle = 'Details'
+      //let bodyTitle = 'Details'
 
       setVal(
         <Paper className={classes.paper}>
@@ -127,9 +127,8 @@ function BookPackageTq({
           >
             <TreeItem nodeId="1" label={rootTitle}>
               <Typography variant="body2" gutterBottom>
-                Number of Questions:{result.l1count}
+                <i>Number of Questions:<b>{result.l1count}</b></i>
               </Typography>
-              <TreeItem nodeId="2" label={bodyTitle}>
                 <MaterialTable
                   icons={tableIcons}
                   title={mt.title}
@@ -137,7 +136,6 @@ function BookPackageTq({
                   data={mt.data}
                   options={mt.options}
                 />
-              </TreeItem>
             </TreeItem>
           </TreeView>
         </Paper>
