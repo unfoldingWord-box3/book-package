@@ -50,9 +50,9 @@ function BookPackageRollup({
   if ( clearFlag === undefined ) { clearFlag = true }
 
   const [_book, setVal] = useState(<CircularProgress />);
+  
   useEffect( () => {
     const fetchData = async () => {
-
 
       let result;
       const bookarray = bookId.split(",");
@@ -72,12 +72,14 @@ function BookPackageRollup({
             {bookarray.sort().map(skey => (
               <Paper>
                 <TreeView
-                  className={classes.root}
                   defaultCollapseIcon={<ExpandMoreIcon />}
                   defaultExpandIcon={<ChevronRightIcon />}
                   defaultExpanded={["1"]}
                 >
-                  <TreeItem nodeId="1" label={cav.bookTitleById(skey)}>
+                  <TreeItem nodeId="1" label={
+                    <Typography variant="h6" >{cav.bookTitleById(skey)}</Typography>
+                  } 
+                  >
                     <BookPackageUlt bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageUst bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTa bookId={skey} chapter={chapter} clearFlag={clearFlag} />

@@ -187,7 +187,8 @@ async function bp_totals(delay,iterations,setVal) {
 
           let rootTitle = 'Book Packages Total Word Count: '+ totalPackcageWordCount.toLocaleString();
           let bodyTitle = 'Details'
-    
+    //                    <Typography variant="h5" >{cav.bookTitleById(skey)}</Typography>
+
           setVal(
             <Paper>
               <TreeView
@@ -195,8 +196,8 @@ async function bp_totals(delay,iterations,setVal) {
                 defaultExpandIcon={<ChevronRightIcon />}
                 defaultExpanded={['1','2']}
               >
-                <TreeItem nodeId="1" label={rootTitle}>
-                  <TreeItem nodeId="2" label="Book Packages Subtotals">
+                <TreeItem nodeId="1" label={<Typography variant="h5">{rootTitle}</Typography>}>
+                  <TreeItem nodeId="2" label={<Typography variant="h6">Book Packages Subtotals</Typography>}>
                     <Typography variant="body2" gutterBottom>
                       <ul>
                       <li>ULT <strong>{ult_total.toLocaleString()}</strong> </li>
@@ -208,7 +209,7 @@ async function bp_totals(delay,iterations,setVal) {
                       </ul>
                     </Typography>
                   </TreeItem>
-                  <TreeItem nodeId="3" label={bodyTitle}>
+                  <TreeItem nodeId="3" label={<Typography variant="h6">{bodyTitle}</Typography>}>
                     <MaterialTable
                       icons={tableIcons}
                       title={mt.title}
