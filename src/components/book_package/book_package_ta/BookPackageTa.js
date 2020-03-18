@@ -112,7 +112,7 @@ function BookPackageTa({
                     {uniqueAndSorted.map(skey => (
                       <TableRow key={skey}>
                         <TableCell component="th" scope="row">
-                          <Link href={convertToLink({skey})} target="_blank" rel="noopener" >
+                          <Link href={convertToLink(skey)} target="_blank" rel="noopener" >
                           {skey}
                           </Link>
                         </TableCell>
