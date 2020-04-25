@@ -60,6 +60,19 @@ let sections = [
       });
     }
   },
+  {
+    name: 'SinglePackageTotal',
+    components: () => {
+      const componentNames = [
+        'single_package_total',
+      ];
+      return componentNames.map(componentName => {
+        const filename = upperFirst(camelCase(componentName));
+        const fpath = Path.resolve(__dirname, `src/components//${componentName}`, `${filename}.js`);
+        return fpath;
+      });
+    }
+  },
 ];
 
 module.exports = {

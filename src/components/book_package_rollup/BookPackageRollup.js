@@ -13,6 +13,7 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import * as cav from '../../core/chaptersAndVerses';
 import {bpstore} from '../../core/setupBpDatabase'
 import BookPackageTotals from '../book_package_totals';
+import SinglePackageTotal from '../single_package_total';
 //import BookPackageStrongs from '../book_package/book_package_strongs';
 import BookPackageTw from '../book_package/book_package_tw';
 import BookPackageTn from '../book_package/book_package_tn';
@@ -77,7 +78,7 @@ function BookPackageRollup({
                   defaultExpanded={["1"]}
                 >
                   <TreeItem nodeId="1" label={
-                    <Typography variant="h6" >{cav.bookTitleById(skey)}</Typography>
+                    <Typography variant="h6" >{cav.bookTitleById(skey)} <SinglePackageTotal bookId={skey} /> </Typography>
                   } 
                   >
                     <BookPackageUlt bookId={skey} chapter={chapter} clearFlag={clearFlag} />
