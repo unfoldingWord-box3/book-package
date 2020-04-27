@@ -6,8 +6,8 @@
 //   - false means to continue looping
 // - a function g() that returns void; on timeout this function is executed.
 
-export async function timeoutWatcher(interval: number, iterations: number, f: () => Boolean, g: () => void ) {
-  await (async function theLoop (iterations: number) {
+export async function timeoutWatcher(interval, iterations, f, g ) {
+  await (async function theLoop (iterations) {
     setTimeout( 
       async function () {
         if (--iterations) {      // If i > 0, keep going
