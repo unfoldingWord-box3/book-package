@@ -1,6 +1,6 @@
 {
   "name": "book-package-rcl",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "license": "MIT",
   "description": "A React Component Library for Single Piece Workflow resource identification.",
   "homepage": "https://unfoldingword.github.io/book-package-rcl/",
@@ -32,7 +32,7 @@
     "serialize-javascript": "^2.1.2",
     "url-loader": "^2.1.0",
     "usfm-js": "^2.0.0",
-    "uw-word-count": "^0.1.2"
+    "uw-word-count": "^1.0.0"
   },
   "scripts": {
     "start": "styleguidist server",
