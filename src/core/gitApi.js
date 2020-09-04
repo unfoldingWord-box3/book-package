@@ -57,6 +57,7 @@ export const resourceRepositories = ({languageId}) => {
 };
 
 export async function fetchResourceManifests({username, languageId}) {
+  console.log("fetchResourceManifests(), baseURL is:", baseURL);
   let manifests = {};
   const _resourceRepositories = resourceRepositories({languageId});
   const resourceIds = Object.keys(_resourceRepositories);
@@ -73,9 +74,11 @@ export async function fetchResourceManifests({username, languageId}) {
 };
 
 export async function fetchManifest({username, repository}) {
-  //console.log("uname=",username," repo=",repository)
+  console.log("fetchManifest(): uname=",username," repo=",repository, " baseURL:", baseURL);
   const yaml = await getFile({username, repository, path: 'manifest.yaml'});
+  console.log("fetchManifest(): after getFile()");
   const json = (yaml) ? YAML.safeLoad(yaml) : null;
+  console.log("fetchManifest(): after YAML.safeLoad()");
   return json;
 };
 
