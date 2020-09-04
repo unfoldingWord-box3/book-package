@@ -5,8 +5,8 @@ import { setup } from 'axios-cache-adapter';
 import JSZip from 'jszip';
 
 //const baseURL = 'https://develop.door43.org/';
-//const baseURL = 'https://git.door43.org/';
-const baseURL = 'https://qa.door43.org/';
+const baseURL = 'https://git.door43.org/';
+//const baseURL = 'https://qa.door43.org/';
 const apiPath = 'api/v1';
 
 const cacheStore = localforage.createInstance({
@@ -57,7 +57,6 @@ export const resourceRepositories = ({languageId}) => {
 };
 
 export async function fetchResourceManifests({username, languageId}) {
-  console.log("fetchResourceManifests(), baseURL is:", baseURL);
   let manifests = {};
   const _resourceRepositories = resourceRepositories({languageId});
   const resourceIds = Object.keys(_resourceRepositories);
@@ -74,26 +73,17 @@ export async function fetchResourceManifests({username, languageId}) {
 };
 
 export async function fetchManifest({username, repository}) {
-  //console.log("fetchManifest(): uname=",username," repo=",repository);
   const yaml = await getFile({username, repository, path: 'manifest.yaml'});
-  //console.log("fetchManifest(): after getFile() uname=",username," repo=",repository);
   const json = (yaml) ? YAML.safeLoad(yaml) : null;
-  //console.log("fetchManifest(): after YAML.safeLoad() uname=",username," repo=",repository);
-  if ( json === null ) {
-    console.log("fetchManifest(): after YAML.safeLoad() JSON is null!, uname=",username," repo=",repository);
-    console.log("JSON is null and input yaml was:", yaml);
-  }
   return json;
 };
 
 // https://git.door43.org/unfoldingword/en_ult/raw/branch/master/manifest.yaml
 export async function fetchFileFromServer({username, repository, path, branch='master'}) {
-  //console.log("repo=",repository, " path=",path);
   const repoExists = await repositoryExists({username, repository});
   if (repoExists) {
     const uri = Path.join(username, repository, 'raw/branch', branch, path);
     try {
-      //console.log("URI=",uri);
       const data = await get({uri});
       return data;
     }
@@ -101,15 +91,11 @@ export async function fetchFileFromServer({username, repository, path, branch='m
       return null;
     }
   } else {
-    //console.log("REPO does not exist!", repository)
     return null;
   }
 };
 
 export async function getFile({username, repository, path, branch}) {
-  if (repository === "en_ta") {
-    //console.log("getFile(): path=",path," branch=",branch);
-  }
   let file;
   file = await getFileFromZip({username, repository, path, branch});
   if (!file) {
@@ -126,21 +112,19 @@ export async function getUID({username}) {
 }
 export async function repositoryExists({username, repository}) {
   const uid = await getUID({username});
-  const params = { q: repository, uid };
+  const params = { repo: repository, uid };
   const uri = Path.join(apiPath, 'repos', `search`);
   const {data: repos} = await get({uri, params});
-  const repo = repos.filter(repo => repo.name === repository)[0];
-  return !!repo;
+  const arepo = repos.filter(repo => repo.name === repository)[0];
+  return !!arepo;
 };
 
 export async function get({uri, params}) {
   const {data} = await api.get(uri, { params });
-  //console.log("get():",data);
   return data;
 };
 
 export async function getURL({uri, params}) {
-  //console.log("getURL() uri,params:",uri,params);
   const {data} = await api.get(uri, { params });
   return data;
 };
