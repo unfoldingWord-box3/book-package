@@ -74,11 +74,15 @@ export async function fetchResourceManifests({username, languageId}) {
 };
 
 export async function fetchManifest({username, repository}) {
-  console.log("fetchManifest(): uname=",username," repo=",repository);
+  //console.log("fetchManifest(): uname=",username," repo=",repository);
   const yaml = await getFile({username, repository, path: 'manifest.yaml'});
-  console.log("fetchManifest(): after getFile() uname=",username," repo=",repository);
+  //console.log("fetchManifest(): after getFile() uname=",username," repo=",repository);
   const json = (yaml) ? YAML.safeLoad(yaml) : null;
-  console.log("fetchManifest(): after YAML.safeLoad() uname=",username," repo=",repository);
+  //console.log("fetchManifest(): after YAML.safeLoad() uname=",username," repo=",repository);
+  if ( json === null ) {
+    console.log("fetchManifest(): after YAML.safeLoad() JSON is null!, uname=",username," repo=",repository);
+    console.log("JSON is null and input yaml was:", yaml);
+  }
   return json;
 };
 

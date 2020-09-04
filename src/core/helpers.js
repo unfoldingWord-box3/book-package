@@ -57,6 +57,9 @@ export async function fetchResources({
 };
 
 export async function fetchBook({username, languageId, resourceId, bookId, manifest}) {
+  if ( manifest === null || manifest === undefined ) {
+    console.log("fetchBook() Manifest is null/undefined:",resourceId,bookId)
+  }
   const {projects} = manifest;
   if (!projectByBookId({projects, bookId})) return null;
   const repository = gitApi.resourceRepositories({languageId})[resourceId];
@@ -143,6 +146,10 @@ export async function fetchNotes({username, languageId, bookId, manifest}) {
 };
 
 export async function fetchFileByBookId({username, repository, bookId, manifest}) {
+  if ( manifest === null || manifest === undefined ) {
+    console.log("fetchFileByBookId() Manifest is null/undefined:",repository,bookId)
+  }
+
   let data;
   const {projects} = manifest;
   const project = projectByBookId({projects, bookId});
