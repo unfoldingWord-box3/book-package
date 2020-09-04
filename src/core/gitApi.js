@@ -4,7 +4,9 @@ import localforage from 'localforage';
 import { setup } from 'axios-cache-adapter';
 import JSZip from 'jszip';
 
-const baseURL = 'https://git.door43.org/';
+//const baseURL = 'https://develop.door43.org/';
+//const baseURL = 'https://git.door43.org/';
+const baseURL = 'https://qa.door43.org/';
 const apiPath = 'api/v1';
 
 const cacheStore = localforage.createInstance({
