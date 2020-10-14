@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import {fetchBookPackageTn} from './helpers';
+import {fetchBookPackageTn, fetchObsTn} from './helpers';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import TreeView from '@material-ui/lab/TreeView';
@@ -58,6 +58,7 @@ const tableIcons = {
 
 function validateInputProperties(bookId,chapters) {
   //console.log("validate bookId",bookId,", chapters:",chapters);
+  if ( bookId === 'obs' ) return true; // no need to validate
   if ( chapters === "" ) {
     let ref = {bookId: bookId, chapter: 1, verse: 1};
     //console.log("validate ref", ref);
@@ -101,10 +102,14 @@ function BookPackageTn({
     const fetchData = async () => {
       let result;
       try {
-        result = await fetchBookPackageTn(
-          {username: 'unfoldingword', languageId:'en', 
-          bookId: bookId, chapters: chapter, clearFlag: clearFlag}
-        );
+        if ( bookId === 'obs' ) {
+          result = await fetchObsTn({username: 'unfoldingword', bookId: bookId,  clearFlag: clearFlag});
+        } else {
+          result = await fetchBookPackageTn(
+            {username: 'unfoldingword', languageId:'en', 
+            bookId: bookId, chapters: chapter, clearFlag: clearFlag}
+          );
+        }
       } catch (error) {
         setVal(
           <div>

@@ -6,6 +6,8 @@ This is a component that shows the resources for a single book of the Bible. Opt
 The book identifiers are per standards found at:
 http://ubsicap.github.io/usfm/identification/books.html
 
+To count the words in OBS Translation Notes use lowercase "obs" for the bookId parameter.
+
 ```js
 <BookPackageTn bookId='tit' chapter="" />
 ```

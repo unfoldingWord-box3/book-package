@@ -10,7 +10,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 
-import {fetchBookPackageTq} from './helpers';
+import {fetchBookPackageTq, fetchObsTq} from './helpers';
 import * as cav from '../../../core/chaptersAndVerses';
 
 import { forwardRef } from 'react';
@@ -57,6 +57,7 @@ const tableIcons = {
 /* end material box imports and icons */
 
 function validateInputProperties(bookId,chapters) {
+  if ( bookId === 'obs' ) return true; // no need to validate
   //console.log("validate bookId",bookId,", chapters:",chapters);
   if ( chapters === "" ) {
     let ref = {bookId: bookId, chapter: 1, verse: 1};
@@ -100,10 +101,14 @@ function BookPackageTq({
     const fetchData = async () => {
       let result;
       try {
-        result = await fetchBookPackageTq(
-          {username: 'unfoldingword', languageId:'en', 
-          bookId: bookId, chapters: chapter, clearFlag: clearFlag}
-        );
+        if ( bookId === 'obs' ) {
+          result = await fetchObsTq({username: 'unfoldingword', bookId: bookId,  clearFlag: clearFlag});
+        } else {
+          result = await fetchBookPackageTq(
+            {username: 'unfoldingword', languageId:'en', 
+            bookId: bookId, chapters: chapter, clearFlag: clearFlag}
+          );
+        }
       } catch (error) {
         setVal(
           <div>
