@@ -166,7 +166,7 @@ export const projectByBookId = ({projects, bookId}) => {
 
 export const tsvParse = ({tsv}) => {
   try {
-    return tsv.split('\n').map(row => row.trim().split('\t'));
+    return tsv.trim().split('\n').map(row => row.trim().split('\t'));
   } catch(error) {
     return null;
   }

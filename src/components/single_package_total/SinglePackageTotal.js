@@ -25,9 +25,20 @@ function SinglePackageTotal({
 
   const onIteration = async () => {
     let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-'];
+    let obsResourePrefixes = ['utw-','utq-','utn-']
     let total    = 0;
     
     for ( let ri = 0; ri < resourcePrefixes.length; ri++ ) {
+      if ( bookId === 'obs' ) {
+        if ( resourcePrefixes[ri] === obsResourePrefixes[0] ||
+             resourcePrefixes[ri] === obsResourePrefixes[1] ||
+             resourcePrefixes[ri] === obsResourePrefixes[2]
+        ) {
+          // let it pass
+        } else {
+          continue; // skip it! obs only has the three resource types
+        }
+      }
       let lsk = resourcePrefixes[ri]+bookId;
       let x = await bpstore.getItem(lsk);
       if ( x === null ) { 

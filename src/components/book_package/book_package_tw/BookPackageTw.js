@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 
-import {fetchBookPackageTw} from './helpers';
+import {fetchBookPackageTw, fetchObsTw} from './helpers';
 import {validateInputProperties} from './helpers';
 import {convertRC2Link} from './helpers';
 
@@ -46,10 +46,14 @@ function BookPackageTw({
     const fetchData = async () => {
       let result;
       try {
-        result = await fetchBookPackageTw(
-          {username: 'unfoldingword', languageId:'en', 
-          bookId: bookId, chapters: chapter, clearFlag: clearFlag
-        });
+        if ( bookId === 'obs' ) {
+          result = await fetchObsTw({ bookId: bookId,  clearFlag: clearFlag });
+        } else {
+          result = await fetchBookPackageTw(
+            {username: 'unfoldingword', languageId:'en', 
+            bookId: bookId, chapters: chapter, clearFlag: clearFlag
+          });
+        }
       } catch (error) {
         setVal(
           <div>

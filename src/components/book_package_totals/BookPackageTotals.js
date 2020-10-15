@@ -63,6 +63,8 @@ async function bp_totals(delay,iterations,setVal) {
   });
 
   let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-'];
+  let obsResourePrefixes = ['utw-','utq-','utn-']
+
   // ult,ust,utn,utq,utw,uta
   let ult_total = 0;
   let ust_total = 0;
@@ -84,6 +86,16 @@ async function bp_totals(delay,iterations,setVal) {
 
         for ( let ri = 0; ri < resourcePrefixes.length; ri++ ) {
           for ( let bi = 0; bi < bookarray.length; bi++ ) {
+            if ( bookarray[bi] === 'obs' ) {
+              if ( resourcePrefixes[ri] === obsResourePrefixes[0] ||
+                   resourcePrefixes[ri] === obsResourePrefixes[1] ||
+                   resourcePrefixes[ri] === obsResourePrefixes[2]
+              ) {
+                // let it pass
+              } else {
+                continue; // skip it! obs only has the three resource types
+              }
+            }
             let lsk = resourcePrefixes[ri]+bookarray[bi];
             let x = await bpstore.getItem(lsk);
             if ( x === null ) {

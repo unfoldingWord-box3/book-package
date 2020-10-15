@@ -23,6 +23,7 @@ import BookPackageUlt from '../book_package/book_package_ult';
 import BookPackageUst from '../book_package/book_package_ust';
 
 async function validateInputProperties(bookId,chapters) {
+  if ( bookId === 'obs' ) return true;
   //console.log("validate bookId",bookId,", chapters:",chapters);
   if ( chapters === "" ) {
     let ref = {bookId: bookId, chapter: 1, verse: 1};
@@ -78,15 +79,27 @@ function BookPackageRollup({
                   defaultExpanded={["1"]}
                 >
                   <TreeItem nodeId="1" label={
-                    <Typography variant="h6" >{cav.bookTitleById(skey)} <SinglePackageTotal bookId={skey} /> </Typography>
+                    <Typography variant="h6" >
+                      { skey === 'obs' ? 'OBS' : cav.bookTitleById(skey)} <SinglePackageTotal bookId={skey} /> 
+                    </Typography>
                   } 
                   >
+                    { skey === 'obs' ? 
+                    <>
+                    <BookPackageTw bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                    <BookPackageTn bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                    <BookPackageTq bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                    </>
+                    :
+                    <>
                     <BookPackageUlt bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageUst bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTa bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTw bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTn bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTq bookId={skey} chapter={chapter} clearFlag={clearFlag} />
+                    </>
+                    }
                   </TreeItem>
                 </TreeView>
               </Paper>
