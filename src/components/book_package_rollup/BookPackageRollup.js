@@ -21,6 +21,7 @@ import BookPackageTa from '../book_package/book_package_ta';
 import BookPackageTq from '../book_package/book_package_tq';
 import BookPackageUlt from '../book_package/book_package_ult';
 import BookPackageUst from '../book_package/book_package_ust';
+import BookPackageObs from '../book_package/book_package_obs';
 
 async function validateInputProperties(bookId,chapters) {
   if ( bookId === 'obs' ) return true;
@@ -86,6 +87,7 @@ function BookPackageRollup({
                   >
                     { skey === 'obs' ? 
                     <>
+                    <BookPackageObs bookId={skey} clearFlag={clearFlag} />
                     <BookPackageTw bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTn bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTq bookId={skey} chapter={chapter} clearFlag={clearFlag} />
