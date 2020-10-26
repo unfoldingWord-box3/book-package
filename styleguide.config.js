@@ -35,6 +35,7 @@ let sections = [
         'book_package_tq',
         'book_package_ult',
         'book_package_ust',
+        'book_package_obs',
       ];
       return componentNames.map(componentName => {
         const filename = upperFirst(camelCase(componentName));
