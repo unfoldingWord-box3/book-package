@@ -62,8 +62,8 @@ async function bp_totals(delay,iterations,setVal) {
     return mp;
   });
 
-  let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-'];
-  let obsResourePrefixes = ['utw-','utq-','utn-']
+  let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-','obs-'];
+  let obsResourePrefixes = ['utw-','utq-','utn-', 'obs-']
 
   // ult,ust,utn,utq,utw,uta
   let ult_total = 0;
@@ -72,6 +72,7 @@ async function bp_totals(delay,iterations,setVal) {
   let utq_total = 0;
   let utw_total = 0;
   let uta_total = 0;
+  let obs_total = 0;
   
   await (async function theLoop (iterations) {
     setTimeout( async function () {
@@ -86,16 +87,26 @@ async function bp_totals(delay,iterations,setVal) {
 
         for ( let ri = 0; ri < resourcePrefixes.length; ri++ ) {
           for ( let bi = 0; bi < bookarray.length; bi++ ) {
+            if ( resourcePrefixes[ri] === 'obs-' ) {
+              if ( bookarray[bi] !== 'obs' ) {
+                // The "resource" obs only has one possible book, namely "obs"
+                // so skip it unless this is the case (both are obs)
+                continue;
+              }
+            }
+
             if ( bookarray[bi] === 'obs' ) {
               if ( resourcePrefixes[ri] === obsResourePrefixes[0] ||
                    resourcePrefixes[ri] === obsResourePrefixes[1] ||
-                   resourcePrefixes[ri] === obsResourePrefixes[2]
+                   resourcePrefixes[ri] === obsResourePrefixes[2] ||
+                   resourcePrefixes[ri] === obsResourePrefixes[3]
               ) {
                 // let it pass
               } else {
                 continue; // skip it! obs only has the three resource types
               }
             }
+
             let lsk = resourcePrefixes[ri]+bookarray[bi];
             let x = await bpstore.getItem(lsk);
             if ( x === null ) {
@@ -183,6 +194,10 @@ async function bp_totals(delay,iterations,setVal) {
                   utn_total = utn_total + n;
                 } else if ( k.startsWith("utq") ) {
                   utq_total = utq_total + n;
+                } else if ( k.startsWith("obs") ) {
+                  obs_total = obs_total + n;
+                } else {
+                  console.log("Unknown resource type:", k);
                 }
               }
             }
@@ -209,7 +224,7 @@ async function bp_totals(delay,iterations,setVal) {
                 defaultExpanded={['1','2']}
               >
                 <TreeItem nodeId="1" label={<Typography variant="h5">{rootTitle}</Typography>}>
-                  <TreeItem nodeId="2" label={<Typography variant="h6">Book Packages Subtotals</Typography>}>
+                  <TreeItem nodeId="2" label={<Typography variant="h6">Resource Subtotals for Selected Book Packages</Typography>}>
                     <Typography variant="body2" gutterBottom>
                       <ul>
                       <li>ULT <strong>{ult_total.toLocaleString()}</strong> </li>
@@ -218,6 +233,7 @@ async function bp_totals(delay,iterations,setVal) {
                       <li>UTW <strong>{utw_total.toLocaleString()}</strong> </li>
                       <li>UTN <strong>{utn_total.toLocaleString()}</strong> </li>
                       <li>UTQ <strong>{utq_total.toLocaleString()}</strong> </li>
+                      <li>OBS <strong>{obs_total.toLocaleString()}</strong> </li>
                       </ul>
                     </Typography>
                   </TreeItem>

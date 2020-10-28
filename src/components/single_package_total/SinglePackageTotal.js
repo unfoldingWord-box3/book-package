@@ -24,15 +24,21 @@ function SinglePackageTotal({
   if ( _iterations === undefined ) _iterations = 1000;
 
   const onIteration = async () => {
-    let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-'];
-    let obsResourePrefixes = ['utw-','utq-','utn-']
+    let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-','obs-'];
+    let obsResourePrefixes = ['utw-','utq-','utn-','obs-']
     let total    = 0;
     
     for ( let ri = 0; ri < resourcePrefixes.length; ri++ ) {
+      if ( resourcePrefixes[ri] === 'obs-' ) {
+        if ( bookId !== 'obs' ) {
+          continue; // skip it, resource obs only has one book, namely obs
+        }
+      }
       if ( bookId === 'obs' ) {
         if ( resourcePrefixes[ri] === obsResourePrefixes[0] ||
              resourcePrefixes[ri] === obsResourePrefixes[1] ||
-             resourcePrefixes[ri] === obsResourePrefixes[2]
+             resourcePrefixes[ri] === obsResourePrefixes[2] ||
+             resourcePrefixes[ri] === obsResourePrefixes[3]
         ) {
           // let it pass
         } else {
