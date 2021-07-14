@@ -15,7 +15,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.45",
     "@material-ui/pickers": "3.2.10",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "axios-cache-adapter": "^2.2.1",
     "cypress": "3.8.1",
     "date-fns": "^2.8.1",
