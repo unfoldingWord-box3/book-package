@@ -38,8 +38,6 @@ languageId,
         bookId: bookId, 
         manifest: _manifests['tq']
     });
-
-    console.log("questions: ",_questions);
     
     let errors = [];
     if ( _questions === null ) {
@@ -54,7 +52,6 @@ languageId,
     // loop starts at 1, skipping the header row of the TSV file
     for (var i=1; i<_questions.length; i++) {
         let ch = _questions[i][0].split(":")[0];
-        console.log(ch);
         if ( ch === undefined ) { 
             //console.log("row i=",i," has chapter value undefined");
             continue; 
@@ -71,7 +68,6 @@ languageId,
     }
 
     let vcounts = wc.wordCount(allQuestions);
-    console.log(vcounts);
     // overwrite l1count with correct value
     vcounts.l1count = total;
     //.setItem('utq-'+bookId,JSON.stringify(vcounts.wordFrequency))
