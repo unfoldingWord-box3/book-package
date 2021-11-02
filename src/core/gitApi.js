@@ -49,6 +49,7 @@ export const resourceRepositories = ({languageId}) => {
     tn: languageId + '_tn',
     ta: languageId + '_ta',
     tw: languageId + '_tw',
+    tq: languageId + '_tq',
     ugnt: 'el-x-koine_ugnt',
     uhb: 'hbo_uhb',
     ugl: languageId + '_ugl',

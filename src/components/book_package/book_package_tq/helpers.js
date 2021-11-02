@@ -3,7 +3,7 @@ import * as wc from 'uw-word-count';
 import {chaptersInBook} from '../../../core/chaptersAndVerses';
 import Path from 'path';
 import {bpstore} from '../../../core/setupBpDatabase';
-import { tsvParse } from '../../../core/helpers.js'
+import { tsvParse, translationQuestions } from '../../../core/helpers.js'
 
 
 export async function fetchBookPackageTq({
@@ -26,80 +26,54 @@ languageId,
         }
     }
 
+    //New code
+    let _questions = [];
+    const _manifests = await gitApi.fetchResourceManifests(
+        {username: 'unfoldingword', 
+        languageId: languageId
+    });
+    _questions = await translationQuestions({
+        username: 'unfoldingword',
+        languageId: languageId, 
+        bookId: bookId, 
+        manifest: _manifests['tq']
+    });
 
+    console.log("questions: ",_questions);
+    
     let errors = [];
-    let totalL1count = 0;
-    let grandtext = "";
-    const chaparray = chapters.split(",");
-    // Create the path to the repo
-    // begin with chapter 1 to get the plumbing working
-    const repo = languageId + "_tq";
-    const numchapters = chaptersInBook(bookId);
-    const slash = "/";
-    const baseURL = 'https://git.door43.org/';
-    const owner   = 'unfoldingword';
+    if ( _questions === null ) {
+        errors.push("UTQ Error: Cannot access:",bookId," -- error message not available")
+    }
 
-    //console.log("Number of chapters in book:",numchapters.length);
-    for (var i = 0; i < numchapters.length; i++) {
-        let ch = ""+(i+1);
-        if ( chapters === "" ) {
-            chapters = "0";
+    let totalL1count = 0;
+    const chaparray = chapters.split(",");
+    let allQuestions = "";
+    let total=0;
+
+    // loop starts at 1, skipping the header row of the TSV file
+    for (var i=1; i<_questions.length; i++) {
+        let ch = _questions[i][0].split(":")[0];
+        console.log(ch);
+        if ( ch === undefined ) { 
+            //console.log("row i=",i," has chapter value undefined");
+            continue; 
         }
-        if ( chapters !== "0" ) {
+        if ( chapters !== "" ) {
             if ( ! chaparray.includes(ch) ) {
                 continue;
             }
         }
-        if ( i+1 < 10 ) {
-            ch = "0"+ch;
-        } 
-        //let numverses = numchapters[i];
-        //console.log("Verses in chapter:",numverses);
-        let data;
-        let uri;
-        try {
-            let path = bookId+slash+ch;
-            uri = baseURL+Path.join('api/v1/repos', owner, repo, 'contents', path);
-            data = await gitApi.getURL({uri});    
-        } catch(error) {
-            const err = "UTQ Error on:"+uri+" is:"+error;
-            errors.push(err);
-            console.log(err);
-            throw new Error(err);
-        }
-        let _verses = await JSON.parse(JSON.stringify(data));
-
-        for (var j = 0; j < _verses.length; j++) {
-            let git_url = _verses[j].git_url;
-            let _tq;
-            try {
-                _tq = await gitApi.getURL({uri: git_url});    
-            } catch(error) {
-                const err = "UTQ Error on:"+git_url+" is:"+error;
-                errors.push(err);
-                console.log(err);
-                throw new Error(err);
-            }
-            if ( _tq == null) {
-                continue;
-            }
-            let blob = JSON.parse(JSON.stringify(_tq));
-            let content;
-            try {
-                content = atob(blob.content);
-            } catch(error) {
-                const err = "atob() Error on:"+git_url+" is:"+error;
-                throw new Error(err);
-            }
-    
-            let vcounts = wc.wordCount(content);
-            grandtext = grandtext + " " + vcounts.allWords.join(" ");
-            totalL1count  = totalL1count + vcounts.l1count;           
-        }
+        total = total + 1;
+        let question = _questions[i][5];
+        let response = _questions[i][6];
+        allQuestions = allQuestions + '\n' + question + '\n' + response;
     }
-    let vcounts = wc.wordCount(grandtext);
+
+    let vcounts = wc.wordCount(allQuestions);
+    console.log(vcounts);
     // overwrite l1count with correct value
-    vcounts.l1count = totalL1count;
+    vcounts.l1count = total;
     //.setItem('utq-'+bookId,JSON.stringify(vcounts.wordFrequency))
     await bpstore.setItem(dbkey, vcounts);
     if ( errors.length > 0 ) {
