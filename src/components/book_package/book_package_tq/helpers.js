@@ -1,7 +1,5 @@
 import * as gitApi from '../../../core/gitApi';
 import * as wc from 'uw-word-count';
-import {chaptersInBook} from '../../../core/chaptersAndVerses';
-import Path from 'path';
 import {bpstore} from '../../../core/setupBpDatabase';
 import { tsvParse, translationQuestions } from '../../../core/helpers.js'
 
@@ -44,7 +42,6 @@ languageId,
         errors.push("UTQ Error: Cannot access:",bookId," -- error message not available")
     }
 
-    let totalL1count = 0;
     const chaparray = chapters.split(",");
     let allQuestions = "";
     let total=0;
