@@ -135,12 +135,26 @@ export async function translationNotes({username, languageId, bookId, manifest})
   return data;
 };
 
+export async function translationQuestions({username, languageId, bookId, manifest}) {
+  const data = await fetchQuestions({username, languageId, bookId, manifest});
+  return data;
+};
+
+
 export async function fetchNotes({username, languageId, bookId, manifest}) {
   const repository = gitApi.resourceRepositories({languageId}).tn;
   const tsv = await fetchFileByBookId({username, repository, bookId, manifest});
   const data = tsvParse({tsv});
   return data;
 };
+
+export async function fetchQuestions({username, languageId, bookId, manifest}) {
+  const repository = gitApi.resourceRepositories({languageId}).tq;
+  const tsv = await fetchFileByBookId({username, repository, bookId, manifest});
+  const data = tsvParse({tsv});
+  return data;
+};
+
 
 export async function fetchFileByBookId({username, repository, bookId, manifest}) {
 
