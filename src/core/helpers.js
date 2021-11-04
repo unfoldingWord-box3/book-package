@@ -140,9 +140,9 @@ export async function translationQuestions({username, languageId, bookId, manife
   return data;
 };
 
-
-export async function fetchNotes({username, languageId, bookId, manifest}) {
-  const repository = gitApi.resourceRepositories({languageId}).tn;
+export async function fetchNotes({ username, languageId, bookId, manifest }) {
+  let resourceId = bookId === 'obs' ? 'obs-tn' : 'tn'
+  const repository = gitApi.resourceRepositories({languageId})[resourceId];
   const tsv = await fetchFileByBookId({username, repository, bookId, manifest});
   const data = tsvParse({tsv});
   return data;
