@@ -23,7 +23,7 @@ The `clearFlag` attribute is set to true. This will fetch all data from scratch.
 <BookPackageRollup bookId='tit' chapter='' clearFlag={false} />
 ```
 
-To includes all the Book Package components from OBS use lowercase "obs" for the bookId parameter.
+To include all the Book Package components from OBS use lowercase "obs" for the bookId parameter.
 
 ```js
 <BookPackageRollup bookId='obs' chapter='' clearFlag={false} />
