@@ -14,3 +14,4 @@ To count the words in OBS Translation Academy use lowercase "obs" for the bookId
 
 ```js
 <BookPackageTa bookId='obs' chapter="" />
+```
