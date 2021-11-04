@@ -23,6 +23,12 @@ The `clearFlag` attribute is set to true. This will fetch all data from scratch.
 <BookPackageRollup bookId='tit' chapter='' clearFlag={false} />
 ```
 
+To includes all the Book Package components from OBS use lowercase "obs" for the bookId parameter.
+
+```js
+<BookPackageRollup bookId='obs' chapter='' clearFlag={false} />
+```
+
 **Why are Lexicon results not included in the book package**
 
 A book package is only meaningful in the context of translating a 
