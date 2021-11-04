@@ -63,7 +63,7 @@ async function bp_totals(delay,iterations,setVal) {
   });
 
   let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-','obs-'];
-  let obsResourePrefixes = ['utw-','utq-','utn-', 'obs-']
+  let obsResourePrefixes = ['uta-','utw-','utq-','utn-', 'obs-']
 
   // ult,ust,utn,utq,utw,uta
   let ult_total = 0;
@@ -99,11 +99,12 @@ async function bp_totals(delay,iterations,setVal) {
               if ( resourcePrefixes[ri] === obsResourePrefixes[0] ||
                    resourcePrefixes[ri] === obsResourePrefixes[1] ||
                    resourcePrefixes[ri] === obsResourePrefixes[2] ||
-                   resourcePrefixes[ri] === obsResourePrefixes[3]
+                   resourcePrefixes[ri] === obsResourePrefixes[3] ||
+                   resourcePrefixes[ri] === obsResourePrefixes[4]
               ) {
                 // let it pass
               } else {
-                continue; // skip it! obs only has the three resource types
+                continue; // skip it! obs only has the four resource types
               }
             }
 
