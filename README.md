@@ -32,6 +32,11 @@ These notes are adapted from https://unfoldingword-box3.github.io/hello-world-re
     - to fix, add dependencies to `package.json` and rerun `yarn` to install them
 4. See debug `console.log()` output in browser console -- in chrome, CTRL-SHIFT-J to open.
 
+After changes tested:
+1. Update package version (must valid semver, such as 1.5.0 with all three pieces)
+2. Use git to commit/push
+3. Use `yarn publish`
+
 ## Chromebook Linux Beta Notes
 
 Must use `hostname -I` to get the host address. **Neither `localhost` nor `127.0.0.1` will work.
