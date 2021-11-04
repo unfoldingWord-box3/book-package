@@ -28,12 +28,15 @@ languageId,
     const _manifests = await gitApi.fetchResourceManifests(
         {username: 'unfoldingword', 
         languageId: languageId
-    });
+        });
+    
+    let resourceId = bookId === 'obs' ? 'obs-tn' : 'tn'
+    
     _notes = await translationNotes(
         {username: 'unfoldingword', 
         languageId: languageId, 
         bookId: bookId, 
-        manifest: _manifests['tn']
+        manifest: _manifests[resourceId]
     });
 
     // function to convert map to object
@@ -51,15 +54,30 @@ languageId,
     const chaparray = chapters.split(",");
 
     // loop starts at 1, skipping the header row of the TSV file
-    for (var i=1; i<_notes.length; i++) {
-        let ch = _notes[i][1]
+    for (var i = 1; i < _notes.length; i++) {
+        let ch = '';
+
+        //Make this distinction while tsv number of columns from en_tn (9 columns) differs from en_obs-tn (7 columns)
+        if (bookId === 'obs') {
+            ch = _notes[i][0].split(":")[0];
+        } else {
+            ch = _notes[i][1]
+        }
         if ( ch === undefined ) { continue; }
         if ( chapters !== "" ) {
             if ( ! chaparray.includes(ch) ) {
                 continue;
             }
         }
-        let tarticle = _notes[i][4];
+        let tarticle = '';
+        
+        //Make this distinction while tsv number of columns from en_tn (9 columns) differs from en_obs-tn (7 columns)
+        if (bookId === 'obs') {
+            let taLink = _notes[i][3].match(/(?<=translate\/).*/);
+            tarticle = taLink ? taLink[0] : undefined;
+        } else {
+            tarticle = _notes[i][4];
+        }
         if ( tarticle === undefined ) { continue; }
         if ( tarticle !== "" ) {
             tacount = tacount + 1;
