@@ -10,4 +10,8 @@ http://ubsicap.github.io/usfm/identification/books.html
 <BookPackageTa bookId='tit' chapter="" />
 ```
 
+To count the words in OBS Translation Academy use lowercase "obs" for the bookId parameter.
 
+```js
+<BookPackageTa bookId='obs' chapter="" />
+```

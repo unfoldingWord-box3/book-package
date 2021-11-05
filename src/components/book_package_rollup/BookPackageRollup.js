@@ -88,6 +88,7 @@ function BookPackageRollup({
                     { skey === 'obs' ? 
                     <>
                     <BookPackageObs bookId={skey} clearFlag={clearFlag} />
+                    <BookPackageTa bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTw bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTn bookId={skey} chapter={chapter} clearFlag={clearFlag} />
                     <BookPackageTq bookId={skey} chapter={chapter} clearFlag={clearFlag} />
