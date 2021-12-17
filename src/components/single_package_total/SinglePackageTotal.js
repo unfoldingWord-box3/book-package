@@ -25,7 +25,7 @@ function SinglePackageTotal({
 
   const onIteration = async () => {
     let resourcePrefixes = ['uta-','utw-','utq-','utn-','ult-','ust-','obs-'];
-    let obsResourePrefixes = ['utw-','utq-','utn-','obs-']
+    let obsResourePrefixes = ['uta-','utw-','utq-','utn-','obs-']
     let total    = 0;
     
     for ( let ri = 0; ri < resourcePrefixes.length; ri++ ) {
@@ -38,11 +38,12 @@ function SinglePackageTotal({
         if ( resourcePrefixes[ri] === obsResourePrefixes[0] ||
              resourcePrefixes[ri] === obsResourePrefixes[1] ||
              resourcePrefixes[ri] === obsResourePrefixes[2] ||
-             resourcePrefixes[ri] === obsResourePrefixes[3]
+             resourcePrefixes[ri] === obsResourePrefixes[3] ||
+             resourcePrefixes[ri] === obsResourePrefixes[4]
         ) {
           // let it pass
         } else {
-          continue; // skip it! obs only has the three resource types
+          continue; // skip it! obs only has the four resource types
         }
       }
       let lsk = resourcePrefixes[ri]+bookId;
