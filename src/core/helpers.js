@@ -145,6 +145,7 @@ export async function fetchNotes({ username, languageId, bookId, manifest }) {
   const repository = gitApi.resourceRepositories({languageId})[resourceId];
   const tsv = await fetchFileByBookId({username, repository, bookId, manifest});
   const data = tsvParse({tsv});
+  console.log("fetchNotes() resourceId:", resourceId)
   return data;
 };
 
