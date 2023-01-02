@@ -76,7 +76,8 @@ languageId,
             let taLink = _notes[i][3].match(/(?<=translate\/).*/);
             tarticle = taLink ? taLink[0] : undefined;
         } else {
-            tarticle = _notes[i][4];
+            let taLink = _notes[i][3].match(/(?<=translate\/).*/);
+            tarticle = taLink ? taLink[0] : undefined;;
         }
         if ( tarticle === undefined ) { continue; }
         if ( tarticle !== "" ) {

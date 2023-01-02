@@ -58,7 +58,7 @@ languageId,
             }
         }
         total = total + 1;
-        let occurrenceNote = _notes[i][8];
+        let occurrenceNote = _notes[i][6];
         allNotes = allNotes + '\n' + occurrenceNote;
     }
     // count words in occurrence notes
